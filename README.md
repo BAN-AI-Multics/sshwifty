@@ -1,5 +1,7 @@
 # Sshwifty Web SSH & Telnet Client
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/abada4bf5755427ca565bdef2e23ef5e)](https://app.codacy.com/gh/BAN-AI-Multics/sshwifty?utm_source=github.com&utm_medium=referral&utm_content=BAN-AI-Multics/sshwifty&utm_campaign=Badge_Grade_Settings)
+
 **Sshwifty is a SSH and Telnet connector made for the Web.** It can be deployed
 on your computer or server to provide SSH and Telnet access interface for any
 compatible (standard) web browser.
