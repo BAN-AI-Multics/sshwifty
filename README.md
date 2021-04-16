@@ -8,8 +8,6 @@ compatible (standard) web browser.
 
 ![Web Interface](Screenshot.png)
 
-![Build Status](https://github.com/nirui/sshwifty/workflows/Sshwifty-CI/badge.svg)
-
 ## Install
 
 ### Binary
