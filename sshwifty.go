@@ -34,8 +34,7 @@ func main() {
 		configLoaders = append(configLoaders,
 			configuration.File(os.Getenv("SSHWIFTY_CONFIG")))
 	} else {
-		configLoaders = append(configLoaders, configuration.File(""))
-		configLoaders = append(configLoaders, configuration.Enviro())
+		configLoaders = append(configLoaders, configuration.File(""), configuration.Enviro())
 	}
 
 	e := application.
