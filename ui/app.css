@@ -49,7 +49,7 @@ body.app-error {
 }
 
 #app-loading-icon {
-  background: url("./widgets/busy.svg") center center no-repeat;
+  background: url("./widgets/busy.png") center center no-repeat;
   background-size: contain;
   width: 100%;
   height: 200px;

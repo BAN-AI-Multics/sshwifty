@@ -112,16 +112,16 @@ import "xterm/css/xterm.css";
 
 const termTypeFace = "Hack";
 const termFallbackTypeFace = "monospace";
-const termTypeFaceLoadTimeout = 3000;
+const termTypeFaceLoadTimeout = 5000;
 const termTypeFaceLoadError =
   'Remote font "' +
   termTypeFace +
   '" is unavailable, using "' +
   termFallbackTypeFace +
   '" instead until the remote font is loaded';
-const termDefaultFontSize = 16;
-const termMinFontSize = 8;
-const termMaxFontSize = 36;
+const termDefaultFontSize = 12;
+const termMinFontSize = 4;
+const termMaxFontSize = 48;
 
 class Term {
   constructor(control) {
@@ -131,8 +131,8 @@ class Term {
     this.closed = false;
     this.fontSize = termDefaultFontSize;
     this.term = new Terminal({
-      allowTransparency: false,
-      cursorBlink: true,
+      allowTransparency: true,
+      cursorBlink: false,
       cursorStyle: "block",
       fontFamily: termTypeFace + ", " + termFallbackTypeFace,
       fontSize: this.fontSize,
@@ -144,7 +144,7 @@ class Term {
     this.term.loadAddon(new WebLinksAddon());
 
     this.term.setOption("theme", {
-      background: this.control.activeColor(),
+      background: '#000000'
     });
 
     this.term.onData((data) => {
@@ -215,7 +215,7 @@ class Term {
           alert(
             "Unable to paste: " +
               e +
-              ". Please try again without using the Control+Shift+V / " +
+              ". Please try again, without using the Control+Shift+V / " +
               "Shift+Insert hot key"
           );
         }

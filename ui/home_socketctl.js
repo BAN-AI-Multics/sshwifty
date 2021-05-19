@@ -2,29 +2,24 @@ import * as history from "./history.js";
 import { ECHO_FAILED } from "./socket.js";
 
 export function build(ctx) {
-  const connectionStatusNotConnected = "Sshwifty is ready to connect";
+  const connectionStatusNotConnected = "Ready to connect";
   const connectionStatusConnecting =
-    "Connecting to Sshwifty backend server. It should only take " +
-    "less than a second, or two";
+    "Connecting to server...";
   const connectionStatusDisconnected =
-    "Sshwifty is disconnected from it's backend server";
+    "Disconnected from server";
   const connectionStatusConnected =
-    "Sshwifty is connected to it's backend server, user interface operational";
+    "Connected to server";
   const connectionStatusUnmeasurable =
-    "Unable to measure connection delay. The connection maybe very " +
-    "busy or already lost";
+    "Connection failure";
 
   const connectionDelayGood =
-    "Connection delay is low, operation should be very responsive";
+    "Excellent link quality.";
   const connectionDelayFair =
-    "Experiencing minor connection delay, operation should be responded " +
-    "within a reasonable time";
+    "Good link quality.";
   const connectionDelayMedian =
-    "Experiencing median connection delay, consider to slow down your input " +
-    "to avoid misoperation";
+    "Fair link quality.";
   const connectionDelayHeavy =
-    "Experiencing bad connection delay, operation may freeze at any moment. " +
-    "Consider to pause your input until remote is responsive";
+    "Very poor link quality!";
 
   const buildEmptyHistory = () => {
     const r = [];

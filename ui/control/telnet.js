@@ -408,7 +408,7 @@ class Control {
 
       await runWait;
 
-      self.subs.reject("Remote connection has been terminated");
+      self.subs.reject("Disconnected");
     });
   }
 

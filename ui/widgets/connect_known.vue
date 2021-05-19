@@ -26,58 +26,58 @@
       No known remote available
     </div>
     <div v-else>
-      <div v-if="knownList.length > 0" id="connect-known-list-list">
-        <h3>Connected before</h3>
+      
+      
 
-        <ul class="hlst lstcl1">
-          <li v-for="(known, kk) in knownList" :key="kk">
-            <div class="labels">
-              <span
-                class="type"
-                :style="'background-color: ' + known.data.color"
-              >
-                {{ known.data.type }}
-              </span>
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
-              <a
-                class="opt link"
-                href="javascript:;"
-                @click="launcher(known, $event)"
-              >
-                {{ known.copyStatus }}
-              </a>
+      
+      
+      
+      
+      
+      
+      
 
-              <a
-                v-if="!known.data.session"
-                class="opt del"
-                href="javascript:;"
-                @click="remove(known.data.uid)"
-              >
-                Remove
-              </a>
-              <a
-                v-else
-                class="opt clr"
-                href="javascript:;"
-                title="Clear session data"
-                @click="clearSession(known.data.uid)"
-              >
-                Clear
-              </a>
-            </div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
-            <div class="lst-wrap" @click="select(known.data)">
-              <h4
-                :title="known.data.title"
-                :class="{ highlight: known.data.session }"
-              >
-                {{ known.data.title }}
-              </h4>
-              Last: {{ known.data.last.toLocaleString() }}
-            </div>
-          </li>
-        </ul>
-      </div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
       <div
         v-if="presets.length > 0"
@@ -86,8 +86,6 @@
           'last-planel': knownList.length > 0,
         }"
       >
-        <h3>Presets</h3>
-
         <ul class="hlst lstcl2">
           <li
             v-for="(preset, pk) in presets"
@@ -110,19 +108,7 @@
             </div>
           </li>
         </ul>
-
-        <div v-if="restrictedToPresets" id="connect-known-list-presets-alert">
-          The operator has restricted the outgoing connections. You can only
-          connect to remotes from the pre-defined presets.
-        </div>
       </div>
-    </div>
-
-    <div id="connect-known-list-import">
-      Tip: You can
-      <a href="javascript:;" @click="importHosts">import</a> and
-      <a href="javascript:;" @click="exportHosts">export</a>
-      known remotes from and to a file.
     </div>
   </div>
 </template>

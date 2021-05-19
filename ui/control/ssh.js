@@ -84,7 +84,7 @@ class Control {
       self.closed = true;
       self.colorM.forget(self.colors.color);
 
-      self.subs.reject("Remote connection has been terminated");
+      self.subs.reject("Disconnected");
     });
   }
 

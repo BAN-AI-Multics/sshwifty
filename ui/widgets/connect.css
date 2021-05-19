@@ -74,7 +74,7 @@
 
 #connect-busy-overlay {
   z-index: 2;
-  background: #2229 url("busy.svg") center center no-repeat;
+  background: #2229 url("busy.png") center center no-repeat;
   top: 0;
   left: 0;
   bottom: 0;
