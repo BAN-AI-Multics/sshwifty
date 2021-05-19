@@ -1,6 +1,6 @@
 // Sshwifty - A Web SSH client
 //
-// Copyright (C) 2019-2021 Ni Rui <nirui@gmx.com>
+// Copyright (C) 2019-2021 NI Rui <ranqus@gmail.com>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -83,7 +83,6 @@ type fileCfgPreset struct {
 
 func (f fileCfgPreset) concretize() (Preset, error) {
 	m, err := f.Meta.Concretize()
-
 	if err != nil {
 		return Preset{}, err
 	}
@@ -103,7 +102,6 @@ func (f fileCfgPresets) concretize() ([]Preset, error) {
 
 	for i, p := range f {
 		pp, err := p.concretize()
-
 		if err != nil {
 			return nil, fmt.Errorf(
 				"Unable to concretize Preset %d (titled \"%s\"): %s",
@@ -190,7 +188,6 @@ func loadFile(filePath string) (string, Configuration, error) {
 	}
 
 	presets, err := finalCfg.Presets.concretize()
-
 	if err != nil {
 		return fileTypeName, Configuration{}, err
 	}

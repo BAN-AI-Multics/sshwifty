@@ -1,6 +1,6 @@
 // Sshwifty - A Web SSH client
 //
-// Copyright (C) 2019-2021 Ni Rui <nirui@gmx.com>
+// Copyright (C) 2019-2021 NI Rui <ranqus@gmail.com>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -69,7 +69,7 @@ type socket struct {
 	commander command.Commander
 }
 
-func hashCombineSocketKeys(addedKey string, privateKey string) []byte {
+func hashCombineSocketKeys(addedKey, privateKey string) []byte {
 	h := hmac.New(sha512.New, []byte(privateKey))
 
 	h.Write([]byte(addedKey))
@@ -147,7 +147,6 @@ func (s socket) buildWSFetcher(c *websocket.Conn) rw.FetchReaderFetcher {
 	return func() ([]byte, error) {
 		for {
 			mt, message, err := c.ReadMessage()
-
 			if err != nil {
 				return nil, err
 			}
@@ -232,7 +231,6 @@ func (s socket) Get(
 	// Error will not be returned when Websocket already handled
 	// (i.e. returned the error to client). We just log the error and that's it
 	c, err := s.upgrader.Upgrade(w, r, nil)
-
 	if err != nil {
 		return NewError(http.StatusBadRequest, err.Error())
 	}

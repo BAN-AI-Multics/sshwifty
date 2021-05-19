@@ -1,6 +1,6 @@
 // Sshwifty - A Web SSH client
 //
-// Copyright (C) 2019-2021 Ni Rui <nirui@gmx.com>
+// Copyright (C) 2019-2021 NI Rui <ranqus@gmail.com>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-export function get(url, headers) {
+function send(method, url, headers) {
   return new Promise((res, rej) => {
     const authReq = new XMLHttpRequest();
 
@@ -35,7 +35,7 @@ export function get(url, headers) {
       rej(e);
     });
 
-    authReq.open("GET", url, true);
+    authReq.open(method, url, true);
 
     for (const h in headers) {
       authReq.setRequestHeader(h, headers[h]);
@@ -43,4 +43,12 @@ export function get(url, headers) {
 
     authReq.send();
   });
+}
+
+export function get(url, headers) {
+  return send("GET", url, headers);
+}
+
+export function options(url, headers) {
+  return send("OPTIONS", url, headers);
 }

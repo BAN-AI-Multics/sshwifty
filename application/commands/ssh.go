@@ -1,6 +1,6 @@
 // Sshwifty - A Web SSH client
 //
-// Copyright (C) 2019-2021 Ni Rui <nirui@gmx.com>
+// Copyright (C) 2019-2021 NI Rui <ranqus@gmail.com>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -104,9 +104,7 @@ var (
 		"Unknown client signal")
 )
 
-var (
-	sshEmptyTime = time.Time{}
-)
+var sshEmptyTime = time.Time{}
 
 const (
 	sshDefaultPortString = "22"
@@ -395,7 +393,6 @@ func (d *sshClient) dialRemote(
 	addr string,
 	config *ssh.ClientConfig) (*ssh.Client, func(), error) {
 	conn, err := d.cfg.Dial(networkName, addr, config.Timeout)
-
 	if err != nil {
 		return nil, nil, err
 	}
@@ -427,7 +424,6 @@ func (d *sshClient) dialRemote(
 	sshConn.SetReadDeadline(time.Now().Add(config.Timeout))
 
 	c, chans, reqs, err := ssh.NewClientConn(sshConn, addr, config)
-
 	if err != nil {
 		sshConn.Close()
 
@@ -446,7 +442,7 @@ func (d *sshClient) dialRemote(
 }
 
 func (d *sshClient) remote(
-	user string, address string, authMethodBuilder sshAuthMethodBuilder) {
+	user, address string, authMethodBuilder sshAuthMethodBuilder) {
 	defer func() {
 		d.w.Signal(command.HeaderClose)
 

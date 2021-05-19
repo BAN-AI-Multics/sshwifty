@@ -1,6 +1,6 @@
 // Sshwifty - A Web SSH client
 //
-// Copyright (C) 2019-2021 Ni Rui <nirui@gmx.com>
+// Copyright (C) 2019-2021 NI Rui <ranqus@gmail.com>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -26,7 +26,6 @@ func TestStringString(t *testing.T) {
 	ss := String("aaaaaaaaaaaaa")
 
 	result, err := ss.Parse()
-
 	if err != nil {
 		t.Error("Unable to parse:", err)
 
@@ -50,7 +49,6 @@ func TestStringFile(t *testing.T) {
 	filePath := os.TempDir() + string(os.PathSeparator) + testFilename
 
 	f, err := os.Create(filePath)
-
 	if err != nil {
 		t.Error("Unable to create file:", err)
 
@@ -65,7 +63,6 @@ func TestStringFile(t *testing.T) {
 	ss := String("file://" + filePath)
 
 	result, err := ss.Parse()
-
 	if err != nil {
 		t.Error("Unable to parse:", err)
 

@@ -1,6 +1,6 @@
 // Sshwifty - A Web SSH client
 //
-// Copyright (C) 2019-2021 Ni Rui <nirui@gmx.com>
+// Copyright (C) 2019-2021 NI Rui <ranqus@gmail.com>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -75,7 +75,7 @@ func (h *handlerSender) resume() {
 }
 
 // signal sends handler signal
-func (h *handlerSender) signal(hd Header, d []byte, buf []byte) error {
+func (h *handlerSender) signal(hd Header, d, buf []byte) error {
 	bufLen := len(buf)
 	dLen := len(d)
 
@@ -114,7 +114,7 @@ type streamHandlerSender struct {
 }
 
 // signal sends handler signal
-func (h streamHandlerSender) signal(hd Header, d []byte, buf []byte) error {
+func (h streamHandlerSender) signal(hd Header, d, buf []byte) error {
 	return h.handlerSender.signal(hd, d, buf)
 }
 

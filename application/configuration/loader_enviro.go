@@ -1,6 +1,6 @@
 // Sshwifty - A Web SSH client
 //
-// Copyright (C) 2019-2021 Ni Rui <nirui@gmx.com>
+// Copyright (C) 2019-2021 NI Rui <ranqus@gmail.com>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -42,7 +42,7 @@ func parseEnv(name string) string {
 	return os.Getenv(v[21:])
 }
 
-func parseEnvDef(name string, def string) string {
+func parseEnvDef(name, def string) string {
 	v := parseEnv(name)
 
 	if len(v) > 0 {
@@ -127,7 +127,6 @@ func Enviro() Loader {
 		}
 
 		concretizePresets, err := presets.concretize()
-
 		if err != nil {
 			return enviroTypeName, Configuration{}, fmt.Errorf(
 				"Unable to parse Preset data: %s", err)

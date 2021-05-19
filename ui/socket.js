@@ -1,6 +1,6 @@
 // Sshwifty - A Web SSH client
 //
-// Copyright (C) 2019-2021 Ni Rui <nirui@gmx.com>
+// Copyright (C) 2019-2021 NI Rui <ranqus@gmail.com>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -19,6 +19,7 @@ import * as crypt from "./crypto.js";
 import * as reader from "./stream/reader.js";
 import * as sender from "./stream/sender.js";
 import * as streams from "./stream/streams.js";
+import * as xhr from "./xhr.js";
 
 export const ECHO_FAILED = streams.ECHO_FAILED;
 
@@ -39,6 +40,7 @@ class Dial {
     this.address = address;
     this.timeout = timeout;
     this.privateKey = privateKey;
+	this.keepAliveTicker = null;
   }
 
   /**
@@ -49,11 +51,13 @@ class Dial {
    * @returns {Promise<WebSocket>} When connection is established
    *
    */
-  connect(timeout) {
+connect(address, timeout) {
+	const self = this;
     return new Promise((resolve, reject) => {
-      const ws = new WebSocket(this.address);
-      let promised = false;
-      const timeoutTimer = setTimeout(() => {
+      //const ws = new WebSocket(this.address);
+		let ws = new WebSocket(address.webSocket),
+      promised = false,
+      timeoutTimer = setTimeout(() => {
         ws.close();
       }, timeout);
       const myRes = (w) => {
@@ -77,6 +81,12 @@ class Dial {
         return reject(e);
       };
 
+      if (!self.keepAliveTicker) {
+        self.keepAliveTicker = setInterval(() => {
+          xhr.options(address.keepAlive, {});
+        }, self.timeout);
+      }
+
       ws.addEventListener("open", (_event) => {
         myRes(ws);
       });
@@ -87,10 +97,14 @@ class Dial {
         };
 
         myRej(event);
+        clearInterval(self.keepAliveTicker);
+        self.keepAliveTicker = null;
       });
 
       ws.addEventListener("error", (_event) => {
         ws.close();
+        clearInterval(self.keepAliveTicker);
+        self.keepAliveTicker = null;
       });
     });
   }
@@ -123,7 +137,8 @@ class Dial {
    *
    */
   async dial(callbacks) {
-    const ws = await this.connect(this.timeout);
+    //const ws = await this.connect(this.timeout);
+	  let ws = await this.connect(this.address, this.timeout);
 
     try {
       const rd = new reader.Reader(new reader.Multiple(() => {}), (data) => {

@@ -1,6 +1,6 @@
 // Sshwifty - A Web SSH client
 //
-// Copyright (C) 2019-2021 Ni Rui <nirui@gmx.com>
+// Copyright (C) 2019-2021 NI Rui <ranqus@gmail.com>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -53,7 +53,7 @@ func (s socks5Dial) DialContext(
 
 // BuildSocks5Dial builds a Socks5 dialer
 func BuildSocks5Dial(
-	socks5Address string, userName string, password string) (Dial, error) {
+	socks5Address, userName, password string) (Dial, error) {
 	var auth *proxy.Auth
 
 	if len(userName) > 0 || len(password) > 0 {

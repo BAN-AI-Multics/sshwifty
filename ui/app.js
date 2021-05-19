@@ -1,6 +1,6 @@
 // Sshwifty - A Web SSH client
 //
-// Copyright (C) 2019-2021 Ni Rui <nirui@gmx.com>
+// Copyright (C) 2019-2021 NI Rui <ranqus@gmail.com>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -202,25 +202,29 @@ function startApp(rootEl) {
           await cipher.hmac512(enc.encode(finalKey), enc.encode(rTime))
         ).slice(0, 32);
       },
-      buildBackendSocketURL() {
-        let r = "";
+      buildBackendSocketURLs() {
+        let r = {
+          webSocket: "",
+          keepAlive: "",
+        };
 
         switch (location.protocol) {
           case "https:":
-            r = "wss://";
+            r.webSocket = "wss://";
             break;
 
           default:
-            r = "ws://";
+            r.webSocket = "ws://";
         }
 
-        r += location.host + socksInterface;
+        r.webSocket += location.host + socksInterface;
+        r.keepAlive = location.protocol + "//" + location.host + socksInterface;
 
         return r;
       },
       buildSocket(key, dialTimeout, heartbeatInterval) {
         return new Socket(
-          this.buildBackendSocketURL(),
+          this.buildBackendSocketURLs(),
           key,
           dialTimeout * 1000,
           heartbeatInterval * 1000
