@@ -74,8 +74,8 @@
             id="home-content-connect"
             class="icon icon-plus1"
             @click="showConnectWindow"
-          ></span>&nbsp;
-          to connect.
+          ></span
+          >&nbsp; to connect.
         </p>
       </div>
     </screens>
@@ -139,8 +139,7 @@ import * as home_history from "./home_historyctl.js";
 
 import * as presets from "./commands/presets.js";
 
-const BACKEND_CONNECT_ERROR =
-  "Unable to connect to the backend server: ";
+const BACKEND_CONNECT_ERROR = "Unable to connect to the backend server: ";
 const BACKEND_REQUEST_ERROR = "Unable to perform request: ";
 
 export default {

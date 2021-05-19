@@ -346,7 +346,7 @@ func (d *sshClient) comfirmRemoteFingerprint(
 	buf []byte,
 ) error {
 	// Always allow fingerprint, dangerous.
-	return nil;
+	return nil
 	d.enableRemoteReadTimeoutRetry()
 	defer d.disableRemoteReadTimeoutRetry()
 
@@ -690,31 +690,31 @@ func (d *sshClient) local(
 		return nil
 
 	case SSHClientRespondFingerprint:
-	//	if d.fingerprintProcessed {
-	//		return ErrSSHUnexpectedFingerprintVerificationRespond
-	//	}
+		//	if d.fingerprintProcessed {
+		//		return ErrSSHUnexpectedFingerprintVerificationRespond
+		//	}
 
 		d.fingerprintProcessed = true
 
-//		rData, rErr := rw.FetchOneByte(r.Fetch)
+		//		rData, rErr := rw.FetchOneByte(r.Fetch)
 
-//		if rErr != nil {
-//			return rErr
-//		}
+		//		if rErr != nil {
+		//			return rErr
+		//		}
 
-//		comfirmed := rData[0] == 0
+		//		comfirmed := rData[0] == 0
 
-	//	if !comfirmed {
-	//		d.fingerprintVerifyResultReceive <- false
+		//	if !comfirmed {
+		//		d.fingerprintVerifyResultReceive <- false
 
-//			remote, remoteErr := d.getRemote()
+		//			remote, remoteErr := d.getRemote()
 
-//			if remoteErr == nil {
-//				remote.closer()
-//			}
-//		} else {
-//			d.fingerprintVerifyResultReceive <- true
-//		}
+		//			if remoteErr == nil {
+		//				remote.closer()
+		//			}
+		//		} else {
+		//			d.fingerprintVerifyResultReceive <- true
+		//		}
 
 		return nil
 

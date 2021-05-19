@@ -144,7 +144,7 @@ class Term {
     this.term.loadAddon(new WebLinksAddon());
 
     this.term.setOption("theme", {
-      background: '#000000'
+      background: "#000000",
     });
 
     this.term.onData((data) => {
