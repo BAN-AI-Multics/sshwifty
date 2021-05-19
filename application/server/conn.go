@@ -21,7 +21,7 @@ import (
 	"net"
 	"time"
 
-	"github.com/nirui/sshwifty/application/network"
+	"github.com/BAN-AI-Multics/sshwifty/application/network"
 )
 
 var emptyTime = time.Time{}

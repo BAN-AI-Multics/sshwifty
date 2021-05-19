@@ -26,7 +26,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/nirui/sshwifty/application/log"
+	"github.com/BAN-AI-Multics/sshwifty/application/log"
 )
 
 type staticData struct {

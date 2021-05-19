@@ -20,7 +20,7 @@ package controller
 import (
 	"net/http"
 
-	"github.com/nirui/sshwifty/application/log"
+	"github.com/BAN-AI-Multics/sshwifty/application/log"
 )
 
 func serveFailure(

@@ -23,11 +23,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/nirui/sshwifty/application/command"
-	"github.com/nirui/sshwifty/application/configuration"
-	"github.com/nirui/sshwifty/application/log"
-	"github.com/nirui/sshwifty/application/network"
-	"github.com/nirui/sshwifty/application/rw"
+	"github.com/BAN-AI-Multics/sshwifty/application/command"
+	"github.com/BAN-AI-Multics/sshwifty/application/configuration"
+	"github.com/BAN-AI-Multics/sshwifty/application/log"
+	"github.com/BAN-AI-Multics/sshwifty/application/network"
+	"github.com/BAN-AI-Multics/sshwifty/application/rw"
 )
 
 // Errors

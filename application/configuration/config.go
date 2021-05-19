@@ -23,7 +23,7 @@ import (
 	"net"
 	"time"
 
-	"github.com/nirui/sshwifty/application/network"
+	"github.com/BAN-AI-Multics/sshwifty/application/network"
 )
 
 // Server contains configuration of a HTTP server

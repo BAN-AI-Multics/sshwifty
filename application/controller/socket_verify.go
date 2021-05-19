@@ -26,8 +26,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/nirui/sshwifty/application/configuration"
-	"github.com/nirui/sshwifty/application/log"
+	"github.com/BAN-AI-Multics/sshwifty/application/configuration"
+	"github.com/BAN-AI-Multics/sshwifty/application/log"
 )
 
 type socketVerification struct {

@@ -10,8 +10,8 @@ github.com/johnsonjh/leaktestfe v0.0.0-20210518205409-7828c0e1b51e/go.mod h1:FJV
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=
 github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=
 github.com/kr/text v0.1.0/go.mod h1:4Jbv+DJW3UT/LiOwJeYQe1efqtUx/iVham/4vfdArNI=
-github.com/nirui/sshwifty v0.0.0-20210429062916-4bb90f183493 h1:B7Et+LWXpWkcJrPB2LeWWXBBLFsl32h/9OwkJxels0A=
-github.com/nirui/sshwifty v0.0.0-20210429062916-4bb90f183493/go.mod h1:vCLpWIv5iwIhDlSBXgZ3Ip38j9ptDKhRXwYxEe3K4Yw=
+github.com/BAN-AI-Multics/sshwifty v0.0.0-20210429062916-4bb90f183493 h1:B7Et+LWXpWkcJrPB2LeWWXBBLFsl32h/9OwkJxels0A=
+github.com/BAN-AI-Multics/sshwifty v0.0.0-20210429062916-4bb90f183493/go.mod h1:vCLpWIv5iwIhDlSBXgZ3Ip38j9ptDKhRXwYxEe3K4Yw=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=

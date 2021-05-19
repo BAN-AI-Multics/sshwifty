@@ -22,7 +22,7 @@ const (
 	Name     = "Sshwifty"
 	FullName = "Sshwifty Web SSH Client"
 	Author   = "NI Rui <ranqus@gmail.com>"
-	URL      = "https://github.com/nirui/sshwifty"
+	URL      = "https://github.com/BAN-AI-Multics/sshwifty"
 )
 
 // Banner message

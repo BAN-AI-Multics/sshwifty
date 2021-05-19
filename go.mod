@@ -23,7 +23,7 @@ require (
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/gorilla/websocket v1.4.3-0.20210424162022-e8629af678b7
 	github.com/johnsonjh/leaktestfe v0.0.0-20210518205409-7828c0e1b51e
-	github.com/nirui/sshwifty v0.0.0-20210429062916-4bb90f183493
+	github.com/BAN-AI-Multics/sshwifty v0.0.0-20210429062916-4bb90f183493
 	github.com/stretchr/testify v1.7.1-0.20210427113832-6241f9ab9942 // indirect
 	go.uber.org/goleak v1.1.11-0.20210517221212-5d1efd4d97e1
 	golang.org/x/crypto v0.0.0-20210513164829-c07d793c2f9a

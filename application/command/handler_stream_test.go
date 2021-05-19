@@ -24,8 +24,8 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/nirui/sshwifty/application/log"
-	"github.com/nirui/sshwifty/application/rw"
+	"github.com/BAN-AI-Multics/sshwifty/application/log"
+	"github.com/BAN-AI-Multics/sshwifty/application/rw"
 )
 
 func testDummyFetchChainGen(dd <-chan []byte) rw.FetchReaderFetcher {
