@@ -203,7 +203,7 @@ function startApp(rootEl) {
         ).slice(0, 32);
       },
       buildBackendSocketURLs() {
-        let r = {
+        const r = {
           webSocket: "",
           keepAlive: "",
         };

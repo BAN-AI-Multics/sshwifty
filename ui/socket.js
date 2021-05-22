@@ -40,7 +40,7 @@ class Dial {
     this.address = address;
     this.timeout = timeout;
     this.privateKey = privateKey;
-	this.keepAliveTicker = null;
+    this.keepAliveTicker = null;
   }
 
   /**
@@ -51,13 +51,13 @@ class Dial {
    * @returns {Promise<WebSocket>} When connection is established
    *
    */
-connect(address, timeout) {
-	const self = this;
+  connect(address, timeout) {
+    const self = this;
     return new Promise((resolve, reject) => {
-      //const ws = new WebSocket(this.address);
-		let ws = new WebSocket(address.webSocket),
-      promised = false,
-      timeoutTimer = setTimeout(() => {
+      // const ws = new WebSocket(this.address);
+      const ws = new WebSocket(address.webSocket);
+      let promised = false;
+      const timeoutTimer = setTimeout(() => {
         ws.close();
       }, timeout);
       const myRes = (w) => {
@@ -137,8 +137,8 @@ connect(address, timeout) {
    *
    */
   async dial(callbacks) {
-    //const ws = await this.connect(this.timeout);
-	  let ws = await this.connect(this.address, this.timeout);
+    // const ws = await this.connect(this.timeout);
+    const ws = await this.connect(this.address, this.timeout);
 
     try {
       const rd = new reader.Reader(new reader.Multiple(() => {}), (data) => {

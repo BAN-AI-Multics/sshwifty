@@ -319,8 +319,7 @@ const initialFieldDef = {
     name: "Notice",
     description: "",
     type: "textdata",
-    value:
-      " ",
+    value: " ",
     example: "",
     readonly: false,
     suggestions(input) {
@@ -422,8 +421,7 @@ const initialFieldDef = {
   },
   Authentication: {
     name: "Authentication",
-    description:
-      "",
+    description: "",
     type: "radio",
     value: "",
     example: "Password,Private Key,None",
@@ -442,25 +440,8 @@ const initialFieldDef = {
           throw new Error("Authentication method must be specified");
       }
     },
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  },
+};
 
 /**
  * Return auth method from given string
@@ -675,7 +656,7 @@ class Wizard {
           keptSessions
         );
       },
-      //return FingerprintPromptVerifyPassed;
+      // return FingerprintPromptVerifyPassed;
       async "connect.credential"(rd, sd) {
         self.step.resolve(
           self.stepCredentialPrompt(rd, sd, config, (newCred, fromPreset) => {

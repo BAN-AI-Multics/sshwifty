@@ -3,23 +3,15 @@ import { ECHO_FAILED } from "./socket.js";
 
 export function build(ctx) {
   const connectionStatusNotConnected = "Ready to connect";
-  const connectionStatusConnecting =
-    "Connecting to server...";
-  const connectionStatusDisconnected =
-    "Disconnected from server";
-  const connectionStatusConnected =
-    "Connected to server";
-  const connectionStatusUnmeasurable =
-    "Connection failure";
+  const connectionStatusConnecting = "Connecting to server...";
+  const connectionStatusDisconnected = "Disconnected from server";
+  const connectionStatusConnected = "Connected to server";
+  const connectionStatusUnmeasurable = "Connection failure";
 
-  const connectionDelayGood =
-    "Excellent link quality.";
-  const connectionDelayFair =
-    "Good link quality.";
-  const connectionDelayMedian =
-    "Fair link quality.";
-  const connectionDelayHeavy =
-    "Very poor link quality!";
+  const connectionDelayGood = "Excellent link quality.";
+  const connectionDelayFair = "Good link quality.";
+  const connectionDelayMedian = "Fair link quality.";
+  const connectionDelayHeavy = "Very poor link quality!";
 
   const buildEmptyHistory = () => {
     const r = [];
