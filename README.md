@@ -12,15 +12,13 @@
 
 ## License
 
-- Code of this project is licensed under the **AGPL‑3.0**
-
-  - See [LICENSE.md] for details
-
-- Third-party components used by this project are licensed under their
-  respective licenses
-
-  - See [DEPENDENCIES.md] to learn more about the dependencies used by
-    this project and read their copyright statements.
+- This Software is distributed under the terms and conditions of the
+  [**AGPL‑3.0**](LICENSE.md) license.
+  - This Software may contain, incorporate, integrate, require, or be
+    delivered with, various [third-party components](DEPENDENCIES.md) which
+	may be subject to different license agreement terms, disclaimers of
+	warranties, maintenance, limited warranties, or other terms and
+	conditions.
 
 [license.md]: LICENSE.md
 [dependencies.md]: DEPENDENCIES.md
