@@ -10,12 +10,12 @@
 
 ---
 
-- This Software is distributed under the terms and conditions of the
-  [**AGPL‑3.0**](LICENSE.md). This Software may contain, incorporate,
-  integrate, require, or be delivered with
-  [third-party components](DEPENDENCIES.md) subject to different license
-  agreement terms, disclaimers of warranties, maintenance, limited
-  warranties, or other terms and conditions.
+This Software is distributed under the terms and conditions of the
+[**AGPL‑3.0**](LICENSE.md). This Software may contain, incorporate,
+integrate, require, or be delivered with
+[third-party components](DEPENDENCIES.md) subject to different license
+agreement terms, disclaimers of warranties, maintenance, limited
+warranties, or other terms and conditions.
 
 [license.md]: LICENSE.md
 [dependencies.md]: DEPENDENCIES.md
