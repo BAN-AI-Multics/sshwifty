@@ -33,9 +33,13 @@ export class Events {
 
     for (let i in events) {
       if (typeof callbacks[events[i]] !== "function") {
-        throw new Exception('Unknown event type for "' + events[i] +
-                            '". Expecting "function" got "' +
-                            typeof callbacks[events[i]] + '" instead.');
+        throw new Exception(
+          'Unknown event type for "' +
+            events[i] +
+            '". Expecting "function" got "' +
+            typeof callbacks[events[i]] +
+            '" instead.'
+        );
       }
 
       let name = events[i];
@@ -58,15 +62,22 @@ export class Events {
    */
   place(type, callback) {
     if (this.placeHolders[type] !== null) {
-      throw new Exception('Event type "' + type +
-                          '" cannot be appended. It maybe ' +
-                          "unregistered or already been acquired");
+      throw new Exception(
+        'Event type "' +
+          type +
+          '" cannot be appended. It maybe ' +
+          "unregistered or already been acquired"
+      );
     }
 
     if (typeof callback !== "function") {
-      throw new Exception('Unknown event type for "' + type +
-                          '". Expecting "function" got "' + typeof callback +
-                          '" instead.');
+      throw new Exception(
+        'Unknown event type for "' +
+          type +
+          '". Expecting "function" got "' +
+          typeof callback +
+          '" instead.'
+      );
     }
 
     delete this.placeHolders[type];

@@ -53,16 +53,17 @@ class Telnet {
     this.config = config;
     this.connected = false;
     this.events = new event.Events(
-        [
-          "initialization.failed",
-          "initialized",
-          "connect.failed",
-          "connect.succeed",
-          "@inband",
-          "close",
-          "@completed",
-        ],
-        callbacks);
+      [
+        "initialization.failed",
+        "initialized",
+        "connect.failed",
+        "connect.succeed",
+        "@inband",
+        "close",
+        "@completed",
+      ],
+      callbacks
+    );
   }
 
   /**
@@ -72,10 +73,12 @@ class Telnet {
    *
    */
   run(initialSender) {
-    let addr =
-            new address.Address(this.config.host.type, this.config.host.address,
-                                this.config.host.port),
-        addrBuf = addr.buffer();
+    let addr = new address.Address(
+        this.config.host.type,
+        this.config.host.address,
+        this.config.host.port
+      ),
+      addrBuf = addr.buffer();
 
     let data = new Uint8Array(addrBuf.length);
 
@@ -114,25 +117,25 @@ class Telnet {
    */
   tick(streamHeader, rd) {
     switch (streamHeader.marker()) {
-    case SERVER_DIAL_CONNECTED:
-      if (!this.connected) {
-        this.connected = true;
+      case SERVER_DIAL_CONNECTED:
+        if (!this.connected) {
+          this.connected = true;
 
-        return this.events.fire("connect.succeed", rd, this);
-      }
-      break;
+          return this.events.fire("connect.succeed", rd, this);
+        }
+        break;
 
-    case SERVER_DIAL_FAILED:
-      if (!this.connected) {
-        return this.events.fire("connect.failed", rd);
-      }
-      break;
+      case SERVER_DIAL_FAILED:
+        if (!this.connected) {
+          return this.events.fire("connect.failed", rd);
+        }
+        break;
 
-    case SERVER_REMOTE_BAND:
-      if (this.connected) {
-        return this.events.fire("inband", rd);
-      }
-      break;
+      case SERVER_REMOTE_BAND:
+        if (this.connected) {
+          return this.events.fire("inband", rd);
+        }
+        break;
     }
 
     throw new Exception("Unknown stream header marker");
@@ -142,7 +145,9 @@ class Telnet {
    * Send close signal to remote
    *
    */
-  sendClose() { return this.sender.close(); }
+  sendClose() {
+    return this.sender.close();
+  }
 
   /**
    * Send data to remote
@@ -150,7 +155,9 @@ class Telnet {
    * @param {Uint8Array} data
    *
    */
-  sendData(data) { return this.sender.sendData(0x00, data); }
+  sendData(data) {
+    return this.sender.sendData(0x00, data);
+  }
 
   /**
    * Close the command
@@ -166,21 +173,25 @@ class Telnet {
    * Tear down the command completely
    *
    */
-  completed() { return this.events.fire("completed"); }
+  completed() {
+    return this.events.fire("completed");
+  }
 }
 
 const initialFieldDef = {
-  Host : {
-    name : "Host",
-    description :
-        "Looking for server to connect&quest; Checkout " +
-            '<a href="http://www.telnet.org/htm/places.htm" target="blank">' +
-            "telnet.org</a> for public servers.",
-    type : "text",
-    value : "",
-    example : "telnet.vaguly.com:23",
-    readonly : false,
-    suggestions(input) { return []; },
+  Host: {
+    name: "Host",
+    description:
+      "Looking for server to connect&quest; Checkout " +
+      '<a href="http://www.telnet.org/htm/places.htm" target="blank">' +
+      "telnet.org</a> for public servers.",
+    type: "text",
+    value: "",
+    example: "telnet.vaguly.com:23",
+    readonly: false,
+    suggestions(input) {
+      return [];
+    },
     verify(d) {
       if (d.length <= 0) {
         throw new Error("Hostname must be specified");
@@ -193,8 +204,9 @@ const initialFieldDef = {
       }
 
       if (addr.addr.length > address.MAX_ADDR_LEN) {
-        throw new Error("Can no longer than " + address.MAX_ADDR_LEN +
-                        " bytes");
+        throw new Error(
+          "Can no longer than " + address.MAX_ADDR_LEN + " bytes"
+        );
       }
 
       if (addr.port <= 0) {
@@ -204,14 +216,16 @@ const initialFieldDef = {
       return "Look like " + addr.type + " address";
     },
   },
-  Encoding : {
-    name : "Encoding",
-    description : "The character encoding of the server",
-    type : "select",
-    value : "utf-8",
-    example : common.charsetPresets.join(","),
-    readonly : false,
-    suggestions(input) { return []; },
+  Encoding: {
+    name: "Encoding",
+    description: "The character encoding of the server",
+    type: "select",
+    value: "utf-8",
+    example: common.charsetPresets.join(","),
+    readonly: false,
+    suggestions(input) {
+      return [];
+    },
     verify(d) {
       for (let i in common.charsetPresets) {
         if (common.charsetPresets[i] !== d) {
@@ -240,8 +254,16 @@ class Wizard {
    * @param {history.History} history
    *
    */
-  constructor(info, preset, session, keptSessions, streams, subs, controls,
-              history) {
+  constructor(
+    info,
+    preset,
+    session,
+    keptSessions,
+    streams,
+    subs,
+    controls,
+    history
+  ) {
     this.info = info;
     this.preset = preset;
     this.hasStarted = false;
@@ -253,16 +275,25 @@ class Wizard {
     this.history = history;
   }
 
-  run() { this.step.resolve(this.stepInitialPrompt()); }
+  run() {
+    this.step.resolve(this.stepInitialPrompt());
+  }
 
-  started() { return this.hasStarted; }
+  started() {
+    return this.hasStarted;
+  }
 
-  control() { return this.controls; }
+  control() {
+    return this.controls;
+  }
 
   close() {
-    this.step.resolve(this.stepErrorDone(
+    this.step.resolve(
+      this.stepErrorDone(
         "Action cancelled",
-        "Action has been cancelled without reach any success"));
+        "Action has been cancelled without reach any success"
+      )
+    );
   }
 
   stepErrorDone(title, message) {
@@ -270,19 +301,26 @@ class Wizard {
   }
 
   stepSuccessfulDone(data) {
-    return command.done(true, data, "Success!",
-                        "We have connected to the remote");
+    return command.done(
+      true,
+      data,
+      "Success!",
+      "We have connected to the remote"
+    );
   }
 
   stepWaitForAcceptWait() {
     return command.wait(
-        "Requesting", "Waiting for the request to be accepted by the backend");
+      "Requesting",
+      "Waiting for the request to be accepted by the backend"
+    );
   }
 
   stepWaitForEstablishWait(host) {
     return command.wait(
-        "Connecting to " + host,
-        "Establishing connection with the remote host, may take a while");
+      "Connecting to " + host,
+      "Establishing connection with the remote host, may take a while"
+    );
   }
 
   /**
@@ -296,8 +334,8 @@ class Wizard {
     let self = this;
 
     let parsedConfig = {
-      host : address.parseHostPort(configInput.host, DEFAULT_PORT),
-      charset : configInput.charset,
+      host: address.parseHostPort(configInput.host, DEFAULT_PORT),
+      charset: configInput.charset,
     };
 
     // Copy the keptSessions from the record so it will not be overwritten here
@@ -306,37 +344,58 @@ class Wizard {
     return new Telnet(sender, parsedConfig, {
       "initialization.failed"(streamInitialHeader) {
         switch (streamInitialHeader.data()) {
-        case SERVER_INITIAL_ERROR_BAD_ADDRESS:
-          self.step.resolve(
-              self.stepErrorDone("Request rejected", "Invalid address"));
+          case SERVER_INITIAL_ERROR_BAD_ADDRESS:
+            self.step.resolve(
+              self.stepErrorDone("Request rejected", "Invalid address")
+            );
 
-          return;
+            return;
         }
 
-        self.step.resolve(self.stepErrorDone("Request rejected",
-                                             "Unknown error code: " +
-                                                 streamInitialHeader.data()));
+        self.step.resolve(
+          self.stepErrorDone(
+            "Request rejected",
+            "Unknown error code: " + streamInitialHeader.data()
+          )
+        );
       },
       initialized(streamInitialHeader) {
         self.step.resolve(self.stepWaitForEstablishWait(configInput.host));
       },
       "connect.succeed"(rd, commandHandler) {
-        self.step.resolve(self.stepSuccessfulDone(new command.Result(
-            configInput.host, self.info, self.controls.build({
-              charset : parsedConfig.charset,
-              send(data) { return commandHandler.sendData(data); },
-              close() { return commandHandler.sendClose(); },
-              events : commandHandler.events,
-            }),
-            self.controls.ui())));
+        self.step.resolve(
+          self.stepSuccessfulDone(
+            new command.Result(
+              configInput.host,
+              self.info,
+              self.controls.build({
+                charset: parsedConfig.charset,
+                send(data) {
+                  return commandHandler.sendData(data);
+                },
+                close() {
+                  return commandHandler.sendClose();
+                },
+                events: commandHandler.events,
+              }),
+              self.controls.ui()
+            )
+          )
+        );
 
-        self.history.save(self.info.name() + ":" + configInput.host,
-                          configInput.host, new Date(), self.info, configInput,
-                          sessionData, keptSessions);
+        self.history.save(
+          self.info.name() + ":" + configInput.host,
+          configInput.host,
+          new Date(),
+          self.info,
+          configInput,
+          sessionData,
+          keptSessions
+        );
       },
       async "connect.failed"(rd) {
         let readed = await reader.readCompletely(rd),
-            message = new TextDecoder("utf-8").decode(readed.buffer);
+          message = new TextDecoder("utf-8").decode(readed.buffer);
 
         self.step.resolve(self.stepErrorDone("Connection failed", message));
       },
@@ -350,48 +409,60 @@ class Wizard {
     const self = this;
 
     return command.prompt(
-        "Telnet", "Teletype Network", "Connect",
-        (r) => {
-          self.hasStarted = true;
+      "Telnet",
+      "Teletype Network",
+      "Connect",
+      (r) => {
+        self.hasStarted = true;
 
-          self.streams.request(COMMAND_ID, (sd) => {
-            return self.buildCommand(sd, {
-              host : r.host,
-              charset : r.encoding,
+        self.streams.request(COMMAND_ID, (sd) => {
+          return self.buildCommand(
+            sd,
+            {
+              host: r.host,
+              charset: r.encoding,
             },
-                                     self.session);
-          });
+            self.session
+          );
+        });
 
-          self.step.resolve(self.stepWaitForAcceptWait());
-        },
-        () => {},
-        command.fieldsWithPreset(initialFieldDef,
-                                 [
-                                   {
-                                     name : "Host",
-                                     suggestions(input) {
-                                       const hosts = self.history.search(
-                                           "Telnet", "host", input,
-                                           HostMaxSearchResults);
+        self.step.resolve(self.stepWaitForAcceptWait());
+      },
+      () => {},
+      command.fieldsWithPreset(
+        initialFieldDef,
+        [
+          {
+            name: "Host",
+            suggestions(input) {
+              const hosts = self.history.search(
+                "Telnet",
+                "host",
+                input,
+                HostMaxSearchResults
+              );
 
-                                       let sugg = [];
+              let sugg = [];
 
-                                       for (let i = 0; i < hosts.length; i++) {
-                                         sugg.push({
-                                           title : hosts[i].title,
-                                           value : hosts[i].data.host,
-                                           meta : {
-                                             Encoding : hosts[i].data.charset,
-                                           },
-                                         });
-                                       }
+              for (let i = 0; i < hosts.length; i++) {
+                sugg.push({
+                  title: hosts[i].title,
+                  value: hosts[i].data.host,
+                  meta: {
+                    Encoding: hosts[i].data.charset,
+                  },
+                });
+              }
 
-                                       return sugg;
-                                     },
-                                   },
-                                   {name : "Encoding"},
-                                 ],
-                                 self.preset, (r) => {}));
+              return sugg;
+            },
+          },
+          { name: "Encoding" },
+        ],
+        self.preset,
+        (r) => {}
+      )
+    );
   }
 }
 
@@ -409,10 +480,26 @@ class Executor extends Wizard {
    * @param {history.History} history
    *
    */
-  constructor(info, config, session, keptSessions, streams, subs, controls,
-              history) {
-    super(info, presets.emptyPreset(), session, keptSessions, streams, subs,
-          controls, history);
+  constructor(
+    info,
+    config,
+    session,
+    keptSessions,
+    streams,
+    subs,
+    controls,
+    history
+  ) {
+    super(
+      info,
+      presets.emptyPreset(),
+      session,
+      keptSessions,
+      streams,
+      subs,
+      controls,
+      history
+    );
 
     this.config = config;
   }
@@ -423,11 +510,14 @@ class Executor extends Wizard {
     self.hasStarted = true;
 
     self.streams.request(COMMAND_ID, (sd) => {
-      return self.buildCommand(sd, {
-        host : self.config.host,
-        charset : self.config.charset ? self.config.charset : "utf-8",
-      },
-                               self.session);
+      return self.buildCommand(
+        sd,
+        {
+          host: self.config.host,
+          charset: self.config.charset ? self.config.charset : "utf-8",
+        },
+        self.session
+      );
     });
 
     return self.stepWaitForAcceptWait();
@@ -437,24 +527,64 @@ class Executor extends Wizard {
 export class Command {
   constructor() {}
 
-  id() { return COMMAND_ID; }
-
-  name() { return "Telnet"; }
-
-  description() { return "Teletype Network"; }
-
-  color() { return "#6ac"; }
-
-  wizard(info, preset, session, keptSessions, streams, subs, controls,
-         history) {
-    return new Wizard(info, preset, session, keptSessions, streams, subs,
-                      controls, history);
+  id() {
+    return COMMAND_ID;
   }
 
-  execute(info, config, session, keptSessions, streams, subs, controls,
-          history) {
-    return new Executor(info, config, session, keptSessions, streams, subs,
-                        controls, history);
+  name() {
+    return "Telnet";
+  }
+
+  description() {
+    return "Teletype Network";
+  }
+
+  color() {
+    return "#6ac";
+  }
+
+  wizard(
+    info,
+    preset,
+    session,
+    keptSessions,
+    streams,
+    subs,
+    controls,
+    history
+  ) {
+    return new Wizard(
+      info,
+      preset,
+      session,
+      keptSessions,
+      streams,
+      subs,
+      controls,
+      history
+    );
+  }
+
+  execute(
+    info,
+    config,
+    session,
+    keptSessions,
+    streams,
+    subs,
+    controls,
+    history
+  ) {
+    return new Executor(
+      info,
+      config,
+      session,
+      keptSessions,
+      streams,
+      subs,
+      controls,
+      history
+    );
   }
 
   launch(info, launcher, streams, subs, controls, history) {
@@ -467,8 +597,9 @@ export class Command {
     try {
       initialFieldDef["Host"].verify(d[0]);
     } catch (e) {
-      throw new Exception('Given launcher "' + launcher +
-                          '" was invalid: ' + e);
+      throw new Exception(
+        'Given launcher "' + launcher + '" was invalid: ' + e
+      );
     }
 
     let charset = "utf-8";
@@ -480,16 +611,25 @@ export class Command {
 
         charset = d[1];
       } catch (e) {
-        throw new Exception('Given launcher "' + launcher +
-                            '" was invalid: ' + e);
+        throw new Exception(
+          'Given launcher "' + launcher + '" was invalid: ' + e
+        );
       }
     }
 
-    return this.execute(info, {
-      host : d[0],
-      charset : charset,
-    },
-                        null, null, streams, subs, controls, history);
+    return this.execute(
+      info,
+      {
+        host: d[0],
+        charset: charset,
+      },
+      null,
+      null,
+      streams,
+      subs,
+      controls,
+      history
+    );
   }
 
   launcher(config) {

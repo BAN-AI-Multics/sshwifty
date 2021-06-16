@@ -60,7 +60,9 @@ class Done {
    * @returns {string} title
    *
    */
-  error() { return this.errorTitle; }
+  error() {
+    return this.errorTitle;
+  }
 
   /**
    * Return the error message of current Done
@@ -68,21 +70,27 @@ class Done {
    * @returns {string} message
    *
    */
-  message() { return this.errorMessage; }
+  message() {
+    return this.errorMessage;
+  }
 
   /**
    * Returns whether or not current Done is representing a success
    *
    * @returns {boolean} True when success, false otherwise
    */
-  success() { return this.s; }
+  success() {
+    return this.s;
+  }
 
   /**
    * Returns final data
    *
    * @returns {Result} Successful result
    */
-  data() { return this.d; }
+  data() {
+    return this.d;
+  }
 }
 
 class Wait {
@@ -103,7 +111,9 @@ class Wait {
    * @returns {string} title
    *
    */
-  title() { return this.t; }
+  title() {
+    return this.t;
+  }
 
   /**
    * Return the message of current Wait
@@ -111,18 +121,24 @@ class Wait {
    * @returns {string} message
    *
    */
-  message() { return this.m; }
+  message() {
+    return this.m;
+  }
 }
 
 const defField = {
-  name : "",
-  description : "",
-  type : "",
-  value : "",
-  example : "",
-  readonly : false,
-  suggestions(input) { return []; },
-  verify(v) { return ""; },
+  name: "",
+  description: "",
+  type: "",
+  value: "",
+  example: "",
+  readonly: false,
+  suggestions(input) {
+    return [];
+  },
+  verify(v) {
+    return "";
+  },
 };
 
 /**
@@ -150,9 +166,15 @@ export function field(def, f) {
       continue;
     }
 
-    throw new Exception('Field data type for "' + i +
-                        '" was unmatched. Expecting "' + typeof n[i] +
-                        '", got "' + typeof f[i] + '" instead');
+    throw new Exception(
+      'Field data type for "' +
+        i +
+        '" was unmatched. Expecting "' +
+        typeof n[i] +
+        '", got "' +
+        typeof f[i] +
+        '" instead'
+    );
   }
 
   if (!n["name"]) {
@@ -202,8 +224,12 @@ export function fields(definitions, fs) {
  * @returns {object}
  *
  */
-export function fieldsWithPreset(definitions, fieldsData, presetData,
-                                 presetApplied) {
+export function fieldsWithPreset(
+  definitions,
+  fieldsData,
+  presetData,
+  presetApplied
+) {
   let newFields = fields(definitions, fieldsData);
 
   for (let i in newFields) {
@@ -245,8 +271,8 @@ class Prompt {
       this.i.push(f);
 
       this.f[data.inputs[i].name.toLowerCase()] = {
-        value : f.value,
-        verify : f.verify,
+        value: f.value,
+        verify: f.verify,
       };
     }
   }
@@ -257,7 +283,9 @@ class Prompt {
    * @returns {string} title
    *
    */
-  title() { return this.t; }
+  title() {
+    return this.t;
+  }
 
   /**
    * Return the message of current Prompt
@@ -265,7 +293,9 @@ class Prompt {
    * @returns {string} message
    *
    */
-  message() { return this.m; }
+  message() {
+    return this.m;
+  }
 
   /**
    * Return the input field of current prompt
@@ -289,7 +319,9 @@ class Prompt {
    * @returns {string} Action name
    *
    */
-  actionText() { return this.a; }
+  actionText() {
+    return this.a;
+  }
 
   /**
    * Receive the submit of current prompt
@@ -331,7 +363,9 @@ class Prompt {
    * Cancel current wait operation
    *
    */
-  cancel() { return this.c(); }
+  cancel() {
+    return this.c();
+  }
 }
 
 /**
@@ -345,8 +379,12 @@ class Prompt {
  */
 function next(type, data) {
   return {
-    type() { return type; },
-    data() { return data; },
+    type() {
+      return type;
+    },
+    data() {
+      return data;
+    },
   };
 }
 
@@ -363,10 +401,10 @@ function next(type, data) {
  */
 export function done(success, successData, errorTitle, errorMessage) {
   return next(NEXT_DONE, {
-    success : success,
-    successData : successData,
-    errorTitle : errorTitle,
-    errorMessage : errorMessage,
+    success: success,
+    successData: successData,
+    errorTitle: errorTitle,
+    errorMessage: errorMessage,
   });
 }
 
@@ -381,8 +419,8 @@ export function done(success, successData, errorTitle, errorMessage) {
  */
 export function wait(title, message) {
   return next(NEXT_WAIT, {
-    title : title,
-    message : message,
+    title: title,
+    message: message,
   });
 }
 
@@ -401,12 +439,12 @@ export function wait(title, message) {
  */
 export function prompt(title, message, actionText, respond, cancel, inputs) {
   return next(NEXT_PROMPT, {
-    title : title,
-    message : message,
-    actionText : actionText,
-    inputs : inputs,
-    respond : respond,
-    cancel : cancel,
+    title: title,
+    message: message,
+    actionText: actionText,
+    inputs: inputs,
+    respond: respond,
+    cancel: cancel,
   });
 }
 
@@ -426,7 +464,9 @@ class Next {
    *
    * @returns {string} Step type
    */
-  type() { return this.t; }
+  type() {
+    return this.t;
+  }
 
   /**
    * Return step data
@@ -438,17 +478,17 @@ class Next {
    */
   data() {
     switch (this.type()) {
-    case NEXT_PROMPT:
-      return new Prompt(this.d);
+      case NEXT_PROMPT:
+        return new Prompt(this.d);
 
-    case NEXT_WAIT:
-      return new Wait(this.d);
+      case NEXT_WAIT:
+        return new Wait(this.d);
 
-    case NEXT_DONE:
-      return new Done(this.d);
+      case NEXT_DONE:
+        return new Done(this.d);
 
-    default:
-      throw new Exception("Unknown data type");
+      default:
+        throw new Exception("Unknown data type");
     }
   }
 }
@@ -501,7 +541,9 @@ class Wizard {
    * @returns {boolean} True when the command already started, false otherwise
    *
    */
-  started() { return this.built.started(); }
+  started() {
+    return this.built.started();
+  }
 
   /**
    * Return the name of the control info of current wizard
@@ -509,7 +551,9 @@ class Wizard {
    * @returns {object}
    *
    */
-  control() { return this.built.control(); }
+  control() {
+    return this.built.control();
+  }
 
   /**
    * Close current wizard
@@ -547,7 +591,9 @@ export class Info {
    * @returns {string} Command name
    *
    */
-  name() { return this.type; }
+  name() {
+    return this.type;
+  }
 
   /**
    * Return command description
@@ -555,7 +601,9 @@ export class Info {
    * @returns {string} Command description
    *
    */
-  description() { return this.info; }
+  description() {
+    return this.info;
+  }
 
   /**
    * Return the theme color of the command
@@ -563,7 +611,9 @@ export class Info {
    * @returns {string} Command name
    *
    */
-  color() { return this.tcolor; }
+  color() {
+    return this.tcolor;
+  }
 }
 
 class Builder {
@@ -575,14 +625,21 @@ class Builder {
    */
   constructor(command) {
     this.cid = command.id();
-    this.represeter = (n) => { return command.represet(n); };
-    this.wizarder = (n, i, r, u, y, x, l,
-                     p) => { return command.wizard(n, i, r, u, y, x, l, p); };
-    this.executer = (n, i, r, u, y, x, l,
-                     p) => { return command.execute(n, i, r, u, y, x, l, p); };
-    this.launchCmd =
-        (n, i, r, u, y, x) => { return command.launch(n, i, r, u, y, x); };
-    this.launcherCmd = (c) => { return command.launcher(c); };
+    this.represeter = (n) => {
+      return command.represet(n);
+    };
+    this.wizarder = (n, i, r, u, y, x, l, p) => {
+      return command.wizard(n, i, r, u, y, x, l, p);
+    };
+    this.executer = (n, i, r, u, y, x, l, p) => {
+      return command.execute(n, i, r, u, y, x, l, p);
+    };
+    this.launchCmd = (n, i, r, u, y, x) => {
+      return command.launch(n, i, r, u, y, x);
+    };
+    this.launcherCmd = (c) => {
+      return command.launcher(c);
+    };
     this.type = command.name();
     this.info = command.description();
     this.tcolor = command.color();
@@ -594,7 +651,9 @@ class Builder {
    * @returns {number} Command ID
    *
    */
-  id() { return this.cid; }
+  id() {
+    return this.cid;
+  }
 
   /**
    * Return command name
@@ -602,7 +661,9 @@ class Builder {
    * @returns {string} Command name
    *
    */
-  name() { return this.type; }
+  name() {
+    return this.type;
+  }
 
   /**
    * Return command description
@@ -610,7 +671,9 @@ class Builder {
    * @returns {string} Command description
    *
    */
-  description() { return this.info; }
+  description() {
+    return this.info;
+  }
 
   /**
    * Return the theme color of the command
@@ -618,7 +681,9 @@ class Builder {
    * @returns {string} Command name
    *
    */
-  color() { return this.tcolor; }
+  color() {
+    return this.tcolor;
+  }
 
   /**
    * Execute an automatic command wizard
@@ -637,10 +702,20 @@ class Builder {
   wizard(streams, controls, history, preset, session, keptSessions, done) {
     let subs = new subscribe.Subscribe();
 
-    return new Wizard(this.wizarder(new Info(this), preset, session,
-                                    keptSessions, streams, subs, controls,
-                                    history),
-                      subs, done);
+    return new Wizard(
+      this.wizarder(
+        new Info(this),
+        preset,
+        session,
+        keptSessions,
+        streams,
+        subs,
+        controls,
+        history
+      ),
+      subs,
+      done
+    );
   }
 
   /**
@@ -660,10 +735,20 @@ class Builder {
   execute(streams, controls, history, config, session, keptSessions, done) {
     let subs = new subscribe.Subscribe();
 
-    return new Wizard(this.executer(new Info(this), config, session,
-                                    keptSessions, streams, subs, controls,
-                                    history),
-                      subs, done);
+    return new Wizard(
+      this.executer(
+        new Info(this),
+        config,
+        session,
+        keptSessions,
+        streams,
+        subs,
+        controls,
+        history
+      ),
+      subs,
+      done
+    );
   }
 
   /**
@@ -681,9 +766,18 @@ class Builder {
   launch(streams, controls, history, launcher, done) {
     let subs = new subscribe.Subscribe();
 
-    return new Wizard(this.launchCmd(new Info(this), decodeURI(launcher),
-                                     streams, subs, controls, history),
-                      subs, done);
+    return new Wizard(
+      this.launchCmd(
+        new Info(this),
+        decodeURI(launcher),
+        streams,
+        subs,
+        controls,
+        history
+      ),
+      subs,
+      done
+    );
   }
 
   /**
@@ -704,7 +798,9 @@ class Builder {
    *
    * @return {presets.Preset} modified new preset
    */
-  represet(n) { return this.represeter(n); }
+  represet(n) {
+    return this.represeter(n);
+  }
 }
 
 export class Preset {
@@ -742,7 +838,9 @@ export class Commands {
    * @returns {Array<Builder>} A group of command
    *
    */
-  all() { return this.commands; }
+  all() {
+    return this.commands;
+  }
 
   /**
    * Select one command
@@ -752,7 +850,9 @@ export class Commands {
    * @returns {Builder} Command builder
    *
    */
-  select(id) { return this.commands[id]; }
+  select(id) {
+    return this.commands[id];
+  }
 
   /**
    * Returns presets with merged command
@@ -769,8 +869,9 @@ export class Commands {
       const fetched = ps.fetch(this.commands[i].name());
 
       for (let j = 0; j < fetched.length; j++) {
-        pp.push(new Preset(this.commands[i].represet(fetched[j]),
-                           this.commands[i]));
+        pp.push(
+          new Preset(this.commands[i].represet(fetched[j]), this.commands[i])
+        );
       }
     }
 

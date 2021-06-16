@@ -22,5 +22,7 @@ export default class Exception extends Error {
    * @param {string} message error message
    *
    */
-  constructor(message) { super(message); }
+  constructor(message) {
+    super(message);
+  }
 }

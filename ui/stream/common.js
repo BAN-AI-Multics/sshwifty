@@ -57,7 +57,8 @@ export function getRands(n, min, max) {
  *
  */
 export function separateBuffer(buf, max) {
-  let start = 0, result = [];
+  let start = 0,
+    result = [];
 
   while (start < buf.length) {
     let remain = buf.length - start;
@@ -84,7 +85,8 @@ export function separateBuffer(buf, max) {
  *
  */
 export function buildBufferFromString(str) {
-  let r = [], t = [];
+  let r = [],
+    t = [];
 
   for (let i in str) {
     let c = str.charCodeAt(i);

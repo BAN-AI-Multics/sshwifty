@@ -30,7 +30,8 @@ function extractSelectedData(kept, input) {
     return null;
   }
 
-  let data = {}, length = 0;
+  let data = {},
+    length = 0;
 
   for (let k in kept) {
     if (!input[kept[k]]) {
@@ -58,11 +59,11 @@ function extractSelectedData(kept, input) {
  */
 function metaContains(data, metaName, valContains) {
   switch (typeof data[metaName]) {
-  case "string":
-    return data[metaName].indexOf(valContains) >= 0;
+    case "string":
+      return data[metaName].indexOf(valContains) >= 0;
 
-  default:
-    return false;
+    default:
+      return false;
   }
 }
 
@@ -122,19 +123,21 @@ export class History {
     }
 
     this.records.push({
-      uname : uname,
-      title : title,
-      type : info.name(),
-      color : info.color(),
-      last : lastUsed.getTime(),
-      data : data,
-      session : sessionData,
-      keptSessions : keptSessions,
+      uname: uname,
+      title: title,
+      type: info.name(),
+      color: info.color(),
+      last: lastUsed.getTime(),
+      data: data,
+      session: sessionData,
+      keptSessions: keptSessions,
     });
 
     if (this.records.length > this.maxItems) {
-      this.records = this.records.slice(this.records.length - this.maxItems,
-                                        this.records.length);
+      this.records = this.records.slice(
+        this.records.length - this.maxItems,
+        this.records.length
+      );
     }
 
     this.store();
@@ -144,7 +147,9 @@ export class History {
    * Save current records to storage
    *
    */
-  store() { this.saver(this, this.export()); }
+  store() {
+    this.saver(this, this.export());
+  }
 
   /**
    * Delete record from history
@@ -197,14 +202,14 @@ export class History {
 
     for (let i in this.records) {
       r.push({
-        uid : this.records[i].uname,
-        title : this.records[i].title,
-        type : this.records[i].type,
-        color : this.records[i].color,
-        last : new Date(this.records[i].last),
-        data : this.records[i].data,
-        session : this.records[i].session,
-        keptSessions : this.records[i].keptSessions,
+        uid: this.records[i].uname,
+        title: this.records[i].title,
+        type: this.records[i].type,
+        color: this.records[i].color,
+        last: new Date(this.records[i].last),
+        data: this.records[i].data,
+        session: this.records[i].session,
+        keptSessions: this.records[i].keptSessions,
       });
     }
 
@@ -222,15 +227,17 @@ export class History {
 
     for (let i in this.records) {
       r.push({
-        uname : this.records[i].uname,
-        title : this.records[i].title,
-        type : this.records[i].type,
-        color : this.records[i].color,
-        last : this.records[i].last,
-        data : this.records[i].data,
-        session : extractSelectedData(this.records[i].keptSessions,
-                                      this.records[i].session),
-        keptSessions : this.records[i].keptSessions,
+        uname: this.records[i].uname,
+        title: this.records[i].title,
+        type: this.records[i].type,
+        color: this.records[i].color,
+        last: this.records[i].last,
+        data: this.records[i].data,
+        session: extractSelectedData(
+          this.records[i].keptSessions,
+          this.records[i].session
+        ),
+        keptSessions: this.records[i].keptSessions,
       });
     }
 
@@ -245,21 +252,23 @@ export class History {
    */
   import(records) {
     for (let i in records) {
-    if (this.indexOf(records[i].uname) >= 0) {
-      continue;
-    }
+      if (this.indexOf(records[i].uname) >= 0) {
+        continue;
+      }
 
-    this.records.push({
-      uname : records[i].uname,
-      title : records[i].title,
-      type : records[i].type,
-      color : records[i].color,
-      last : records[i].last,
-      data : records[i].data,
-      session :
-          extractSelectedData(records[i].keptSessions, records[i].session),
-      keptSessions : records[i].keptSessions,
-    });
+      this.records.push({
+        uname: records[i].uname,
+        title: records[i].title,
+        type: records[i].type,
+        color: records[i].color,
+        last: records[i].last,
+        data: records[i].data,
+        session: extractSelectedData(
+          records[i].keptSessions,
+          records[i].session
+        ),
+        keptSessions: records[i].keptSessions,
+      });
     }
 
     this.store();
@@ -278,23 +287,23 @@ export class History {
     let s = [];
 
     if (maxResults < 0) {
-    maxResults = this.records.length;
+      maxResults = this.records.length;
     }
 
     for (let i = 0; i < this.records.length && s.length < maxResults; i++) {
-    if (this.records[i].type !== type) {
-      continue;
-    }
+      if (this.records[i].type !== type) {
+        continue;
+      }
 
-    if (!this.records[i].data) {
-      continue;
-    }
+      if (!this.records[i].data) {
+        continue;
+      }
 
-    if (!metaContains(this.records[i].data, metaName, keyword)) {
-      continue;
-    }
+      if (!metaContains(this.records[i].data, metaName, keyword)) {
+        continue;
+      }
 
-    s.push(this.records[i]);
+      s.push(this.records[i]);
     }
 
     return s;

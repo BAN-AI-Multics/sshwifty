@@ -46,12 +46,15 @@ export class Sender {
    */
   send(marker, data) {
     if (this.closed) {
-      throw new Exception("Sender already been closed. No data can be send",
-                          false);
+      throw new Exception(
+        "Sender already been closed. No data can be send",
+        false
+      );
     }
 
     let reqHeader = new header.Header(header.STREAM),
-        stHeader = new header.Stream(0, 0), d = new Uint8Array(data.length + 3);
+      stHeader = new header.Stream(0, 0),
+      d = new Uint8Array(data.length + 3);
 
     reqHeader.set(this.id);
     stHeader.set(marker, data.length);
@@ -75,18 +78,20 @@ export class Sender {
    */
   async sendData(marker, data) {
     if (this.closed) {
-      throw new Exception("Sender already been closed. No data can be send",
-                          false);
+      throw new Exception(
+        "Sender already been closed. No data can be send",
+        false
+      );
     }
 
     let dataSeg = common.separateBuffer(data, header.STREAM_MAX_LENGTH),
-        reqHeader = new header.Header(header.STREAM);
+      reqHeader = new header.Header(header.STREAM);
 
     reqHeader.set(this.id);
 
     for (let i in dataSeg) {
       let stHeader = new header.Stream(0, 0),
-          d = new Uint8Array(dataSeg[i].length + 3);
+        d = new Uint8Array(dataSeg[i].length + 3);
 
       stHeader.set(marker, dataSeg[i].length);
 
@@ -108,15 +113,17 @@ export class Sender {
    */
   signal(signal) {
     if (this.closed) {
-      throw new Exception("Sender already been closed. No signal can be send",
-                          false);
+      throw new Exception(
+        "Sender already been closed. No signal can be send",
+        false
+      );
     }
 
     let reqHeader = new header.Header(signal);
 
     reqHeader.set(this.id);
 
-    return this.sender.send(new Uint8Array([ reqHeader.value() ]));
+    return this.sender.send(new Uint8Array([reqHeader.value()]));
   }
 
   /**
@@ -157,7 +164,9 @@ export class InitialSender {
    * @returns {number} Max data size
    *
    */
-  static maxDataLength() { return header.InitialStream.maxDataSize(); }
+  static maxDataLength() {
+    return header.InitialStream.maxDataSize();
+  }
 
   /**
    * Sends data to remote
@@ -167,8 +176,8 @@ export class InitialSender {
    */
   send(data) {
     let reqHeader = new header.Header(header.STREAM),
-        stHeader = new header.InitialStream(0, 0),
-        d = new Uint8Array(data.length + 3);
+      stHeader = new header.InitialStream(0, 0),
+      d = new Uint8Array(data.length + 3);
 
     reqHeader.set(this.id);
     stHeader.set(this.command, data.length, true);
@@ -201,7 +210,9 @@ export class Stream {
    * @returns {boolean} True when it's running, false otherwise
    *
    */
-  running() { return this.command !== null; }
+  running() {
+    return this.command !== null;
+  }
 
   /**
    * Returns whether or not current stream is initializing
@@ -209,7 +220,9 @@ export class Stream {
    * @returns {boolean} True when it's initializing, false otherwise
    *
    */
-  initializing() { return this.isInitializing; }
+  initializing() {
+    return this.isInitializing;
+  }
 
   /**
    * Unsets current stream
@@ -233,8 +246,10 @@ export class Stream {
    */
   run(commandID, commandBuilder, sd) {
     if (this.running()) {
-      throw new Exception("Stream already running, cannot accept new commands",
-                          false);
+      throw new Exception(
+        "Stream already running, cannot accept new commands",
+        false
+      );
     }
 
     this.isInitializing = true;
@@ -253,13 +268,17 @@ export class Stream {
    */
   initialize(hd) {
     if (!this.running()) {
-      throw new Exception("Cannot initialize a stream that is not running",
-                          false);
+      throw new Exception(
+        "Cannot initialize a stream that is not running",
+        false
+      );
     }
 
     if (this.isShuttingDown) {
       throw new Exception(
-          "Cannot initialize a stream that is about to shutdown", false);
+        "Cannot initialize a stream that is about to shutdown",
+        false
+      );
     }
 
     this.command.initialize(hd);
@@ -288,8 +307,10 @@ export class Stream {
     }
 
     if (this.isShuttingDown) {
-      throw new Exception("Cannot tick a stream that is about to shutdown",
-                          false);
+      throw new Exception(
+        "Cannot tick a stream that is about to shutdown",
+        false
+      );
     }
 
     return this.command.tick(streamHeader, rd);
@@ -307,8 +328,10 @@ export class Stream {
     }
 
     if (this.isShuttingDown) {
-      throw new Exception("Cannot close a stream that is about to shutdown",
-                          false);
+      throw new Exception(
+        "Cannot close a stream that is about to shutdown",
+        false
+      );
     }
 
     this.isShuttingDown = true;
@@ -327,9 +350,11 @@ export class Stream {
     }
 
     if (!this.isShuttingDown) {
-      throw new Exception("Can't complete current stream because Close " +
-                              "signal is not received",
-                          false);
+      throw new Exception(
+        "Can't complete current stream because Close " +
+          "signal is not received",
+        false
+      );
     }
 
     this.command.completed();

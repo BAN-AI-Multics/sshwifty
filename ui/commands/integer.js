@@ -31,7 +31,9 @@ export class Integer {
    * @param {number} num Integer number
    *
    */
-  constructor(num) { this.num = num; }
+  constructor(num) {
+    this.num = num;
+  }
 
   /**
    * Marshal integer to buffer
@@ -47,7 +49,7 @@ export class Integer {
     }
 
     if (this.num <= integerValueCutter) {
-      return new Uint8Array([ this.num & integerValueCutter ]);
+      return new Uint8Array([this.num & integerValueCutter]);
     }
 
     return new Uint8Array([
@@ -82,5 +84,7 @@ export class Integer {
    * @returns {number} The integer value
    *
    */
-  value() { return this.num; }
+  value() {
+    return this.num;
+  }
 }

@@ -21,10 +21,12 @@ import * as integer from "./integer.js";
 
 describe("Integer", () => {
   it("Integer 127", async () => {
-    let i = new integer.Integer(127), marshalled = i.marshal();
+    let i = new integer.Integer(127),
+      marshalled = i.marshal();
 
-    let r = new reader.Reader(new reader.Multiple(() => {}),
-                              (data) => { return data; });
+    let r = new reader.Reader(new reader.Multiple(() => {}), (data) => {
+      return data;
+    });
 
     assert.equal(marshalled.length, 1);
 
@@ -38,10 +40,12 @@ describe("Integer", () => {
   });
 
   it("Integer MAX", async () => {
-    let i = new integer.Integer(integer.MAX), marshalled = i.marshal();
+    let i = new integer.Integer(integer.MAX),
+      marshalled = i.marshal();
 
-    let r = new reader.Reader(new reader.Multiple(() => {}),
-                              (data) => { return data; });
+    let r = new reader.Reader(new reader.Multiple(() => {}), (data) => {
+      return data;
+    });
 
     assert.equal(marshalled.length, 2);
 

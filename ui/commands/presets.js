@@ -22,10 +22,10 @@ import Exception from "./exception.js";
  *
  */
 const presetItem = {
-  title : "",
-  type : "",
-  host : "",
-  meta : {},
+  title: "",
+  type: "",
+  host: "",
+  meta: {},
 };
 
 /**
@@ -40,9 +40,13 @@ function verifyPresetItemMeta(preset) {
       continue;
     }
 
-    throw new Exception('The data type of meta field "' + i + '" was "' +
-                        typeof preset.meta[i] +
-                        '" instead of expected "string"');
+    throw new Exception(
+      'The data type of meta field "' +
+        i +
+        '" was "' +
+        typeof preset.meta[i] +
+        '" instead of expected "string"'
+    );
   }
 }
 
@@ -70,9 +74,15 @@ function parsePresetItem(item) {
       continue;
     }
 
-    throw new Exception('Expecting the data type of "' + i + '" is "' +
-                        typeof presetItem[i] + '", given "' + typeof item[i] +
-                        '" instead');
+    throw new Exception(
+      'Expecting the data type of "' +
+        i +
+        '" is "' +
+        typeof presetItem[i] +
+        '", given "' +
+        typeof item[i] +
+        '" instead'
+    );
   }
 
   verifyPresetItemMeta(preset.meta);
@@ -91,7 +101,9 @@ export class Preset {
    * @param {object} preset preset data
    *
    */
-  constructor(preset) { this.preset = parsePresetItem(preset); }
+  constructor(preset) {
+    this.preset = parsePresetItem(preset);
+  }
 
   /**
    * Return the title of the preset
@@ -99,7 +111,9 @@ export class Preset {
    * @returns {string}
    *
    */
-  title() { return this.preset.title; }
+  title() {
+    return this.preset.title;
+  }
 
   /**
    * Return the type of the preset
@@ -107,7 +121,9 @@ export class Preset {
    * @returns {string}
    *
    */
-  type() { return this.preset.type; }
+  type() {
+    return this.preset.type;
+  }
 
   /**
    * Return the host of the preset
@@ -115,7 +131,9 @@ export class Preset {
    * @returns {string}
    *
    */
-  host() { return this.preset.host; }
+  host() {
+    return this.preset.host;
+  }
 
   /**
    * Return the given meta of current preset
@@ -196,10 +214,10 @@ export class Preset {
  */
 export function emptyPreset() {
   return new Preset({
-    title : "Default",
-    type : "Default",
-    host : "",
-    meta : {},
+    title: "Default",
+    type: "Default",
+    host: "",
+    meta: {},
   });
 }
 

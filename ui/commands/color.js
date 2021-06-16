@@ -26,10 +26,10 @@
  */
 function getRandHex(from, to) {
   let color = Math.random() * (to - from) + from,
-      colorDark = color - color / 20;
+    colorDark = color - color / 20;
 
   let r = Math.round(color).toString(16),
-      rDark = Math.round(colorDark).toString(16);
+    rDark = Math.round(colorDark).toString(16);
 
   if (r.length % 2 !== 0) {
     r = "0" + r;
@@ -39,7 +39,7 @@ function getRandHex(from, to) {
     rDark = "0" + rDark;
   }
 
-  return [ r, rDark ];
+  return [r, rDark];
 }
 
 /**
@@ -51,17 +51,20 @@ function getRandHex(from, to) {
  * @returns {string} Color bytes in string
  */
 function getRandColor(from, to) {
-  let r = getRandHex(from, to), g = getRandHex(from, to),
-      b = getRandHex(from, to);
+  let r = getRandHex(from, to),
+    g = getRandHex(from, to),
+    b = getRandHex(from, to);
 
-  return [ "#" + r[0] + g[0] + b[0], "#" + r[1] + g[1] + b[1] ];
+  return ["#" + r[0] + g[0] + b[0], "#" + r[1] + g[1] + b[1]];
 }
 
 export class Color {
   /**
    * constructor
    */
-  constructor() { this.assignedColors = {}; }
+  constructor() {
+    this.assignedColors = {};
+  }
 
   /**
    * Get one color
@@ -87,8 +90,8 @@ export class Color {
       this.assignedColors[color[0]] = true;
 
       return {
-        color : color[0],
-        dark : color[1],
+        color: color[0],
+        dark: color[1],
       };
     }
   }
@@ -98,5 +101,7 @@ export class Color {
    *
    * @param {string} color Color code
    */
-  forget(color) { delete this.assignedColors[color]; }
+  forget(color) {
+    delete this.assignedColors[color];
+  }
 }

@@ -22,10 +22,10 @@ import "./landing.css";
 import Vue from "vue";
 
 import Auth from "./auth.vue";
-import {Color as ControlColor} from "./commands/color.js";
-import {Commands} from "./commands/commands.js";
-import {Controls} from "./commands/controls.js";
-import {Presets} from "./commands/presets.js";
+import { Color as ControlColor } from "./commands/color.js";
+import { Commands } from "./commands/commands.js";
+import { Controls } from "./commands/controls.js";
+import { Presets } from "./commands/presets.js";
 import * as ssh from "./commands/ssh.js";
 import * as telnet from "./commands/telnet.js";
 import * as sshctl from "./control/ssh.js";
@@ -33,7 +33,7 @@ import * as telnetctl from "./control/telnet.js";
 import * as cipher from "./crypto.js";
 import Home from "./home.vue";
 import Loading from "./loading.vue";
-import {Socket} from "./socket.js";
+import { Socket } from "./socket.js";
 import * as stream from "./stream/common";
 import * as xhr from "./xhr.js";
 
@@ -81,67 +81,74 @@ function startApp(rootEl) {
 
   async function buildSocketKey(privateKey) {
     return new Uint8Array(
-               await cipher.hmac512(
-                   stream.buildBufferFromString(privateKey),
-                   stream.buildBufferFromString(getCurrentKeyMixer())))
-        .slice(0, 16);
+      await cipher.hmac512(
+        stream.buildBufferFromString(privateKey),
+        stream.buildBufferFromString(getCurrentKeyMixer())
+      )
+    ).slice(0, 16);
   }
 
   new Vue({
-    el : rootEl,
-    components : {
-      loading : Loading,
-      auth : Auth,
-      home : Home,
+    el: rootEl,
+    components: {
+      loading: Loading,
+      auth: Auth,
+      home: Home,
     },
     data() {
       return {
-        hostPath : window.location.protocol + "//" + window.location.host +
-                       window.location.pathname,
-        query : window.location.hash.length > 0 &&
-                        window.location.hash.indexOf("#") === 0
-                    ? window.location.hash.slice(1, window.location.hash.length)
-                    : "",
-        page : "loading",
-        key : "",
-        presetData : {
-          presets : new Presets([]),
-          restricted : false,
+        hostPath:
+          window.location.protocol +
+          "//" +
+          window.location.host +
+          window.location.pathname,
+        query:
+          window.location.hash.length > 0 &&
+          window.location.hash.indexOf("#") === 0
+            ? window.location.hash.slice(1, window.location.hash.length)
+            : "",
+        page: "loading",
+        key: "",
+        presetData: {
+          presets: new Presets([]),
+          restricted: false,
         },
-        authErr : "",
-        loadErr : "",
-        socket : null,
-        controls : new Controls([
+        authErr: "",
+        loadErr: "",
+        socket: null,
+        controls: new Controls([
           new telnetctl.Telnet(uiControlColor),
           new sshctl.SSH(uiControlColor),
         ]),
-        commands : new Commands([ new telnet.Command(), new ssh.Command() ]),
-        tabUpdateIndicator : null,
-        viewPort : {
-          dim : {
-            width : 0,
-            height : 0,
+        commands: new Commands([new telnet.Command(), new ssh.Command()]),
+        tabUpdateIndicator: null,
+        viewPort: {
+          dim: {
+            width: 0,
+            height: 0,
             renew(width, height) {
               this.width = width;
               this.height = height;
             },
           },
         },
-        viewPortUpdaters : {
-          width : 0,
-          height : 0,
-          dimResizer : null,
+        viewPortUpdaters: {
+          width: 0,
+          height: 0,
+          dimResizer: null,
         },
       };
     },
-    watch : {
+    watch: {
       loadErr() {
-        this.isErrored() ? document.body.classList.add("app-error")
-                         : document.body.classList.remove("app-error");
+        this.isErrored()
+          ? document.body.classList.add("app-error")
+          : document.body.classList.remove("app-error");
       },
       authErr() {
-        this.isErrored() ? document.body.classList.add("app-error")
-                         : document.body.classList.remove("app-error");
+        this.isErrored()
+          ? document.body.classList.add("app-error")
+          : document.body.classList.remove("app-error");
       },
     },
     mounted() {
@@ -154,8 +161,10 @@ function startApp(rootEl) {
         self.viewPortUpdaters.width = window.innerWidth;
 
         self.$nextTick(() => {
-          self.viewPort.dim.renew(self.viewPortUpdaters.width,
-                                  self.viewPortUpdaters.height);
+          self.viewPort.dim.renew(
+            self.viewPortUpdaters.width,
+            self.viewPortUpdaters.height
+          );
         });
       };
 
@@ -164,17 +173,22 @@ function startApp(rootEl) {
     beforeDestroy() {
       window.removeEventListener("resize", self.viewPortUpdaters.dimResizer);
     },
-    methods : {
-      changeTitleInfo(
-          newTitleInfo) { document.title = newTitleInfo + " " + pageTitle; },
-      resetTitleInfo() { document.title = pageTitle; },
-      changeURLHash(newHash) { window.location.hash = newHash; },
+    methods: {
+      changeTitleInfo(newTitleInfo) {
+        document.title = newTitleInfo + " " + pageTitle;
+      },
+      resetTitleInfo() {
+        document.title = pageTitle;
+      },
+      changeURLHash(newHash) {
+        window.location.hash = newHash;
+      },
       isErrored() {
         return this.authErr.length > 0 || this.loadErr.length > 0;
       },
       async getSocketAuthKey(privateKey) {
         const enc = new TextEncoder(),
-              rTime = Number(Math.trunc(new Date().getTime() / 100000));
+          rTime = Number(Math.trunc(new Date().getTime() / 100000));
 
         var finalKey = "";
 
@@ -184,23 +198,23 @@ function startApp(rootEl) {
           finalKey = privateKey;
         }
 
-        return new Uint8Array(await cipher.hmac512(enc.encode(finalKey),
-                                                   enc.encode(rTime)))
-            .slice(0, 32);
+        return new Uint8Array(
+          await cipher.hmac512(enc.encode(finalKey), enc.encode(rTime))
+        ).slice(0, 32);
       },
       buildBackendSocketURLs() {
         let r = {
-          webSocket : "",
-          keepAlive : "",
+          webSocket: "",
+          keepAlive: "",
         };
 
         switch (location.protocol) {
-        case "https:":
-          r.webSocket = "wss://";
-          break;
+          case "https:":
+            r.webSocket = "wss://";
+            break;
 
-        default:
-          r.webSocket = "ws://";
+          default:
+            r.webSocket = "ws://";
         }
 
         r.webSocket += location.host + socksInterface;
@@ -209,16 +223,23 @@ function startApp(rootEl) {
         return r;
       },
       buildSocket(key, dialTimeout, heartbeatInterval) {
-        return new Socket(this.buildBackendSocketURLs(), key,
-                          dialTimeout * 1000, heartbeatInterval * 1000);
+        return new Socket(
+          this.buildBackendSocketURLs(),
+          key,
+          dialTimeout * 1000,
+          heartbeatInterval * 1000
+        );
       },
       executeHomeApp(authResult, key) {
         this.presetData = {
-          presets : new Presets(JSON.parse(authResult.data)),
-          restricted : authResult.onlyAllowPresetRemotes,
+          presets: new Presets(JSON.parse(authResult.data)),
+          restricted: authResult.onlyAllowPresetRemotes,
         };
-        this.socket =
-            this.buildSocket(key, authResult.timeout, authResult.heartbeat);
+        this.socket = this.buildSocket(
+          key,
+          authResult.timeout,
+          authResult.heartbeat
+        );
         this.page = "app";
       },
       async doAuth(privateKey) {
@@ -231,26 +252,28 @@ function startApp(rootEl) {
         return result;
       },
       async requestAuth(privateKey) {
-        let authKey = !privateKey || !this.key
-                          ? null
-                          : await this.getSocketAuthKey(privateKey);
+        let authKey =
+          !privateKey || !this.key
+            ? null
+            : await this.getSocketAuthKey(privateKey);
 
         let h = await xhr.get(socksVerificationInterface, {
-          "X-Key" : authKey ? btoa(String.fromCharCode.apply(null, authKey))
-                            : "",
+          "X-Key": authKey
+            ? btoa(String.fromCharCode.apply(null, authKey))
+            : "",
         });
 
         let serverDate = h.getResponseHeader("Date");
 
         return {
-          result : h.status,
-          key : h.getResponseHeader("X-Key"),
-          timeout : h.getResponseHeader("X-Timeout"),
-          heartbeat : h.getResponseHeader("X-Heartbeat"),
-          date : serverDate ? new Date(serverDate) : null,
-          data : h.responseText,
-          onlyAllowPresetRemotes :
-              h.getResponseHeader("X-OnlyAllowPresetRemotes") === "yes",
+          result: h.status,
+          key: h.getResponseHeader("X-Key"),
+          timeout: h.getResponseHeader("X-Timeout"),
+          heartbeat: h.getResponseHeader("X-Heartbeat"),
+          date: serverDate ? new Date(serverDate) : null,
+          data: h.responseText,
+          onlyAllowPresetRemotes:
+            h.getResponseHeader("X-OnlyAllowPresetRemotes") === "yes",
         };
       },
       async tryInitialAuth() {
@@ -259,16 +282,16 @@ function startApp(rootEl) {
 
           if (result.date) {
             let serverTime = result.date.getTime(),
-                clientTime = new Date().getTime(),
-                timeDiff = Math.abs(serverTime - clientTime);
+              clientTime = new Date().getTime(),
+              timeDiff = Math.abs(serverTime - clientTime);
 
             if (timeDiff > maxTimeDiff) {
               this.loadErr =
-                  "The time difference between this client " +
-                  "and the backend server is beyond operational limit.\r\n\r\n" +
-                  "Please try reload the page, and if the problem persisted, " +
-                  "consider to adjust your local time so both the client and " +
-                  "the server are running at same date time";
+                "The time difference between this client " +
+                "and the backend server is beyond operational limit.\r\n\r\n" +
+                "Please try reload the page, and if the problem persisted, " +
+                "consider to adjust your local time so both the client and " +
+                "the server are running at same date time";
 
               return;
             }
@@ -276,40 +299,43 @@ function startApp(rootEl) {
 
           let self = this;
           switch (result.result) {
-          case 200:
-            this.executeHomeApp(result, {
-              data : await buildSocketKey(atob(result.key) + "+"),
-              async fetch() {
-                if (this.data) {
-                  let dKey = this.data;
-                  this.data = null;
-                  return dKey;
-                }
+            case 200:
+              this.executeHomeApp(result, {
+                data: await buildSocketKey(atob(result.key) + "+"),
+                async fetch() {
+                  if (this.data) {
+                    let dKey = this.data;
+                    this.data = null;
+                    return dKey;
+                  }
 
-                let result = await self.doAuth("");
+                  let result = await self.doAuth("");
 
-                if (result.result !== 200) {
-                  throw new Error(
+                  if (result.result !== 200) {
+                    throw new Error(
                       "Unable to fetch key from remote, unexpected " +
-                      "error code: " + result.result);
-                }
+                        "error code: " +
+                        result.result
+                    );
+                  }
 
-                return await buildSocketKey(atob(result.key) + "+");
-              },
-            });
-            break;
+                  return await buildSocketKey(atob(result.key) + "+");
+                },
+              });
+              break;
 
-          case 403:
-            this.page = "auth";
-            break;
+            case 403:
+              this.page = "auth";
+              break;
 
-          case 0:
-            setTimeout(() => { this.tryInitialAuth(); },
-                       backendQueryRetryDelay);
-            break;
+            case 0:
+              setTimeout(() => {
+                this.tryInitialAuth();
+              }, backendQueryRetryDelay);
+              break;
 
-          default:
-            alert("Unexpected backend query status: " + result.result);
+            default:
+              alert("Unexpected backend query status: " + result.result);
           }
         } catch (e) {
           this.loadErr = "Unable to initialize client application: " + e;
@@ -323,36 +349,40 @@ function startApp(rootEl) {
 
           let self = this;
           switch (result.result) {
-          case 200:
-            this.executeHomeApp(result, {
-              data : await buildSocketKey(atob(result.key) + "+" + passphrase),
-              async fetch() {
-                if (this.data) {
-                  let dKey = this.data;
-                  this.data = null;
-                  return dKey;
-                }
+            case 200:
+              this.executeHomeApp(result, {
+                data: await buildSocketKey(atob(result.key) + "+" + passphrase),
+                async fetch() {
+                  if (this.data) {
+                    let dKey = this.data;
+                    this.data = null;
+                    return dKey;
+                  }
 
-                let result = await self.doAuth(passphrase);
+                  let result = await self.doAuth(passphrase);
 
-                if (result.result !== 200) {
-                  throw new Error(
+                  if (result.result !== 200) {
+                    throw new Error(
                       "Unable to fetch key from remote, unexpected " +
-                      "error code: " + result.result);
-                }
+                        "error code: " +
+                        result.result
+                    );
+                  }
 
-                return await buildSocketKey(atob(result.key) + "+" +
-                                            passphrase);
-              },
-            });
-            break;
+                  return await buildSocketKey(
+                    atob(result.key) + "+" + passphrase
+                  );
+                },
+              });
+              break;
 
-          case 403:
-            this.authErr = "Authentication has failed. Wrong passphrase?";
-            break;
+            case 403:
+              this.authErr = "Authentication has failed. Wrong passphrase?";
+              break;
 
-          default:
-            this.authErr = "Unexpected backend query status: " + result.result;
+            default:
+              this.authErr =
+                "Unexpected backend query status: " + result.result;
           }
         } catch (e) {
           this.authErr = "Unable to authenticate: " + e;
@@ -367,7 +397,9 @@ function startApp(rootEl) {
 
         this.changeTitleInfo("(" + tabs.length + (updated ? "*" : "") + ")");
       },
-      tabOpened(tabs) { this.tabUpdated(tabs); },
+      tabOpened(tabs) {
+        this.tabUpdated(tabs);
+      },
       tabClosed(tabs) {
         if (tabs.length > 0) {
           this.updateTabTitleInfo(tabs, this.tabUpdateIndicator !== null);
@@ -410,10 +442,13 @@ function initializeClient() {
     console.log("Currently in Development environment");
   }
 
-  window.addEventListener("unhandledrejection",
-                          function(e) { console.error("Error:", e); });
+  window.addEventListener("unhandledrejection", function (e) {
+    console.error("Error:", e);
+  });
 
-  window.addEventListener("error", function(e) { console.error("Error:", e); });
+  window.addEventListener("error", function (e) {
+    console.error("Error:", e);
+  });
 
   landingRoot.parentNode.removeChild(landingRoot);
 

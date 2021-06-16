@@ -40,7 +40,9 @@ export class String {
    *
    * @param {Uint8Array} str String data
    */
-  constructor(str) { this.str = str; }
+  constructor(str) {
+    this.str = str;
+  }
 
   /**
    * Return the string
@@ -48,7 +50,9 @@ export class String {
    * @returns {Uint8Array} String data
    *
    */
-  data() { return this.str; }
+  data() {
+    return this.str;
+  }
 
   /**
    * Return serialized String as array
@@ -58,7 +62,7 @@ export class String {
    */
   buffer() {
     let lBytes = new integer.Integer(this.str.length).marshal(),
-        buf = new Uint8Array(lBytes.length + this.str.length);
+      buf = new Uint8Array(lBytes.length + this.str.length);
 
     buf.set(lBytes, 0);
     buf.set(this.str, lBytes.length);

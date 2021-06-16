@@ -21,7 +21,9 @@ export class Records {
    *
    * @param {array} data Data space
    */
-  constructor(data) { this.data = data; }
+  constructor(data) {
+    this.data = data;
+  }
 
   /**
    * Insert new item into the history records
@@ -30,7 +32,7 @@ export class Records {
    */
   update(newData) {
     this.data.shift();
-    this.data.push({data : newData, class : ""});
+    this.data.push({ data: newData, class: "" });
   }
 
   /**
@@ -46,5 +48,7 @@ export class Records {
    * Return data
    *
    */
-  get() { return this.data; }
+  get() {
+    return this.data;
+  }
 }

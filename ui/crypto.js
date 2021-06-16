@@ -22,11 +22,16 @@
  * @param {Uint8Array} data Data to be HMAC'ed
  */
 export async function hmac512(secret, data) {
-  const key = await window.crypto.subtle.importKey("raw", secret, {
-    name : "HMAC",
-    hash : {name : "SHA-512"},
-  },
-                                                   false, [ "sign", "verify" ]);
+  const key = await window.crypto.subtle.importKey(
+    "raw",
+    secret,
+    {
+      name: "HMAC",
+      hash: { name: "SHA-512" },
+    },
+    false,
+    ["sign", "verify"]
+  );
 
   return window.crypto.subtle.sign(key.algorithm, key, data);
 }
@@ -40,11 +45,16 @@ export const GCMKeyBitLen = 128;
  * @param {Uint8Array} keyData Key data
  */
 export function buildGCMKey(keyData) {
-  return window.crypto.subtle.importKey("raw", keyData, {
-    name : "AES-GCM",
-    length : GCMKeyBitLen,
-  },
-                                        false, [ "encrypt", "decrypt" ]);
+  return window.crypto.subtle.importKey(
+    "raw",
+    keyData,
+    {
+      name: "AES-GCM",
+      length: GCMKeyBitLen,
+    },
+    false,
+    ["encrypt", "decrypt"]
+  );
 }
 
 /**
@@ -56,7 +66,10 @@ export function buildGCMKey(keyData) {
  */
 export function encryptGCM(key, iv, plaintext) {
   return window.crypto.subtle.encrypt(
-      {name : "AES-GCM", iv : iv, tagLength : GCMKeyBitLen}, key, plaintext);
+    { name: "AES-GCM", iv: iv, tagLength: GCMKeyBitLen },
+    key,
+    plaintext
+  );
 }
 
 /**
@@ -68,7 +81,10 @@ export function encryptGCM(key, iv, plaintext) {
  */
 export function decryptGCM(key, iv, cipherText) {
   return window.crypto.subtle.decrypt(
-      {name : "AES-GCM", iv : iv, tagLength : GCMKeyBitLen}, key, cipherText);
+    { name: "AES-GCM", iv: iv, tagLength: GCMKeyBitLen },
+    key,
+    cipherText
+  );
 }
 
 /**

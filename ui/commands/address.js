@@ -37,8 +37,10 @@ export class Address {
    * @throws {Exception} when address type is invalid
    */
   static async read(rd) {
-    let readed = await reader.readN(rd, 3), portNum = 0, addrType = LOOPBACK,
-        addrData = null;
+    let readed = await reader.readN(rd, 3),
+      portNum = 0,
+      addrType = LOOPBACK,
+      addrData = null;
 
     portNum |= readed[0];
     portNum <<= 8;
@@ -47,23 +49,23 @@ export class Address {
     addrType = readed[2] >> 6;
 
     switch (addrType) {
-    case LOOPBACK:
-      break;
+      case LOOPBACK:
+        break;
 
-    case IPV4:
-      addrData = await reader.readN(rd, 4);
-      break;
+      case IPV4:
+        addrData = await reader.readN(rd, 4);
+        break;
 
-    case IPV6:
-      addrData = await reader.readN(rd, 16);
-      break;
+      case IPV6:
+        addrData = await reader.readN(rd, 16);
+        break;
 
-    case HOSTNAME:
-      addrData = await reader.readN(rd, 0x3f & readed[2]);
-      break;
+      case HOSTNAME:
+        addrData = await reader.readN(rd, 0x3f & readed[2]);
+        break;
 
-    default:
-      throw new Exception("Unknown address type");
+      default:
+        throw new Exception("Unknown address type");
     }
 
     return new Address(addrType, addrData, portNum);
@@ -87,19 +89,25 @@ export class Address {
    * Return the address type
    *
    */
-  type() { return this.addrType; }
+  type() {
+    return this.addrType;
+  }
 
   /**
    * Return the address data
    *
    */
-  address() { return this.addrData; }
+  address() {
+    return this.addrData;
+  }
 
   /**
    * Return the port data
    *
    */
-  port() { return this.addrPort; }
+  port() {
+    return this.addrPort;
+  }
 
   /**
    * Buffer returns the marshalled address
@@ -111,61 +119,73 @@ export class Address {
    */
   buffer() {
     switch (this.type()) {
-    case LOOPBACK:
-      return new Uint8Array([
-        this.addrPort >> 8,
-        this.addrPort & 0xff,
-        LOOPBACK << 6,
-      ]);
+      case LOOPBACK:
+        return new Uint8Array([
+          this.addrPort >> 8,
+          this.addrPort & 0xff,
+          LOOPBACK << 6,
+        ]);
 
-    case IPV4:
-      if (this.addrData.length != 4) {
-        throw new Exception("Invalid address length");
-      }
+      case IPV4:
+        if (this.addrData.length != 4) {
+          throw new Exception("Invalid address length");
+        }
 
-      return new Uint8Array([
-        this.addrPort >> 8,
-        this.addrPort & 0xff,
-        IPV4 << 6,
-        this.addrData[0],
-        this.addrData[1],
-        this.addrData[2],
-        this.addrData[3],
-      ]);
+        return new Uint8Array([
+          this.addrPort >> 8,
+          this.addrPort & 0xff,
+          IPV4 << 6,
+          this.addrData[0],
+          this.addrData[1],
+          this.addrData[2],
+          this.addrData[3],
+        ]);
 
-    case IPV6:
-      if (this.addrData.length != 16) {
-        throw new Exception("Invalid address length");
-      }
+      case IPV6:
+        if (this.addrData.length != 16) {
+          throw new Exception("Invalid address length");
+        }
 
-      return new Uint8Array([
-        this.addrPort >> 8, this.addrPort & 0xff, IPV6 << 6,
-        this.addrData[0],   this.addrData[1],     this.addrData[2],
-        this.addrData[3],   this.addrData[4],     this.addrData[5],
-        this.addrData[6],   this.addrData[7],     this.addrData[8],
-        this.addrData[9],   this.addrData[10],    this.addrData[11],
-        this.addrData[12],  this.addrData[13],    this.addrData[14],
-        this.addrData[15],
-      ]);
+        return new Uint8Array([
+          this.addrPort >> 8,
+          this.addrPort & 0xff,
+          IPV6 << 6,
+          this.addrData[0],
+          this.addrData[1],
+          this.addrData[2],
+          this.addrData[3],
+          this.addrData[4],
+          this.addrData[5],
+          this.addrData[6],
+          this.addrData[7],
+          this.addrData[8],
+          this.addrData[9],
+          this.addrData[10],
+          this.addrData[11],
+          this.addrData[12],
+          this.addrData[13],
+          this.addrData[14],
+          this.addrData[15],
+        ]);
 
-    case HOSTNAME:
-      if (this.addrData.length > MAX_ADDR_LEN) {
-        throw new Exception("Host name cannot longer than " + MAX_ADDR_LEN);
-      }
+      case HOSTNAME:
+        if (this.addrData.length > MAX_ADDR_LEN) {
+          throw new Exception("Host name cannot longer than " + MAX_ADDR_LEN);
+        }
 
-      let dataBuf = new Uint8Array(this.addrData.length + 3);
+        let dataBuf = new Uint8Array(this.addrData.length + 3);
 
-      dataBuf[0] = (this.addrPort >> 8) & 0xff;
-      dataBuf[1] = this.addrPort & 0xff;
-      dataBuf[2] = HOSTNAME << 6;
-      dataBuf[2] |= this.addrData.length;
+        dataBuf[0] = (this.addrPort >> 8) & 0xff;
+        dataBuf[1] = this.addrPort & 0xff;
+        dataBuf[2] = HOSTNAME << 6;
+        dataBuf[2] |= this.addrData.length;
 
-      dataBuf.set(this.addrData, 3);
+        dataBuf.set(this.addrData, 3);
 
-      return dataBuf;
+        return dataBuf;
 
-    default:
-      throw new Exception("Unknown address type");
+      default:
+        throw new Exception("Unknown address type");
     }
   }
 }
@@ -181,27 +201,28 @@ export class Address {
  * @throws {Exception} when the address is invalid
  */
 export function parseHostPort(s, defaultPort) {
-  let d = common.splitHostPort(s, defaultPort), t = HOSTNAME;
+  let d = common.splitHostPort(s, defaultPort),
+    t = HOSTNAME;
 
   switch (d.type) {
-  case "IPv4":
-    t = IPV4;
-    break;
+    case "IPv4":
+      t = IPV4;
+      break;
 
-  case "IPv6":
-    t = IPV6;
-    break;
+    case "IPv6":
+      t = IPV6;
+      break;
 
-  case "Hostname":
-    break;
+    case "Hostname":
+      break;
 
-  default:
-    throw new Exception("Invalid address type");
+    default:
+      throw new Exception("Invalid address type");
   }
 
   return {
-    type : t,
-    address : d.addr,
-    port : d.port,
+    type: t,
+    address: d.addr,
+    port: d.port,
   };
 }
