@@ -18,8 +18,6 @@
 import * as reader from "../stream/reader.js";
 import Exception from "./exception.js";
 
-import Exception from "./exception.js";
-
 export const MAX = 0x3fff;
 export const MAX_BYTES = 2;
 
