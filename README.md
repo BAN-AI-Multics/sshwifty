@@ -14,12 +14,13 @@
 
 ## License
 
-- Code of this project is licensed under the **AGPL‑3.0**.
+- Code of this project is licensed under the **AGPL‑3.0**
+  - See [LICENSE.md] for details
 
-  - See [LICENSE.md] for detail.
-
-- Third-party components used by this project are licensed under their respective licenses.
-  - See [DEPENDENCIES.md] to learn more about dependencies used by this project and read their copyright statements.
+- Third-party components used by this project are licensed under their
+  respective licenses
+  - See [DEPENDENCIES.md] to learn more about the dependencies used by
+    this project and read their copyright statements.
 
 [license.md]: LICENSE.md
 [dependencies.md]: DEPENDENCIES.md
