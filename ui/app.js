@@ -284,7 +284,6 @@ function startApp(rootEl) {
             const serverTime = result.date.getTime();
             const clientTime = new Date().getTime();
             const timeDiff = Math.abs(serverTime - clientTime);
-
           }
 
           const self = this;
