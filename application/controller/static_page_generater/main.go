@@ -41,6 +41,7 @@ const (
 const (
 	staticListHeader = `// Sshwifty - A Web SSH client
 //
+// Copyright (C) 2021 Jeffrey H. Johnson <trnsz+banai@pobox.com>
 // Copyright (C) 2019-2021 NI Rui <ranqus@gmail.com>
 //
 // This program is free software: you can redistribute it and/or modify
@@ -129,22 +130,22 @@ func staticFileGen(fileName, filePath string) staticData {
 
 	compressed := bytes.NewBuffer(make([]byte, 0, 1024))
 
-	compresser, compresserBuildErr := gzip.NewWriterLevel(
+	compressor, compressorBuildErr := gzip.NewWriterLevel(
 		compressed, gzip.BestSpeed)
 
-	if compresserBuildErr != nil {
-		panic(fmt.Sprintln("Cannot build data compresser:", compresserBuildErr))
+	if compressorBuildErr != nil {
+		panic(fmt.Sprintln("Cannot build data compressor:", compressorBuildErr))
 	}
 
 	contentLen := len(content)
 
-	_, compressErr := compresser.Write(content)
+	_, compressErr := compressor.Write(content)
 
 	if compressErr != nil {
 		panic(fmt.Sprintln("Cannot write compressed data:", compressErr))
 	}
 
-	compressErr = compresser.Flush()
+	compressErr = compressor.Flush()
 
 	if compressErr != nil {
 		panic(fmt.Sprintln("Cannot write compressed data:", compressErr))
@@ -349,21 +350,21 @@ func parseFile(
 	} else {
 		compressed := bytes.NewBuffer(make([]byte, 0, 1024))
 
-		compresser, compresserBuildErr := gzip.NewWriterLevel(
+		compressor, compressorBuildErr := gzip.NewWriterLevel(
 			compressed, gzip.BestCompression)
 
-		if compresserBuildErr != nil {
+		if compressorBuildErr != nil {
 			panic(fmt.Sprintln(
-				"Cannot build data compresser:", compresserBuildErr))
+				"Cannot build data compressor:", compressorBuildErr))
 		}
 
-		_, compressErr := compresser.Write(content)
+		_, compressErr := compressor.Write(content)
 
 		if compressErr != nil {
 			panic(fmt.Sprintln("Cannot write compressed data:", compressErr))
 		}
 
-		compressErr = compresser.Flush()
+		compressErr = compressor.Flush()
 
 		if compressErr != nil {
 			panic(fmt.Sprintln("Cannot write compressed data:", compressErr))

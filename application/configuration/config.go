@@ -161,7 +161,7 @@ type Configuration struct {
 	OnlyAllowPresetRemotes bool
 }
 
-// Common settings shared by mulitple servers
+// Common settings shared by multiple servers
 type Common struct {
 	HostName               string
 	SharedKey              string
