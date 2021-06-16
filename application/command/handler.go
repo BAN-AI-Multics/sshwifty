@@ -40,7 +40,7 @@ var (
 		"Invalid control message")
 )
 
-// HandlerCancelSignal signals the cancel of the entire handling proccess
+// HandlerCancelSignal signals the cancel of the entire handling process
 type HandlerCancelSignal chan struct{}
 
 const (

@@ -25,7 +25,7 @@ type Header byte
 // Packet Types
 const (
 	// 00------: Control signals
-	// Remaing bits: Data length
+	// Remaining bits: Data length
 	//
 	// Format:
 	//   0011111 [63 bytes long data] - 63 bytes of control data
@@ -52,7 +52,7 @@ const (
 	//
 	// WARNING: The receiver MUST reply with a Completed header to indicate
 	//          the success of the Close action. Until a Completed header is
-	//          replied, all data from the sender must be proccessed as normal.
+	//          replied, all data from the sender must be processed as normal.
 	HeaderClose Header = 0x80
 
 	// 11------: Stream has been closed/completed in respond to client request
