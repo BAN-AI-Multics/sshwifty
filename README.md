@@ -18,6 +18,7 @@
 
 - Third-party components used by this project are licensed under their
   respective licenses
+
   - See [DEPENDENCIES.md] to learn more about the dependencies used by
     this project and read their copyright statements.
 
