@@ -29,7 +29,7 @@ class Control {
     this.charset = data.charset;
 
     if (this.charset === "utf-8") {
-      let enc = new TextEncoder();
+      const enc = new TextEncoder();
 
       this.charsetDecoder = (d) => {
         return d;
@@ -39,8 +39,8 @@ class Control {
         return enc.encode(dStr);
       };
     } else {
-      let dec = new TextDecoder(this.charset),
-        enc = new TextEncoder();
+      const dec = new TextDecoder(this.charset);
+      const enc = new TextEncoder();
 
       this.charsetDecoder = (d) => {
         return enc.encode(
@@ -61,7 +61,7 @@ class Control {
     this.resizer = data.resize;
     this.subs = new subscribe.Subscribe();
 
-    let self = this;
+    const self = this;
 
     data.events.place("stdout", async (rd) => {
       try {
@@ -142,7 +142,7 @@ class Control {
       return;
     }
 
-    let cc = this.closer;
+    const cc = this.closer;
     this.closer = null;
 
     return cc();

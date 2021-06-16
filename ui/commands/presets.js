@@ -35,7 +35,7 @@ const presetItem = {
  *
  */
 function verifyPresetItemMeta(preset) {
-  for (let i in preset.meta) {
+  for (const i in preset.meta) {
     if (typeof preset.meta[i] === "string") {
       continue;
     }
@@ -61,13 +61,13 @@ function verifyPresetItemMeta(preset) {
  *
  */
 function parsePresetItem(item) {
-  let preset = {};
+  const preset = {};
 
-  for (let i in presetItem) {
+  for (const i in presetItem) {
     preset[i] = presetItem[i];
   }
 
-  for (let i in presetItem) {
+  for (const i in presetItem) {
     if (typeof presetItem[i] === typeof item[i]) {
       preset[i] = item[i];
 
@@ -196,9 +196,9 @@ export class Preset {
    *
    */
   metaKeys() {
-    let keys = [];
+    const keys = [];
 
-    for (let k in this.preset.meta) {
+    for (const k in this.preset.meta) {
       keys.push(k);
     }
 
@@ -249,7 +249,7 @@ export class Presets {
    *
    */
   fetch(type) {
-    let presets = [];
+    const presets = [];
 
     for (let i = 0; i < this.presets.length; i++) {
       if (this.presets[i].type() !== type) {
@@ -273,7 +273,7 @@ export class Presets {
    *
    */
   meta(type, metaName, metaVal) {
-    let presets = [];
+    const presets = [];
 
     for (let i = 0; i < this.presets.length; i++) {
       if (this.presets[i].type() !== type) {
@@ -308,7 +308,7 @@ export class Presets {
    *
    */
   hosts(type, host) {
-    let presets = [];
+    const presets = [];
 
     for (let i = 0; i < this.presets.length; i++) {
       if (this.presets[i].type() !== type) {

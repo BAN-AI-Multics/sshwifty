@@ -73,7 +73,7 @@ const socksVerificationInterface = socksInterface + "/verify";
 function startApp(rootEl) {
   const pageTitle = document.title;
 
-  let uiControlColor = new ControlColor();
+  const uiControlColor = new ControlColor();
 
   function getCurrentKeyMixer() {
     return Number(Math.trunc(new Date().getTime() / 100000)).toString();
@@ -187,10 +187,10 @@ function startApp(rootEl) {
         return this.authErr.length > 0 || this.loadErr.length > 0;
       },
       async getSocketAuthKey(privateKey) {
-        const enc = new TextEncoder(),
-          rTime = Number(Math.trunc(new Date().getTime() / 100000));
+        const enc = new TextEncoder();
+        const rTime = Number(Math.trunc(new Date().getTime() / 100000));
 
-        var finalKey = "";
+        let finalKey = "";
 
         if (privateKey.length <= 0) {
           finalKey = "DEFAULT VERIFY KEY";
@@ -203,7 +203,7 @@ function startApp(rootEl) {
         ).slice(0, 32);
       },
       buildBackendSocketURLs() {
-        let r = {
+        const r = {
           webSocket: "",
           keepAlive: "",
         };
@@ -243,7 +243,7 @@ function startApp(rootEl) {
         this.page = "app";
       },
       async doAuth(privateKey) {
-        let result = await this.requestAuth(privateKey);
+        const result = await this.requestAuth(privateKey);
 
         if (result.key) {
           this.key = result.key;
@@ -252,18 +252,18 @@ function startApp(rootEl) {
         return result;
       },
       async requestAuth(privateKey) {
-        let authKey =
+        const authKey =
           !privateKey || !this.key
             ? null
             : await this.getSocketAuthKey(privateKey);
 
-        let h = await xhr.get(socksVerificationInterface, {
+        const h = await xhr.get(socksVerificationInterface, {
           "X-Key": authKey
             ? btoa(String.fromCharCode.apply(null, authKey))
             : "",
         });
 
-        let serverDate = h.getResponseHeader("Date");
+        const serverDate = h.getResponseHeader("Date");
 
         return {
           result: h.status,
@@ -278,12 +278,12 @@ function startApp(rootEl) {
       },
       async tryInitialAuth() {
         try {
-          let result = await this.doAuth("");
+          const result = await this.doAuth("");
 
           if (result.date) {
-            let serverTime = result.date.getTime(),
-              clientTime = new Date().getTime(),
-              timeDiff = Math.abs(serverTime - clientTime);
+            const serverTime = result.date.getTime();
+            const clientTime = new Date().getTime();
+            const timeDiff = Math.abs(serverTime - clientTime);
 
             if (timeDiff > maxTimeDiff) {
               this.loadErr =
@@ -297,19 +297,19 @@ function startApp(rootEl) {
             }
           }
 
-          let self = this;
+          const self = this;
           switch (result.result) {
             case 200:
               this.executeHomeApp(result, {
                 data: await buildSocketKey(atob(result.key) + "+"),
                 async fetch() {
                   if (this.data) {
-                    let dKey = this.data;
+                    const dKey = this.data;
                     this.data = null;
                     return dKey;
                   }
 
-                  let result = await self.doAuth("");
+                  const result = await self.doAuth("");
 
                   if (result.result !== 200) {
                     throw new Error(
@@ -345,21 +345,21 @@ function startApp(rootEl) {
         this.authErr = "";
 
         try {
-          let result = await this.doAuth(passphrase);
+          const result = await this.doAuth(passphrase);
 
-          let self = this;
+          const self = this;
           switch (result.result) {
             case 200:
               this.executeHomeApp(result, {
                 data: await buildSocketKey(atob(result.key) + "+" + passphrase),
                 async fetch() {
                   if (this.data) {
-                    let dKey = this.data;
+                    const dKey = this.data;
                     this.data = null;
                     return dKey;
                   }
 
-                  let result = await self.doAuth(passphrase);
+                  const result = await self.doAuth(passphrase);
 
                   if (result.result !== 200) {
                     throw new Error(
@@ -432,7 +432,7 @@ function startApp(rootEl) {
 }
 
 function initializeClient() {
-  let landingRoot = document.getElementById("landing");
+  const landingRoot = document.getElementById("landing");
 
   if (!landingRoot) {
     return;
@@ -452,7 +452,7 @@ function initializeClient() {
 
   landingRoot.parentNode.removeChild(landingRoot);
 
-  let normalRoot = document.createElement("div");
+  const normalRoot = document.createElement("div");
   normalRoot.setAttribute("id", "app");
   normalRoot.innerHTML = mainTemplate;
 

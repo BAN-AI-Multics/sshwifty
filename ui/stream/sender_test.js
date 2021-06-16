@@ -20,7 +20,7 @@ import * as sender from "./sender.js";
 
 describe("Sender", () => {
   function generateTestData(size) {
-    let d = new Uint8Array(size);
+    const d = new Uint8Array(size);
 
     for (let i = 0; i < d.length; i++) {
       d[i] = i % 256;
@@ -31,12 +31,12 @@ describe("Sender", () => {
 
   it("Send", async () => {
     const maxSegSize = 64;
-    let result = [];
-    let sd = new sender.Sender(
+    const result = [];
+    const sd = new sender.Sender(
       (rawData) => {
         return new Promise((resolve) => {
           setTimeout(() => {
-            for (let i in rawData) {
+            for (const i in rawData) {
               result.push(rawData[i]);
             }
 
@@ -48,11 +48,11 @@ describe("Sender", () => {
       300,
       3
     );
-    let expected = generateTestData(maxSegSize * 16);
+    const expected = generateTestData(maxSegSize * 16);
 
     sd.send(expected);
 
-    let sendCompleted = new Promise((resolve) => {
+    const sendCompleted = new Promise((resolve) => {
       let timer = setInterval(() => {
         if (result.length < expected.length) {
           return;
@@ -71,12 +71,12 @@ describe("Sender", () => {
 
   it("Send (Multiple calls)", async () => {
     const maxSegSize = 64;
-    let result = [];
-    let sd = new sender.Sender(
+    const result = [];
+    const sd = new sender.Sender(
       (rawData) => {
         return new Promise((resolve) => {
           setTimeout(() => {
-            for (let i in rawData) {
+            for (const i in rawData) {
               result.push(rawData[i]);
             }
 
@@ -88,9 +88,9 @@ describe("Sender", () => {
       300,
       100
     );
-    let expectedSingle = generateTestData(maxSegSize * 2),
-      expectedLen = expectedSingle.length * 16,
-      expected = new Uint8Array(expectedLen);
+    const expectedSingle = generateTestData(maxSegSize * 2);
+    const expectedLen = expectedSingle.length * 16;
+    const expected = new Uint8Array(expectedLen);
 
     for (let i = 0; i < expectedLen; i += expectedSingle.length) {
       expected.set(expectedSingle, i);
@@ -102,7 +102,7 @@ describe("Sender", () => {
       }, 100);
     }
 
-    let sendCompleted = new Promise((resolve) => {
+    const sendCompleted = new Promise((resolve) => {
       let timer = setInterval(() => {
         if (result.length < expectedLen) {
           return;

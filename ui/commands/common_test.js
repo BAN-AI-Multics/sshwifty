@@ -20,7 +20,7 @@ import * as common from "./common.js";
 
 describe("Common", () => {
   it("parseIPv4", () => {
-    let tests = [
+    const tests = [
       {
         sample: "127.0.0.1",
         expectingFailure: false,
@@ -53,7 +53,7 @@ describe("Common", () => {
       },
     ];
 
-    for (let i in tests) {
+    for (const i in tests) {
       if (tests[i].expectingFailure) {
         let ee = null;
 
@@ -65,7 +65,7 @@ describe("Common", () => {
 
         assert.notEqual(ee, null, "Test " + tests[i].sample);
       } else {
-        let data = common.parseIPv4(tests[i].sample);
+        const data = common.parseIPv4(tests[i].sample);
 
         assert.deepEqual(data, tests[i].expected);
       }
@@ -73,33 +73,19 @@ describe("Common", () => {
   });
 
   it("parseIPv6", () => {
-    let tests = [
+    const tests = [
       {
         sample: "2001:db8:1f70:0:999:de8:7648:6e8",
         expectingFailure: false,
         expected: new Uint16Array([
-          0x2001,
-          0xdb8,
-          0x1f70,
-          0x0,
-          0x999,
-          0xde8,
-          0x7648,
-          0x6e8,
+          0x2001, 0xdb8, 0x1f70, 0x0, 0x999, 0xde8, 0x7648, 0x6e8,
         ]),
       },
       {
         sample: "2001:db8:85a3::8a2e:370:7334",
         expectingFailure: false,
         expected: new Uint16Array([
-          0x2001,
-          0xdb8,
-          0x85a3,
-          0x0,
-          0x0,
-          0x8a2e,
-          0x370,
-          0x7334,
+          0x2001, 0xdb8, 0x85a3, 0x0, 0x0, 0x8a2e, 0x370, 0x7334,
         ]),
       },
       {
@@ -116,42 +102,21 @@ describe("Common", () => {
         sample: "2001:db8:1f70::999:de8:7648:6e8",
         expectingFailure: false,
         expected: new Uint16Array([
-          0x2001,
-          0xdb8,
-          0x1f70,
-          0x0,
-          0x999,
-          0xde8,
-          0x7648,
-          0x6e8,
+          0x2001, 0xdb8, 0x1f70, 0x0, 0x999, 0xde8, 0x7648, 0x6e8,
         ]),
       },
       {
         sample: "2001:0db8:ac10:fe01::",
         expectingFailure: false,
         expected: new Uint16Array([
-          0x2001,
-          0x0db8,
-          0xac10,
-          0xfe01,
-          0x0,
-          0x0,
-          0x0,
-          0x0,
+          0x2001, 0x0db8, 0xac10, 0xfe01, 0x0, 0x0, 0x0, 0x0,
         ]),
       },
       {
         sample: "::7f00:1",
         expectingFailure: false,
         expected: new Uint16Array([
-          0x0000,
-          0x0000,
-          0x0000,
-          0x0000,
-          0x0000,
-          0x0000,
-          0x7f00,
-          0x0001,
+          0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x7f00, 0x0001,
         ]),
       },
       {
@@ -181,7 +146,7 @@ describe("Common", () => {
       },
     ];
 
-    for (let i in tests) {
+    for (const i in tests) {
       if (tests[i].expectingFailure) {
         let ee = null;
 
@@ -193,7 +158,7 @@ describe("Common", () => {
 
         assert.notEqual(ee, null, "Test " + tests[i].sample);
       } else {
-        let data = common.parseIPv6(tests[i].sample);
+        const data = common.parseIPv6(tests[i].sample);
 
         assert.deepEqual(data, tests[i].expected);
       }
@@ -201,7 +166,7 @@ describe("Common", () => {
   });
 
   it("splitHostPort", () => {
-    let tests = [
+    const tests = [
       // Host name
       {
         sample: "ssh.vaguly.com",
@@ -236,14 +201,7 @@ describe("Common", () => {
         expectedType: "IPv6",
         expectedAddr: new Uint8Array(
           new Uint16Array([
-            0x2001,
-            0xdb8,
-            0x1f70,
-            0x0,
-            0x999,
-            0xde8,
-            0x7648,
-            0x6e8,
+            0x2001, 0xdb8, 0x1f70, 0x0, 0x999, 0xde8, 0x7648, 0x6e8,
           ]).buffer
         ),
         expectedPort: 22,
@@ -253,22 +211,15 @@ describe("Common", () => {
         expectedType: "IPv6",
         expectedAddr: new Uint8Array(
           new Uint16Array([
-            0x2001,
-            0xdb8,
-            0x1f70,
-            0x0,
-            0x999,
-            0xde8,
-            0x7648,
-            0x6e8,
+            0x2001, 0xdb8, 0x1f70, 0x0, 0x999, 0xde8, 0x7648, 0x6e8,
           ]).buffer
         ),
         expectedPort: 100,
       },
     ];
 
-    for (let i in tests) {
-      let hostport = common.splitHostPort(tests[i].sample, 22);
+    for (const i in tests) {
+      const hostport = common.splitHostPort(tests[i].sample, 22);
 
       assert.deepEqual(hostport.type, tests[i].expectedType);
       assert.deepEqual(hostport.addr, tests[i].expectedAddr);

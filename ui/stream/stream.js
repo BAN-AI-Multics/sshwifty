@@ -52,9 +52,9 @@ export class Sender {
       );
     }
 
-    let reqHeader = new header.Header(header.STREAM),
-      stHeader = new header.Stream(0, 0),
-      d = new Uint8Array(data.length + 3);
+    const reqHeader = new header.Header(header.STREAM);
+    const stHeader = new header.Stream(0, 0);
+    const d = new Uint8Array(data.length + 3);
 
     reqHeader.set(this.id);
     stHeader.set(marker, data.length);
@@ -84,14 +84,14 @@ export class Sender {
       );
     }
 
-    let dataSeg = common.separateBuffer(data, header.STREAM_MAX_LENGTH),
-      reqHeader = new header.Header(header.STREAM);
+    const dataSeg = common.separateBuffer(data, header.STREAM_MAX_LENGTH);
+    const reqHeader = new header.Header(header.STREAM);
 
     reqHeader.set(this.id);
 
-    for (let i in dataSeg) {
-      let stHeader = new header.Stream(0, 0),
-        d = new Uint8Array(dataSeg[i].length + 3);
+    for (const i in dataSeg) {
+      const stHeader = new header.Stream(0, 0);
+      const d = new Uint8Array(dataSeg[i].length + 3);
 
       stHeader.set(marker, dataSeg[i].length);
 
@@ -119,7 +119,7 @@ export class Sender {
       );
     }
 
-    let reqHeader = new header.Header(signal);
+    const reqHeader = new header.Header(signal);
 
     reqHeader.set(this.id);
 
@@ -135,7 +135,7 @@ export class Sender {
       return;
     }
 
-    let r = this.signal(header.CLOSE);
+    const r = this.signal(header.CLOSE);
 
     this.closed = true;
 
@@ -175,9 +175,9 @@ export class InitialSender {
    *
    */
   send(data) {
-    let reqHeader = new header.Header(header.STREAM),
-      stHeader = new header.InitialStream(0, 0),
-      d = new Uint8Array(data.length + 3);
+    const reqHeader = new header.Header(header.STREAM);
+    const stHeader = new header.InitialStream(0, 0);
+    const d = new Uint8Array(data.length + 3);
 
     reqHeader.set(this.id);
     stHeader.set(this.command, data.length, true);

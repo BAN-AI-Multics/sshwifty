@@ -20,7 +20,7 @@ import * as reader from "./reader.js";
 
 describe("Reader", () => {
   it("Buffer", async () => {
-    let buf = new reader.Buffer(
+    const buf = new reader.Buffer(
       new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7]),
       () => {}
     );
@@ -40,49 +40,26 @@ describe("Reader", () => {
 
   it("Reader", async () => {
     const maxTests = 3;
-    let IntvCount = 0,
-      r = new reader.Reader(new reader.Multiple(() => {}), (data) => {
-        return data;
-      }),
-      expected = [
-        0,
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        0,
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        0,
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-      ],
-      feedIntv = setInterval(() => {
-        r.feed(Uint8Array.from(expected.slice(0, 8)));
+    let IntvCount = 0;
+    const r = new reader.Reader(new reader.Multiple(() => {}), (data) => {
+      return data;
+    });
+    const expected = [
+      0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7,
+    ];
+    const feedIntv = setInterval(() => {
+      r.feed(Uint8Array.from(expected.slice(0, 8)));
 
-        IntvCount++;
+      IntvCount++;
 
-        if (IntvCount < maxTests) {
-          return;
-        }
+      if (IntvCount < maxTests) {
+        return;
+      }
 
-        clearInterval(feedIntv);
-      }, 300);
+      clearInterval(feedIntv);
+    }, 300);
 
-    let result = [];
+    const result = [];
 
     while (result.length < expected.length) {
       result.push((await r.export(1))[0]);
@@ -92,7 +69,7 @@ describe("Reader", () => {
   });
 
   it("readOne", async () => {
-    let r = new reader.Reader(new reader.Multiple(() => {}), (data) => {
+    const r = new reader.Reader(new reader.Multiple(() => {}), (data) => {
       return data;
     });
 
@@ -110,7 +87,7 @@ describe("Reader", () => {
   });
 
   it("readN", async () => {
-    let r = new reader.Reader(new reader.Multiple(() => {}), (data) => {
+    const r = new reader.Reader(new reader.Multiple(() => {}), (data) => {
       return data;
     });
 
@@ -129,25 +106,25 @@ describe("Reader", () => {
 
   it("Limited", async () => {
     const maxTests = 3;
-    let IntvCount = 0,
-      r = new reader.Reader(new reader.Multiple(() => {}), (data) => {
-        return data;
-      }),
-      expected = [0, 1, 2, 3, 4, 5, 6, 7, 0, 1],
-      limited = new reader.Limited(r, 10),
-      feedIntv = setInterval(() => {
-        r.feed(Uint8Array.from(expected.slice(0, 8)));
+    let IntvCount = 0;
+    const r = new reader.Reader(new reader.Multiple(() => {}), (data) => {
+      return data;
+    });
+    const expected = [0, 1, 2, 3, 4, 5, 6, 7, 0, 1];
+    const limited = new reader.Limited(r, 10);
+    const feedIntv = setInterval(() => {
+      r.feed(Uint8Array.from(expected.slice(0, 8)));
 
-        IntvCount++;
+      IntvCount++;
 
-        if (IntvCount < maxTests) {
-          return;
-        }
+      if (IntvCount < maxTests) {
+        return;
+      }
 
-        clearInterval(feedIntv);
-      }, 300);
+      clearInterval(feedIntv);
+    }, 300);
 
-    let result = [];
+    const result = [];
 
     while (!limited.completed()) {
       result.push((await limited.export(1))[0]);
@@ -159,25 +136,25 @@ describe("Reader", () => {
 
   it("readCompletely", async () => {
     const maxTests = 3;
-    let IntvCount = 0,
-      r = new reader.Reader(new reader.Multiple(() => {}), (data) => {
-        return data;
-      }),
-      expected = [0, 1, 2, 3, 4, 5, 6, 7, 0, 1],
-      limited = new reader.Limited(r, 10),
-      feedIntv = setInterval(() => {
-        r.feed(Uint8Array.from(expected.slice(0, 8)));
+    let IntvCount = 0;
+    const r = new reader.Reader(new reader.Multiple(() => {}), (data) => {
+      return data;
+    });
+    const expected = [0, 1, 2, 3, 4, 5, 6, 7, 0, 1];
+    const limited = new reader.Limited(r, 10);
+    const feedIntv = setInterval(() => {
+      r.feed(Uint8Array.from(expected.slice(0, 8)));
 
-        IntvCount++;
+      IntvCount++;
 
-        if (IntvCount < maxTests) {
-          return;
-        }
+      if (IntvCount < maxTests) {
+        return;
+      }
 
-        clearInterval(feedIntv);
-      }, 300);
+      clearInterval(feedIntv);
+    }, 300);
 
-    let result = await reader.readCompletely(limited);
+    const result = await reader.readCompletely(limited);
 
     assert.equal(limited.completed(), true);
     assert.deepEqual(result, Uint8Array.from(expected));
@@ -185,25 +162,25 @@ describe("Reader", () => {
 
   it("readUntil", async () => {
     const maxTests = 3;
-    let IntvCount = 0,
-      r = new reader.Reader(new reader.Multiple(() => {}), (data) => {
-        return data;
-      }),
-      sample = [0, 1, 2, 3, 4, 5, 6, 7, 0, 1],
-      expected1 = new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7]),
-      expected2 = new Uint8Array([0, 1]),
-      limited = new reader.Limited(r, 10),
-      feedIntv = setInterval(() => {
-        r.feed(Uint8Array.from(sample));
+    let IntvCount = 0;
+    const r = new reader.Reader(new reader.Multiple(() => {}), (data) => {
+      return data;
+    });
+    const sample = [0, 1, 2, 3, 4, 5, 6, 7, 0, 1];
+    const expected1 = new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7]);
+    const expected2 = new Uint8Array([0, 1]);
+    const limited = new reader.Limited(r, 10);
+    const feedIntv = setInterval(() => {
+      r.feed(Uint8Array.from(sample));
 
-        IntvCount++;
+      IntvCount++;
 
-        if (IntvCount < maxTests) {
-          return;
-        }
+      if (IntvCount < maxTests) {
+        return;
+      }
 
-        clearInterval(feedIntv);
-      }, 300);
+      clearInterval(feedIntv);
+    }, 300);
 
     let result = await reader.readUntil(limited, 7);
 

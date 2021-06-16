@@ -90,7 +90,7 @@ class Parser {
   }
 
   sendWillSubNego(willCmd, data, option) {
-    let b = new Uint8Array(6 + data.length + 2);
+    const b = new Uint8Array(6 + data.length + 2);
 
     b.set([cmdIAC, willCmd, option, cmdIAC, cmdSB, option], 0);
     b.set(data, 6);
@@ -100,7 +100,7 @@ class Parser {
   }
 
   sendSubNego(data, option) {
-    let b = new Uint8Array(3 + data.length + 2);
+    const b = new Uint8Array(3 + data.length + 2);
 
     b.set([cmdIAC, cmdSB, option], 0);
     b.set(data, 3);
@@ -110,13 +110,13 @@ class Parser {
   }
 
   async handleTermTypeSubNego(rd) {
-    let action = await reader.readOne(rd);
+    const action = await reader.readOne(rd);
 
     if (action[0] !== optTerminalTypeSend) {
       return null;
     }
 
-    let self = this;
+    const self = this;
 
     return () => {
       self.sendSubNego(unknownTermTypeSendData, optTerminalType);
@@ -127,7 +127,7 @@ class Parser {
     let endExec = null;
 
     for (;;) {
-      let d = await reader.readOne(rd);
+      const d = await reader.readOne(rd);
 
       switch (d[0]) {
         case optTerminalType:
@@ -141,7 +141,7 @@ class Parser {
           continue;
       }
 
-      let e = await reader.readOne(rd);
+      const e = await reader.readOne(rd);
 
       if (e[0] !== cmdSE) {
         continue;
@@ -187,12 +187,11 @@ class Parser {
         }
 
         newVal(false, cmdDont);
-        return;
     }
   }
 
   async handleCmd(rd) {
-    let d = await reader.readOne(rd);
+    const d = await reader.readOne(rd);
 
     switch (d[0]) {
       case cmdWill:
@@ -216,7 +215,7 @@ class Parser {
         throw new Exception("Unknown command");
     }
 
-    let o = await reader.readOne(rd);
+    const o = await reader.readOne(rd);
 
     switch (o[0]) {
       case optEcho:
@@ -259,13 +258,13 @@ class Parser {
           return;
         }
 
-        let dim = this.callbacks.getWindowDim(),
-          dimData = new DataView(new ArrayBuffer(4));
+        const dim = this.callbacks.getWindowDim();
+        const dimData = new DataView(new ArrayBuffer(4));
 
         dimData.setUint16(0, dim.cols);
         dimData.setUint16(2, dim.rows);
 
-        let dimBytes = new Uint8Array(dimData.buffer);
+        const dimBytes = new Uint8Array(dimData.buffer);
 
         if (this.options.nawsAccpeted) {
           this.sendSubNego(dimBytes, optNAWS);
@@ -300,7 +299,7 @@ class Parser {
   async run() {
     try {
       for (;;) {
-        let d = await reader.readUntil(this.reader, cmdIAC);
+        const d = await reader.readUntil(this.reader, cmdIAC);
 
         if (!d.found) {
           this.flusher(d.data);
@@ -336,7 +335,7 @@ class Control {
     this.charset = data.charset;
 
     if (this.charset === "utf-8") {
-      let enc = new TextEncoder();
+      const enc = new TextEncoder();
 
       this.charsetDecoder = (d) => {
         return d;
@@ -346,8 +345,8 @@ class Control {
         return enc.encode(dStr);
       };
     } else {
-      let dec = new TextDecoder(this.charset),
-        enc = new TextEncoder();
+      const dec = new TextDecoder(this.charset);
+      const enc = new TextEncoder();
 
       this.charsetDecoder = (d) => {
         return enc.encode(
@@ -373,7 +372,7 @@ class Control {
       rows: 65535,
     };
 
-    let self = this;
+    const self = this;
 
     this.parser = new Parser(
       this.sender,
@@ -390,7 +389,7 @@ class Control {
       }
     );
 
-    let runWait = this.parser.run();
+    const runWait = this.parser.run();
 
     data.events.place("inband", (rd) => {
       return new Promise((resolve, _reject) => {
@@ -501,7 +500,7 @@ class Control {
       return;
     }
 
-    let cc = this.closer;
+    const cc = this.closer;
     this.closer = null;
 
     return cc();

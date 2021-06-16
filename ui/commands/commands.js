@@ -153,13 +153,13 @@ const defField = {
  *
  */
 export function field(def, f) {
-  let n = {};
+  const n = {};
 
-  for (let i in def) {
+  for (const i in def) {
     n[i] = def[i];
   }
 
-  for (let i in f) {
+  for (const i in f) {
     if (typeof n[i] === typeof f[i]) {
       n[i] = f[i];
 
@@ -177,7 +177,7 @@ export function field(def, f) {
     );
   }
 
-  if (!n["name"]) {
+  if (!n.name) {
     throw new Exception('Field "name" must be specified');
   }
 
@@ -196,10 +196,10 @@ export function field(def, f) {
  *
  */
 export function fields(definitions, fs) {
-  let fss = [];
+  const fss = [];
 
-  for (let i in fs) {
-    if (!fs[i]["name"]) {
+  for (const i in fs) {
+    if (!fs[i].name) {
       throw new Exception('Field "name" must be specified');
     }
 
@@ -230,9 +230,9 @@ export function fieldsWithPreset(
   presetData,
   presetApplied
 ) {
-  let newFields = fields(definitions, fieldsData);
+  const newFields = fields(definitions, fieldsData);
 
-  for (let i in newFields) {
+  for (const i in newFields) {
     try {
       newFields[i].value = presetData.meta(newFields[i].name);
       newFields[i].readonly = true;
@@ -265,8 +265,8 @@ class Prompt {
     this.i = [];
     this.f = {};
 
-    for (let i in data.inputs) {
-      let f = field(defField, data.inputs[i]);
+    for (const i in data.inputs) {
+      const f = field(defField, data.inputs[i]);
 
       this.i.push(f);
 
@@ -304,9 +304,9 @@ class Prompt {
    *
    */
   inputs() {
-    let inputs = [];
+    const inputs = [];
 
-    for (let i in this.i) {
+    for (const i in this.i) {
       inputs.push(this.i[i]);
     }
 
@@ -334,14 +334,14 @@ class Prompt {
    *
    */
   submit(inputs) {
-    let fields = {};
+    const fields = {};
 
-    for (let i in this.f) {
+    for (const i in this.f) {
       fields[i] = this.f[i].value;
     }
 
-    for (let i in inputs) {
-      let k = i.toLowerCase();
+    for (const i in inputs) {
+      const k = i.toLowerCase();
 
       if (typeof fields[k] === "undefined") {
         throw new Exception('Field "' + k + '" is undefined');
@@ -525,7 +525,7 @@ class Wizard {
       throw new Exception("Wizard already closed, no next step is available");
     }
 
-    let n = await this.subs.subscribe();
+    const n = await this.subs.subscribe();
 
     if (n.type() === NEXT_DONE) {
       this.close();
@@ -700,7 +700,7 @@ class Builder {
    *
    */
   wizard(streams, controls, history, preset, session, keptSessions, done) {
-    let subs = new subscribe.Subscribe();
+    const subs = new subscribe.Subscribe();
 
     return new Wizard(
       this.wizarder(
@@ -733,7 +733,7 @@ class Builder {
    *
    */
   execute(streams, controls, history, config, session, keptSessions, done) {
-    let subs = new subscribe.Subscribe();
+    const subs = new subscribe.Subscribe();
 
     return new Wizard(
       this.executer(
@@ -764,7 +764,7 @@ class Builder {
    *
    */
   launch(streams, controls, history, launcher, done) {
-    let subs = new subscribe.Subscribe();
+    const subs = new subscribe.Subscribe();
 
     return new Wizard(
       this.launchCmd(
@@ -863,7 +863,7 @@ export class Commands {
    *
    */
   mergePresets(ps) {
-    let pp = [];
+    const pp = [];
 
     for (let i = 0; i < this.commands.length; i++) {
       const fetched = ps.fetch(this.commands[i].name());

@@ -17,7 +17,7 @@
 
 function send(method, url, headers) {
   return new Promise((res, rej) => {
-    let authReq = new XMLHttpRequest();
+    const authReq = new XMLHttpRequest();
 
     authReq.addEventListener("readystatechange", () => {
       if (authReq.readyState !== authReq.DONE) {
@@ -37,7 +37,7 @@ function send(method, url, headers) {
 
     authReq.open(method, url, true);
 
-    for (let h in headers) {
+    for (const h in headers) {
       authReq.setRequestHeader(h, headers[h]);
     }
 

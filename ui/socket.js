@@ -55,31 +55,31 @@ class Dial {
   connect(address, timeout) {
     const self = this;
     return new Promise((resolve, reject) => {
-      let ws = new WebSocket(address.webSocket),
-        promised = false,
-        timeoutTimer = setTimeout(() => {
-          ws.close();
-        }, timeout),
-        myRes = (w) => {
-          if (promised) {
-            return;
-          }
+      const ws = new WebSocket(address.webSocket);
+      let promised = false;
+      const timeoutTimer = setTimeout(() => {
+        ws.close();
+      }, timeout);
+      const myRes = (w) => {
+        if (promised) {
+          return;
+        }
 
-          clearTimeout(timeoutTimer);
-          promised = true;
+        clearTimeout(timeoutTimer);
+        promised = true;
 
-          return resolve(w);
-        },
-        myRej = (e) => {
-          if (promised) {
-            return;
-          }
+        return resolve(w);
+      };
+      const myRej = (e) => {
+        if (promised) {
+          return;
+        }
 
-          clearTimeout(timeoutTimer);
-          promised = true;
+        clearTimeout(timeoutTimer);
+        promised = true;
 
-          return reject(e);
-        };
+        return reject(e);
+      };
 
       if (!self.keepAliveTicker) {
         self.keepAliveTicker = setInterval(() => {
@@ -122,7 +122,7 @@ class Dial {
    *
    */
   async buildKey() {
-    let kStr = await this.buildKeyString();
+    const kStr = await this.buildKeyString();
 
     return await crypt.buildGCMKey(kStr);
   }
@@ -137,15 +137,15 @@ class Dial {
    *
    */
   async dial(callbacks) {
-    let ws = await this.connect(this.address, this.timeout);
+    const ws = await this.connect(this.address, this.timeout);
 
     try {
-      let rd = new reader.Reader(new reader.Multiple(() => {}), (data) => {
+      const rd = new reader.Reader(new reader.Multiple(() => {}), (data) => {
         return new Promise((resolve) => {
-          let bufferReader = new FileReader();
+          const bufferReader = new FileReader();
 
           bufferReader.onload = (event) => {
-            let d = new Uint8Array(event.target.result);
+            const d = new Uint8Array(event.target.result);
 
             resolve(d);
 
@@ -177,48 +177,48 @@ class Dial {
       });
 
       let sdDataConvert = (rawData) => {
-          return rawData;
-        },
-        getSdDataConvert = () => {
-          return sdDataConvert;
-        },
-        sd = new sender.Sender(
-          async (rawData) => {
-            try {
-              let data = await getSdDataConvert()(rawData);
+        return rawData;
+      };
+      const getSdDataConvert = () => {
+        return sdDataConvert;
+      };
+      const sd = new sender.Sender(
+        async (rawData) => {
+          try {
+            const data = await getSdDataConvert()(rawData);
 
-              ws.send(data.buffer);
-              callbacks.outbound(data);
-            } catch (e) {
-              ws.close();
-              rd.closeWithReason(e);
+            ws.send(data.buffer);
+            callbacks.outbound(data);
+          } catch (e) {
+            ws.close();
+            rd.closeWithReason(e);
 
-              if (process.env.NODE_ENV === "development") {
-                console.error(e);
-              }
-
-              throw e;
+            if (process.env.NODE_ENV === "development") {
+              console.error(e);
             }
-          },
-          4096 - 64, // Server has a 4096 bytes receive buffer, can be no
-          // greater,
-          minSenderDelay, // 30ms input delay
-          10 // max 10 buffered requests
-        );
 
-      let senderNonce = crypt.generateNonce();
+            throw e;
+          }
+        },
+        4096 - 64, // Server has a 4096 bytes receive buffer, can be no
+        // greater,
+        minSenderDelay, // 30ms input delay
+        10 // max 10 buffered requests
+      );
+
+      const senderNonce = crypt.generateNonce();
       sd.send(senderNonce);
 
-      let receiverNonce = await reader.readN(rd, crypt.GCMNonceSize);
+      const receiverNonce = await reader.readN(rd, crypt.GCMNonceSize);
 
-      let key = await this.buildKey();
+      const key = await this.buildKey();
 
       sdDataConvert = async (rawData) => {
-        let encoded = await crypt.encryptGCM(key, senderNonce, rawData);
+        const encoded = await crypt.encryptGCM(key, senderNonce, rawData);
 
         crypt.increaseNonce(senderNonce);
 
-        let dataToSend = new Uint8Array(encoded.byteLength + 2);
+        const dataToSend = new Uint8Array(encoded.byteLength + 2);
 
         dataToSend[0] = (encoded.byteLength >> 8) & 0xff;
         dataToSend[1] = encoded.byteLength & 0xff;
@@ -228,16 +228,16 @@ class Dial {
         return dataToSend;
       };
 
-      let cgmReader = new reader.Multiple(async (r) => {
+      const cgmReader = new reader.Multiple(async (r) => {
         try {
-          let dSizeBytes = await reader.readN(rd, 2),
-            dSize = 0;
+          const dSizeBytes = await reader.readN(rd, 2);
+          let dSize = 0;
 
           dSize = dSizeBytes[0];
           dSize <<= 8;
           dSize |= dSizeBytes[1];
 
-          let decoded = await crypt.decryptGCM(
+          const decoded = await crypt.decryptGCM(
             key,
             receiverNonce,
             await reader.readN(rd, dSize)
@@ -291,7 +291,7 @@ export class Socket {
    *
    */
   async get(callbacks) {
-    let self = this;
+    const self = this;
 
     if (this.streamHandler) {
       return this.streamHandler;
@@ -299,12 +299,12 @@ export class Socket {
 
     callbacks.connecting();
 
-    const receiveToPauseFactor = 6,
-      minReceivedToPause = 1024 * 16;
+    const receiveToPauseFactor = 6;
+    const minReceivedToPause = 1024 * 16;
 
-    let streamPaused = false,
-      currentReceived = 0,
-      currentUnpacked = 0;
+    let streamPaused = false;
+    let currentReceived = 0;
+    let currentUnpacked = 0;
 
     const shouldPause = () => {
       return (
@@ -314,7 +314,7 @@ export class Socket {
     };
 
     try {
-      let conn = await this.dial.dial({
+      const conn = await this.dial.dial({
         inbound(data) {
           currentReceived += data.size;
 
@@ -332,13 +332,9 @@ export class Socket {
             if (streamPaused && !shouldPause()) {
               streamPaused = false;
               self.streamHandler.resume();
-
-              return;
             } else if (!streamPaused && shouldPause()) {
               streamPaused = true;
               self.streamHandler.pause();
-
-              return;
             }
           }
         },
@@ -347,7 +343,7 @@ export class Socket {
         },
       });
 
-      let streamHandler = new streams.Streams(conn.reader, conn.sender, {
+      const streamHandler = new streams.Streams(conn.reader, conn.sender, {
         echoInterval: self.echoInterval,
         echoUpdater(delay) {
           const sendDelay = delay / 2;

@@ -97,17 +97,17 @@ class SSH {
    *
    */
   run(initialSender) {
-    let user = new strings.String(this.config.user),
-      userBuf = user.buffer(),
-      addr = new address.Address(
-        this.config.host.type,
-        this.config.host.address,
-        this.config.host.port
-      ),
-      addrBuf = addr.buffer(),
-      authMethod = new Uint8Array([this.config.auth]);
+    const user = new strings.String(this.config.user);
+    const userBuf = user.buffer();
+    const addr = new address.Address(
+      this.config.host.type,
+      this.config.host.address,
+      this.config.host.port
+    );
+    const addrBuf = addr.buffer();
+    const authMethod = new Uint8Array([this.config.auth]);
 
-    let data = new Uint8Array(userBuf.length + addrBuf.length + 1);
+    const data = new Uint8Array(userBuf.length + addrBuf.length + 1);
 
     data.set(userBuf, 0);
     data.set(addrBuf, userBuf.length);
@@ -214,7 +214,7 @@ class SSH {
    *
    */
   async sendResize(rows, cols) {
-    let data = new DataView(new ArrayBuffer(4));
+    const data = new DataView(new ArrayBuffer(4));
 
     data.setUint16(0, rows);
     data.setUint16(2, cols);
@@ -281,7 +281,7 @@ const initialFieldDef = {
         throw new Error("Hostname must be specified");
       }
 
-      let addr = common.splitHostPort(d, DEFAULT_PORT);
+      const addr = common.splitHostPort(d, DEFAULT_PORT);
 
       if (addr.addr.length <= 0) {
         throw new Error("Cannot be empty");
@@ -311,7 +311,7 @@ const initialFieldDef = {
       return [];
     },
     verify(d) {
-      for (let i in common.charsetPresets) {
+      for (const i in common.charsetPresets) {
         if (common.charsetPresets[i] !== d) {
           continue;
         }
@@ -397,7 +397,7 @@ const initialFieldDef = {
       const lines = d.trim().split("\n");
       let firstLineReaded = false;
 
-      for (let i in lines) {
+      for (const i in lines) {
         if (!firstLineReaded) {
           if (lines[i].indexOf("-") === 0) {
             firstLineReaded = true;
@@ -526,11 +526,9 @@ class Wizard {
     this.preset = preset;
     this.hasStarted = false;
     this.streams = streams;
-    this.session = session
-      ? session
-      : {
-          credential: "",
-        };
+    this.session = session || {
+      credential: "",
+    };
     this.keptSessions = keptSessions;
     this.step = subs;
     this.controls = controls.get("SSH");
@@ -600,9 +598,9 @@ class Wizard {
    *
    */
   buildCommand(sender, configInput, sessionData) {
-    let self = this;
+    const self = this;
 
-    let config = {
+    const config = {
       user: common.strToUint8Array(configInput.user),
       auth: getAuthMethodFromStr(configInput.authentication),
       charset: configInput.charset,
@@ -612,7 +610,9 @@ class Wizard {
     };
 
     // Copy the keptSessions from the record so it will not be overwritten here
-    let keptSessions = self.keptSessions ? [].concat(...self.keptSessions) : [];
+    const keptSessions = self.keptSessions
+      ? [].concat(...self.keptSessions)
+      : [];
 
     return new SSH(sender, config, {
       "initialization.failed"(hd) {
@@ -644,7 +644,7 @@ class Wizard {
         self.step.resolve(self.stepWaitForEstablishWait(configInput.host));
       },
       async "connect.failed"(rd) {
-        let d = new TextDecoder("utf-8").decode(
+        const d = new TextDecoder("utf-8").decode(
           await reader.readCompletely(rd)
         );
 
@@ -735,7 +735,7 @@ class Wizard {
   }
 
   stepInitialPrompt() {
-    let self = this;
+    const self = this;
 
     return command.prompt(
       "SSH",
@@ -777,7 +777,7 @@ class Wizard {
                 HostMaxSearchResults
               );
 
-              let sugg = [];
+              const sugg = [];
 
               for (let i = 0; i < hosts.length; i++) {
                 sugg.push({
@@ -807,10 +807,10 @@ class Wizard {
   async stepFingerprintPrompt(rd, sd, verify, newFingerprint) {
     const self = this;
 
-    let fingerprintData = new TextDecoder("utf-8").decode(
-        await reader.readCompletely(rd)
-      ),
-      fingerprintChanged = false;
+    const fingerprintData = new TextDecoder("utf-8").decode(
+      await reader.readCompletely(rd)
+    );
+    let fingerprintChanged = false;
 
     switch (verify(fingerprintData)) {
       case FingerprintPromptVerifyPassed:
@@ -901,7 +901,7 @@ class Wizard {
       "Please input your credential",
       "Login",
       (r) => {
-        let vv = r[fields[0].name.toLowerCase()];
+        const vv = r[fields[0].name.toLowerCase()];
 
         sd.send(
           CLIENT_CONNECT_RESPOND_CREDENTIAL,
@@ -1064,16 +1064,16 @@ export class Command {
       throw new Exception('Given launcher "' + launcher + '" was malformed');
     }
 
-    let user = userHostName[1],
-      host = userHostName[2],
-      auth = d[1],
-      charset = d.length >= 3 && d[2] ? d[2] : "utf-8"; // RM after depreciation
+    const user = userHostName[1];
+    const host = userHostName[2];
+    const auth = d[1];
+    const charset = d.length >= 3 && d[2] ? d[2] : "utf-8"; // RM after depreciation
 
     try {
-      initialFieldDef["User"].verify(user);
-      initialFieldDef["Host"].verify(host);
-      initialFieldDef["Authentication"].verify(auth);
-      initialFieldDef["Encoding"].verify(charset);
+      initialFieldDef.User.verify(user);
+      initialFieldDef.Host.verify(host);
+      initialFieldDef.Authentication.verify(auth);
+      initialFieldDef.Encoding.verify(charset);
     } catch (e) {
       throw new Exception(
         'Given launcher "' + launcher + '" was malformed ' + e

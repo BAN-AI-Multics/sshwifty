@@ -15,26 +15,26 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-const webpack = require("webpack"),
-  { spawn } = require("child_process"),
-  path = require("path"),
-  os = require("os"),
-  HtmlWebpackPlugin = require("html-webpack-plugin"),
-  MiniCssExtractPlugin = require("mini-css-extract-plugin"),
-  CssMinimizerPlugin = require("css-minimizer-webpack-plugin"),
-  ImageMinimizerPlugin = require("image-minimizer-webpack-plugin"),
-  { VueLoaderPlugin } = require("vue-loader"),
-  FaviconsWebpackPlugin = require("favicons-webpack-plugin"),
-  CopyPlugin = require("copy-webpack-plugin"),
-  TerserPlugin = require("terser-webpack-plugin"),
-  { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const webpack = require("webpack");
+const { spawn } = require("child_process");
+const path = require("path");
+const os = require("os");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
+const { VueLoaderPlugin } = require("vue-loader");
+const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 const inDevMode = process.env.NODE_ENV === "development";
 
 process.traceDeprecation = true;
 
-let appSpawnProc = null,
-  appBuildProc = null;
+let appSpawnProc = null;
+let appBuildProc = null;
 
 const killSpawnProc = (proc, then) => {
   if (proc === null) {
@@ -47,7 +47,7 @@ const killSpawnProc = (proc, then) => {
 
   process.kill(-proc.proc.pid, "SIGINT");
 
-  let forceKill = setTimeout(() => {
+  const forceKill = setTimeout(() => {
     process.kill(-proc.proc.pid);
   }, 3000);
 
@@ -60,51 +60,48 @@ const killSpawnProc = (proc, then) => {
 
 const startAppSpawnProc = (onExit) => {
   killSpawnProc(appSpawnProc, () => {
-    let mEnv = {};
+    const mEnv = {};
 
-    for (let i in process.env) {
+    for (const i in process.env) {
       mEnv[i] = process.env[i];
     }
 
-    mEnv["SSHWIFTY_CONFIG"] = path.join(
-      __dirname,
-      "sshwifty.conf.example.json"
-    );
+    mEnv.SSHWIFTY_CONFIG = path.join(__dirname, "sshwifty.conf.example.json");
 
-    mEnv["SSHWIFTY_DEBUG"] = "_";
+    mEnv.SSHWIFTY_DEBUG = "_";
 
     process.stdout.write("Starting application ...\n");
 
-    let proc = spawn("go", ["run", "sshwifty.go"], {
-        env: mEnv,
-        detached: true,
-      }),
-      waiter = new Promise((resolve) => {
-        let closed = false;
+    const proc = spawn("go", ["run", "sshwifty.go"], {
+      env: mEnv,
+      detached: true,
+    });
+    const waiter = new Promise((resolve) => {
+      let closed = false;
 
-        proc.stdout.on("data", (msg) => {
-          process.stdout.write(msg.toString());
-        });
-
-        proc.stderr.on("data", (msg) => {
-          process.stderr.write(msg.toString());
-        });
-
-        proc.on("exit", (n) => {
-          process.stdout.write("Application process is exited.\n");
-
-          if (closed) {
-            return;
-          }
-
-          closed = true;
-
-          appSpawnProc = null;
-          resolve(n);
-
-          onExit();
-        });
+      proc.stdout.on("data", (msg) => {
+        process.stdout.write(msg.toString());
       });
+
+      proc.stderr.on("data", (msg) => {
+        process.stderr.write(msg.toString());
+      });
+
+      proc.on("exit", (n) => {
+        process.stdout.write("Application process is exited.\n");
+
+        if (closed) {
+          return;
+        }
+
+        closed = true;
+
+        appSpawnProc = null;
+        resolve(n);
+
+        onExit();
+      });
+    });
 
     appSpawnProc = {
       proc,
@@ -115,46 +112,46 @@ const startAppSpawnProc = (onExit) => {
 
 const startBuildSpawnProc = (onExit) => {
   killSpawnProc(appBuildProc, () => {
-    let mEnv = {};
+    const mEnv = {};
 
-    for (let i in process.env) {
+    for (const i in process.env) {
       mEnv[i] = process.env[i];
     }
 
-    mEnv["NODE_ENV"] = process.env.NODE_ENV;
+    mEnv.NODE_ENV = process.env.NODE_ENV;
 
     process.stdout.write("Generating source code ...\n");
 
-    let proc = spawn("go", ["generate", "./..."], {
-        env: mEnv,
-        detached: true,
-      }),
-      waiter = new Promise((resolve) => {
-        let closed = false;
+    const proc = spawn("go", ["generate", "./..."], {
+      env: mEnv,
+      detached: true,
+    });
+    const waiter = new Promise((resolve) => {
+      let closed = false;
 
-        proc.stdout.on("data", (msg) => {
-          process.stdout.write(msg.toString());
-        });
-
-        proc.stderr.on("data", (msg) => {
-          process.stderr.write(msg.toString());
-        });
-
-        proc.on("exit", (n) => {
-          process.stdout.write("Code generation process is exited.\n");
-
-          if (closed) {
-            return;
-          }
-
-          closed = true;
-
-          appBuildProc = null;
-          resolve(n);
-
-          onExit();
-        });
+      proc.stdout.on("data", (msg) => {
+        process.stdout.write(msg.toString());
       });
+
+      proc.stderr.on("data", (msg) => {
+        process.stderr.write(msg.toString());
+      });
+
+      proc.on("exit", (n) => {
+        process.stdout.write("Code generation process is exited.\n");
+
+        if (closed) {
+          return;
+        }
+
+        closed = true;
+
+        appBuildProc = null;
+        resolve(n);
+
+        onExit();
+      });
+    });
 
     appBuildProc = {
       proc,
@@ -266,7 +263,7 @@ module.exports = {
     ],
   },
   plugins: (function () {
-    var plugins = [
+    const plugins = [
       new webpack.DefinePlugin(
         process.env.NODE_ENV === "production"
           ? {

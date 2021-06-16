@@ -156,7 +156,7 @@ export function build(tabIndex, i, field) {
           return;
         }
 
-        for (let v in suggestions) {
+        for (const v in suggestions) {
           this.suggestions.push({
             title: suggestions[v].title,
             value: suggestions[v].value,

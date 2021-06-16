@@ -73,14 +73,14 @@ class Telnet {
    *
    */
   run(initialSender) {
-    let addr = new address.Address(
-        this.config.host.type,
-        this.config.host.address,
-        this.config.host.port
-      ),
-      addrBuf = addr.buffer();
+    const addr = new address.Address(
+      this.config.host.type,
+      this.config.host.address,
+      this.config.host.port
+    );
+    const addrBuf = addr.buffer();
 
-    let data = new Uint8Array(addrBuf.length);
+    const data = new Uint8Array(addrBuf.length);
 
     data.set(addrBuf, 0);
 
@@ -197,7 +197,7 @@ const initialFieldDef = {
         throw new Error("Hostname must be specified");
       }
 
-      let addr = common.splitHostPort(d, DEFAULT_PORT);
+      const addr = common.splitHostPort(d, DEFAULT_PORT);
 
       if (addr.addr.length <= 0) {
         throw new Error("Cannot be empty");
@@ -227,7 +227,7 @@ const initialFieldDef = {
       return [];
     },
     verify(d) {
-      for (let i in common.charsetPresets) {
+      for (const i in common.charsetPresets) {
         if (common.charsetPresets[i] !== d) {
           continue;
         }
@@ -331,15 +331,17 @@ class Wizard {
    *
    */
   buildCommand(sender, configInput, sessionData) {
-    let self = this;
+    const self = this;
 
-    let parsedConfig = {
+    const parsedConfig = {
       host: address.parseHostPort(configInput.host, DEFAULT_PORT),
       charset: configInput.charset,
     };
 
     // Copy the keptSessions from the record so it will not be overwritten here
-    let keptSessions = self.keptSessions ? [].concat(...self.keptSessions) : [];
+    const keptSessions = self.keptSessions
+      ? [].concat(...self.keptSessions)
+      : [];
 
     return new Telnet(sender, parsedConfig, {
       "initialization.failed"(streamInitialHeader) {
@@ -394,8 +396,8 @@ class Wizard {
         );
       },
       async "connect.failed"(rd) {
-        let readed = await reader.readCompletely(rd),
-          message = new TextDecoder("utf-8").decode(readed.buffer);
+        const readed = await reader.readCompletely(rd);
+        const message = new TextDecoder("utf-8").decode(readed.buffer);
 
         self.step.resolve(self.stepErrorDone("Connection failed", message));
       },
@@ -442,7 +444,7 @@ class Wizard {
                 HostMaxSearchResults
               );
 
-              let sugg = [];
+              const sugg = [];
 
               for (let i = 0; i < hosts.length; i++) {
                 sugg.push({
@@ -595,7 +597,7 @@ export class Command {
     }
 
     try {
-      initialFieldDef["Host"].verify(d[0]);
+      initialFieldDef.Host.verify(d[0]);
     } catch (e) {
       throw new Exception(
         'Given launcher "' + launcher + '" was invalid: ' + e
@@ -607,7 +609,7 @@ export class Command {
     if (d.length > 1) {
       // TODO: Remove this check after depreciation period.
       try {
-        initialFieldDef["Encoding"].verify(d[1]);
+        initialFieldDef.Encoding.verify(d[1]);
 
         charset = d[1];
       } catch (e) {

@@ -28,7 +28,7 @@ export class String {
    *
    */
   static async read(rd) {
-    let l = new integer.Integer(0);
+    const l = new integer.Integer(0);
 
     await l.unmarshal(rd);
 
@@ -61,8 +61,8 @@ export class String {
    *
    */
   buffer() {
-    let lBytes = new integer.Integer(this.str.length).marshal(),
-      buf = new Uint8Array(lBytes.length + this.str.length);
+    const lBytes = new integer.Integer(this.str.length).marshal();
+    const buf = new Uint8Array(lBytes.length + this.str.length);
 
     buf.set(lBytes, 0);
     buf.set(this.str, lBytes.length);

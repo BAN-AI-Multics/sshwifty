@@ -37,10 +37,10 @@ export class Address {
    * @throws {Exception} when address type is invalid
    */
   static async read(rd) {
-    let readed = await reader.readN(rd, 3),
-      portNum = 0,
-      addrType = LOOPBACK,
-      addrData = null;
+    const readed = await reader.readN(rd, 3);
+    let portNum = 0;
+    let addrType = LOOPBACK;
+    let addrData = null;
 
     portNum |= readed[0];
     portNum <<= 8;
@@ -173,7 +173,7 @@ export class Address {
           throw new Exception("Host name cannot longer than " + MAX_ADDR_LEN);
         }
 
-        let dataBuf = new Uint8Array(this.addrData.length + 3);
+        const dataBuf = new Uint8Array(this.addrData.length + 3);
 
         dataBuf[0] = (this.addrPort >> 8) & 0xff;
         dataBuf[1] = this.addrPort & 0xff;
@@ -201,8 +201,8 @@ export class Address {
  * @throws {Exception} when the address is invalid
  */
 export function parseHostPort(s, defaultPort) {
-  let d = common.splitHostPort(s, defaultPort),
-    t = HOSTNAME;
+  const d = common.splitHostPort(s, defaultPort);
+  let t = HOSTNAME;
 
   switch (d.type) {
     case "IPv4":

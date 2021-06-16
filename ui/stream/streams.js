@@ -120,7 +120,7 @@ export class Streams {
       this.echoTimer = null;
     }
 
-    for (let i in this.streams) {
+    for (const i in this.streams) {
       if (!this.streams[i].running()) {
         continue;
       }
@@ -158,7 +158,7 @@ export class Streams {
    *
    */
   pause() {
-    let pauseHeader = header.header(header.CONTROL);
+    const pauseHeader = header.header(header.CONTROL);
 
     pauseHeader.set(1);
 
@@ -172,7 +172,7 @@ export class Streams {
    *
    */
   resume() {
-    let pauseHeader = header.header(header.CONTROL);
+    const pauseHeader = header.header(header.CONTROL);
 
     pauseHeader.set(1);
 
@@ -192,7 +192,7 @@ export class Streams {
    */
   request(commandID, commandBuilder) {
     try {
-      for (let i in this.streams) {
+      for (const i in this.streams) {
         if (this.streams[i].running()) {
           continue;
         }
@@ -214,8 +214,8 @@ export class Streams {
    *
    */
   sendEcho() {
-    let echoHeader = header.header(header.CONTROL),
-      randomNum = new Uint8Array(common.getRands(8, 0, 255));
+    const echoHeader = header.header(header.CONTROL);
+    const randomNum = new Uint8Array(common.getRands(8, 0, 255));
 
     echoHeader.set(randomNum.length - 1);
 
@@ -242,9 +242,9 @@ export class Streams {
    *
    */
   async handleControl(rd) {
-    let controlType = await reader.readOne(rd),
-      delay = 0,
-      echoBytes = null;
+    const controlType = await reader.readOne(rd);
+    let delay = 0;
+    let echoBytes = null;
 
     switch (controlType[0]) {
       case header.CONTROL_ECHO:
@@ -258,7 +258,7 @@ export class Streams {
           return;
         }
 
-        for (let i in this.lastEchoData) {
+        for (const i in this.lastEchoData) {
           if (this.lastEchoData[i] == echoBytes[i]) {
             continue;
           }
@@ -304,7 +304,7 @@ export class Streams {
       return;
     }
 
-    let stream = this.streams[hd.data()];
+    const stream = this.streams[hd.data()];
 
     if (!stream.running()) {
       // WARNING: Connection must be reset at this point because we cannot
@@ -317,12 +317,12 @@ export class Streams {
       );
     }
 
-    let initialHeaderBytes = await reader.readN(rd, 2);
+    const initialHeaderBytes = await reader.readN(rd, 2);
 
     // WARNING: It's the stream's responsibility to ensure stream data is
     //          completely readed before return
     if (stream.initializing()) {
-      let streamHeader = new header.InitialStream(
+      const streamHeader = new header.InitialStream(
         initialHeaderBytes[0],
         initialHeaderBytes[1]
       );
@@ -330,13 +330,13 @@ export class Streams {
       return stream.initialize(streamHeader);
     }
 
-    let streamHeader = new header.Stream(
-        initialHeaderBytes[0],
-        initialHeaderBytes[1]
-      ),
-      streamReader = new reader.Limited(rd, streamHeader.length());
+    const streamHeader = new header.Stream(
+      initialHeaderBytes[0],
+      initialHeaderBytes[1]
+    );
+    const streamReader = new reader.Limited(rd, streamHeader.length());
 
-    let tickResult = await stream.tick(streamHeader, streamReader);
+    const tickResult = await stream.tick(streamHeader, streamReader);
 
     await reader.readCompletely(streamReader);
 
@@ -356,7 +356,7 @@ export class Streams {
       return;
     }
 
-    let stream = this.streams[hd.data()];
+    const stream = this.streams[hd.data()];
 
     if (!stream.running()) {
       // WARNING: Connection must be reset at this point because we cannot
@@ -369,9 +369,9 @@ export class Streams {
       );
     }
 
-    let cResult = await stream.close();
+    const cResult = await stream.close();
 
-    let completedHeader = new header.Header(header.COMPLETED);
+    const completedHeader = new header.Header(header.COMPLETED);
     completedHeader.set(hd.data());
     this.sender.send(new Uint8Array([completedHeader.value()]));
 
@@ -391,7 +391,7 @@ export class Streams {
       return;
     }
 
-    let stream = this.streams[hd.data()];
+    const stream = this.streams[hd.data()];
 
     if (!stream.running()) {
       // WARNING: Connection must be reset at this point because we cannot
@@ -413,8 +413,8 @@ export class Streams {
    * @throws {Exception} when encountered an unknown header
    */
   async tick() {
-    let headerBytes = await reader.readOne(this.reader),
-      hd = new header.Header(headerBytes[0]);
+    const headerBytes = await reader.readOne(this.reader);
+    const hd = new header.Header(headerBytes[0]);
 
     switch (hd.type()) {
       case header.CONTROL:

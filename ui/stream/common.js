@@ -38,7 +38,7 @@ export function getRand(min, max) {
  * @returns {Array<number>} A group of random number
  */
 export function getRands(n, min, max) {
-  let r = [];
+  const r = [];
 
   for (let i = 0; i < n; i++) {
     r.push(getRand(min, max));
@@ -57,8 +57,8 @@ export function getRands(n, min, max) {
  *
  */
 export function separateBuffer(buf, max) {
-  let start = 0,
-    result = [];
+  let start = 0;
+  const result = [];
 
   while (start < buf.length) {
     let remain = buf.length - start;
@@ -85,10 +85,10 @@ export function separateBuffer(buf, max) {
  *
  */
 export function buildBufferFromString(str) {
-  let r = [],
-    t = [];
+  const r = [];
+  let t = [];
 
-  for (let i in str) {
+  for (const i in str) {
     let c = str.charCodeAt(i);
 
     while (c > 0xff) {

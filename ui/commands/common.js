@@ -58,9 +58,9 @@ const availableEncodings = [
 ];
 
 export const charsetPresets = (() => {
-  let r = [];
+  const r = [];
 
-  for (let i in availableEncodings) {
+  for (const i in availableEncodings) {
     try {
       if (!iconv.encodingExists(availableEncodings[i])) {
         continue;
@@ -136,7 +136,7 @@ export function isNumber(d) {
  *
  */
 export function isHex(d) {
-  let dd = d.toLowerCase();
+  const dd = d.toLowerCase();
 
   for (let i = 0; i < dd.length; i++) {
     if (!hexCharators[dd[i]]) {
@@ -208,20 +208,20 @@ function isHostname(d) {
 export function parseIPv4(d) {
   const addrSeg = 4;
 
-  let s = d.split(".");
+  const s = d.split(".");
 
   if (s.length != addrSeg) {
     throw new Exception("Invalid address");
   }
 
-  let r = new Uint8Array(addrSeg);
+  const r = new Uint8Array(addrSeg);
 
-  for (let i in s) {
+  for (const i in s) {
     if (!isNumber(s[i])) {
       throw new Exception("Invalid address");
     }
 
-    let ii = parseInt(s[i], 10); // Only support dec
+    const ii = parseInt(s[i], 10); // Only support dec
 
     if (isNaN(ii)) {
       throw new Exception("Invalid address");
@@ -250,7 +250,7 @@ export function parseIPv4(d) {
 export function parseIPv6(d) {
   const addrSeg = 8;
 
-  let s = d.split(":");
+  const s = d.split(":");
 
   if (s.length > addrSeg || s.length <= 1) {
     throw new Exception("Invalid address");
@@ -259,7 +259,7 @@ export function parseIPv6(d) {
   if (s[0].charAt(0) === "[") {
     s[0] = s[0].substring(1, s[0].length);
 
-    let end = s.length - 1;
+    const end = s.length - 1;
 
     if (s[end].charAt(s[end].length - 1) !== "]") {
       throw new Exception("Invalid address");
@@ -268,8 +268,8 @@ export function parseIPv6(d) {
     s[end] = s[end].substring(0, s[end].length - 1);
   }
 
-  let r = new Uint16Array(addrSeg),
-    rIndexShift = 0;
+  const r = new Uint16Array(addrSeg);
+  let rIndexShift = 0;
 
   for (let i = 0; i < s.length; i++) {
     if (s[i].length <= 0) {
@@ -282,7 +282,7 @@ export function parseIPv6(d) {
       throw new Exception("Invalid address");
     }
 
-    let ii = parseInt(s[i], 16); // Only support hex
+    const ii = parseInt(s[i], 16); // Only support hex
 
     if (isNaN(ii)) {
       throw new Exception("Invalid address");
@@ -307,7 +307,7 @@ export function parseIPv6(d) {
  *
  */
 export function strToUint8Array(d) {
-  let r = new Uint8Array(d.length);
+  const r = new Uint8Array(d.length);
 
   for (let i = 0, j = d.length; i < j; i++) {
     r[i] = d.charCodeAt(i);
@@ -376,12 +376,12 @@ function parseIP(d) {
 }
 
 export function splitHostPort(d, defPort) {
-  let hps = d.lastIndexOf(":"),
-    fhps = d.indexOf(":"),
-    ipv6hps = d.indexOf("[");
+  const hps = d.lastIndexOf(":");
+  const fhps = d.indexOf(":");
+  const ipv6hps = d.indexOf("[");
 
   if ((hps < 0 || hps != fhps) && ipv6hps < 0) {
-    let a = parseIP(d);
+    const a = parseIP(d);
 
     return {
       type: a.type,
@@ -393,22 +393,22 @@ export function splitHostPort(d, defPort) {
   if (ipv6hps > 0) {
     throw new Exception("Invalid address");
   } else if (ipv6hps === 0) {
-    let ipv6hpse = d.lastIndexOf("]");
+    const ipv6hpse = d.lastIndexOf("]");
 
     if (ipv6hpse <= ipv6hps || ipv6hpse + 1 != hps) {
       throw new Exception("Invalid address");
     }
   }
 
-  let addr = d.slice(0, hps),
-    port = d.slice(hps + 1, d.length);
+  const addr = d.slice(0, hps);
+  const port = d.slice(hps + 1, d.length);
 
   if (!isNumber(port)) {
     throw new Exception("Invalid address");
   }
 
-  let portNum = parseInt(port, 10),
-    a = parseIP(addr);
+  const portNum = parseInt(port, 10);
+  const a = parseIP(addr);
 
   return {
     type: a.type,

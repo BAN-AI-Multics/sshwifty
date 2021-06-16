@@ -25,11 +25,11 @@
  *
  */
 function getRandHex(from, to) {
-  let color = Math.random() * (to - from) + from,
-    colorDark = color - color / 20;
+  const color = Math.random() * (to - from) + from;
+  const colorDark = color - color / 20;
 
-  let r = Math.round(color).toString(16),
-    rDark = Math.round(colorDark).toString(16);
+  let r = Math.round(color).toString(16);
+  let rDark = Math.round(colorDark).toString(16);
 
   if (r.length % 2 !== 0) {
     r = "0" + r;
@@ -51,9 +51,9 @@ function getRandHex(from, to) {
  * @returns {string} Color bytes in string
  */
 function getRandColor(from, to) {
-  let r = getRandHex(from, to),
-    g = getRandHex(from, to),
-    b = getRandHex(from, to);
+  const r = getRandHex(from, to);
+  const g = getRandHex(from, to);
+  const b = getRandHex(from, to);
 
   return ["#" + r[0] + g[0] + b[0], "#" + r[1] + g[1] + b[1]];
 }
@@ -77,7 +77,7 @@ export class Color {
     let tried = 0;
 
     for (;;) {
-      let color = getRandColor(0x22, 0x33);
+      const color = getRandColor(0x22, 0x33);
 
       if (this.assignedColors[color[0]]) {
         tried++;

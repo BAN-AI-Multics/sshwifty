@@ -31,7 +31,7 @@ export class Events {
     this.events = {};
     this.placeHolders = {};
 
-    for (let i in events) {
+    for (const i in events) {
       if (typeof callbacks[events[i]] !== "function") {
         throw new Exception(
           'Unknown event type for "' +

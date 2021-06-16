@@ -21,16 +21,16 @@ import * as address from "./address.js";
 
 describe("Address", () => {
   it("Address Loopback", async () => {
-    let addr = new address.Address(address.LOOPBACK, null, 8080),
-      buf = addr.buffer();
+    const addr = new address.Address(address.LOOPBACK, null, 8080);
+    const buf = addr.buffer();
 
-    let r = new reader.Reader(new reader.Multiple(), (data) => {
+    const r = new reader.Reader(new reader.Multiple(), (data) => {
       return data;
     });
 
     r.feed(buf);
 
-    let addr2 = await address.Address.read(r);
+    const addr2 = await address.Address.read(r);
 
     assert.equal(addr2.type(), addr.type());
     assert.deepEqual(addr2.address(), addr.address());
@@ -38,20 +38,20 @@ describe("Address", () => {
   });
 
   it("Address IPv4", async () => {
-    let addr = new address.Address(
-        address.IPV4,
-        new Uint8Array([127, 0, 0, 1]),
-        8080
-      ),
-      buf = addr.buffer();
+    const addr = new address.Address(
+      address.IPV4,
+      new Uint8Array([127, 0, 0, 1]),
+      8080
+    );
+    const buf = addr.buffer();
 
-    let r = new reader.Reader(new reader.Multiple(() => {}), (data) => {
+    const r = new reader.Reader(new reader.Multiple(() => {}), (data) => {
       return data;
     });
 
     r.feed(buf);
 
-    let addr2 = await address.Address.read(r);
+    const addr2 = await address.Address.read(r);
 
     assert.equal(addr2.type(), addr.type());
     assert.deepEqual(addr2.address(), addr.address());
@@ -59,20 +59,20 @@ describe("Address", () => {
   });
 
   it("Address IPv6", async () => {
-    let addr = new address.Address(
-        address.IPV6,
-        new Uint8Array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]),
-        8080
-      ),
-      buf = addr.buffer();
+    const addr = new address.Address(
+      address.IPV6,
+      new Uint8Array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]),
+      8080
+    );
+    const buf = addr.buffer();
 
-    let r = new reader.Reader(new reader.Multiple(() => {}), (data) => {
+    const r = new reader.Reader(new reader.Multiple(() => {}), (data) => {
       return data;
     });
 
     r.feed(buf);
 
-    let addr2 = await address.Address.read(r);
+    const addr2 = await address.Address.read(r);
 
     assert.equal(addr2.type(), addr.type());
     assert.deepEqual(addr2.address(), addr.address());
@@ -80,20 +80,20 @@ describe("Address", () => {
   });
 
   it("Address HostName", async () => {
-    let addr = new address.Address(
-        address.HOSTNAME,
-        new Uint8Array(["v", "a", "g", "u", "l", "1", "2", "3"]),
-        8080
-      ),
-      buf = addr.buffer();
+    const addr = new address.Address(
+      address.HOSTNAME,
+      new Uint8Array(["v", "a", "g", "u", "l", "1", "2", "3"]),
+      8080
+    );
+    const buf = addr.buffer();
 
-    let r = new reader.Reader(new reader.Multiple(() => {}), (data) => {
+    const r = new reader.Reader(new reader.Multiple(() => {}), (data) => {
       return data;
     });
 
     r.feed(buf);
 
-    let addr2 = await address.Address.read(r);
+    const addr2 = await address.Address.read(r);
 
     assert.equal(addr2.type(), addr.type());
     assert.deepEqual(addr2.address(), addr.address());

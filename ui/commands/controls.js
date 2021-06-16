@@ -29,8 +29,8 @@ export class Controls {
   constructor(controls) {
     this.controls = {};
 
-    for (let i in controls) {
-      let cType = controls[i].type();
+    for (const i in controls) {
+      const cType = controls[i].type();
 
       if (typeof this.controls[cType] === "object") {
         throw new Exception('Control "' + cType + '" already been defined');

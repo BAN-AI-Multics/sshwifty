@@ -30,10 +30,10 @@ function extractSelectedData(kept, input) {
     return null;
   }
 
-  let data = {},
-    length = 0;
+  const data = {};
+  let length = 0;
 
-  for (let k in kept) {
+  for (const k in kept) {
     if (!input[kept[k]]) {
       continue;
     }
@@ -91,7 +91,7 @@ export class History {
    *
    */
   indexOf(uname) {
-    for (let i in this.records) {
+    for (const i in this.records) {
       if (this.records[i].uname !== uname) {
         continue;
       }
@@ -158,7 +158,7 @@ export class History {
    *
    */
   del(uid) {
-    for (let i in this.records) {
+    for (const i in this.records) {
       if (this.records[i].uname !== uid) {
         continue;
       }
@@ -177,7 +177,7 @@ export class History {
    *
    */
   clearSession(uid) {
-    for (let i in this.records) {
+    for (const i in this.records) {
       if (this.records[i].uname !== uid) {
         continue;
       }
@@ -198,9 +198,9 @@ export class History {
    *
    */
   all() {
-    let r = [];
+    const r = [];
 
-    for (let i in this.records) {
+    for (const i in this.records) {
       r.push({
         uid: this.records[i].uname,
         title: this.records[i].title,
@@ -223,9 +223,9 @@ export class History {
    *
    */
   export() {
-    let r = [];
+    const r = [];
 
-    for (let i in this.records) {
+    for (const i in this.records) {
       r.push({
         uname: this.records[i].uname,
         title: this.records[i].title,
@@ -251,7 +251,7 @@ export class History {
    *
    */
   import(records) {
-    for (let i in records) {
+    for (const i in records) {
       if (this.indexOf(records[i].uname) >= 0) {
         continue;
       }
@@ -284,7 +284,7 @@ export class History {
    */
   search(type, metaName, keyword, max) {
     let maxResults = max > this.records.length ? this.records.length : max;
-    let s = [];
+    const s = [];
 
     if (maxResults < 0) {
       maxResults = this.records.length;
