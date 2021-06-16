@@ -10,8 +10,6 @@
 
 ---
 
-## License
-
 - This Software is distributed under the terms and conditions of the
   [**AGPL‑3.0**](LICENSE.md) license.
   - This Software may contain, incorporate, integrate, require, or be
