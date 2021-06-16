@@ -18,6 +18,8 @@
 import assert from "assert";
 import * as header from "./header.js";
 
+import * as header from "./header.js";
+
 describe("Header", () => {
   it("Header", () => {
     const h = new header.Header(header.ECHO);

@@ -18,7 +18,7 @@
 package configuration
 
 import (
-	"github.com/nirui/sshwifty/application/log"
+	"github.com/BAN-AI-Multics/sshwifty/application/log"
 )
 
 const (

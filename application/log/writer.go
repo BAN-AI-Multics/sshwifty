@@ -54,7 +54,7 @@ func (w Writer) Write(b []byte) (int, error) {
 }
 
 func (w Writer) write(
-	prefix string, msg string, params ...interface{}) (int, error) {
+	prefix, msg string, params ...interface{}) (int, error) {
 	return fmt.Fprintf(w.w, "["+prefix+"] "+
 		time.Now().Format(time.RFC1123)+" "+w.c+": "+msg+"\r\n", params...)
 }

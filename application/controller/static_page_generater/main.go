@@ -35,7 +35,7 @@ import (
 )
 
 const (
-	parentPackage = "github.com/nirui/sshwifty/application/controller"
+	parentPackage = "github.com/BAN-AI-Multics/sshwifty/application/controller"
 )
 
 const (
@@ -199,7 +199,7 @@ var (
 //
 // Copyright (C) {{ .Date.Year }} NI Rui (ranqus@gmail.com)
 //
-// https://github.com/nirui/sshwifty
+// https://github.com/BAN-AI-Multics/sshwifty
 //
 // This file is generated at {{ .Date.Format "Mon, 02 Jan 2006 15:04:05 MST" }}
 // by "go generate", DO NOT EDIT! Also, do not open this file, it maybe too large
@@ -318,7 +318,7 @@ func getMimeTypeByExtension(ext string) string {
 }
 
 func parseFile(
-	id int, name string, filePath string, packageName string) parsedFile {
+	id int, name, filePath, packageName string) parsedFile {
 	content, readErr := ioutil.ReadFile(filePath)
 
 	if readErr != nil {
@@ -426,7 +426,7 @@ func main() {
 			destFolderPath, destFolderPathErr))
 	}
 
-	destFolderPathErr = os.Mkdir(destFolderPath, 0777)
+	destFolderPathErr = os.Mkdir(destFolderPath, 0o777)
 
 	if destFolderPathErr != nil {
 		panic(fmt.Sprintf("Unable to build data destination folder %s: %s",

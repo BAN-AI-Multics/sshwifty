@@ -21,8 +21,8 @@ import (
 	"errors"
 	"io"
 
-	"github.com/nirui/sshwifty/application/log"
-	"github.com/nirui/sshwifty/application/rw"
+	"github.com/BAN-AI-Multics/sshwifty/application/log"
+	"github.com/BAN-AI-Multics/sshwifty/application/rw"
 )
 
 // Errors
@@ -179,7 +179,7 @@ func newStreamResponder(w streamHandlerSender, h Header) StreamResponder {
 	}
 }
 
-func (w StreamResponder) write(mk byte, b []byte, buf []byte) (int, error) {
+func (w StreamResponder) write(mk byte, b, buf []byte) (int, error) {
 	bufLen := len(buf)
 	bLen := len(b)
 
@@ -215,7 +215,7 @@ func (w StreamResponder) HeaderSize() int {
 
 // Send sends data. Data will be automatically segmentated if it's too long to
 // fit into one data package or buffer space
-func (w StreamResponder) Send(marker byte, data []byte, buf []byte) error {
+func (w StreamResponder) Send(marker byte, data, buf []byte) error {
 	if len(buf) <= w.HeaderSize() {
 		panic("The length of data buffer must be greater than 3")
 	}

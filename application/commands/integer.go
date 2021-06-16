@@ -20,7 +20,7 @@ package commands
 import (
 	"errors"
 
-	"github.com/nirui/sshwifty/application/rw"
+	"github.com/BAN-AI-Multics/sshwifty/application/rw"
 )
 
 // Errors

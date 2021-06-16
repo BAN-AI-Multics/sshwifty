@@ -24,15 +24,9 @@ import (
 
 // Dial dial to remote machine
 type Dial func(
-	network string, address string, timeout time.Duration) (net.Conn, error)
+	network, address string, timeout time.Duration) (net.Conn, error)
 
 // TCPDial build a TCP dialer
 func TCPDial() Dial {
-	return func(
-		network string,
-		address string,
-		timeout time.Duration,
-	) (net.Conn, error) {
-		return net.DialTimeout(network, address, timeout)
-	}
+	return net.DialTimeout
 }

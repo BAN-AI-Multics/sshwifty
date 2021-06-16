@@ -26,10 +26,10 @@ import (
 	"sync"
 	"syscall"
 
-	"github.com/nirui/sshwifty/application/command"
-	"github.com/nirui/sshwifty/application/configuration"
-	"github.com/nirui/sshwifty/application/log"
-	"github.com/nirui/sshwifty/application/server"
+	"github.com/BAN-AI-Multics/sshwifty/application/command"
+	"github.com/BAN-AI-Multics/sshwifty/application/configuration"
+	"github.com/BAN-AI-Multics/sshwifty/application/log"
+	"github.com/BAN-AI-Multics/sshwifty/application/server"
 )
 
 // ProccessSignaller send signal to the running application
@@ -43,9 +43,7 @@ func DefaultProccessSignallerBuilder() chan os.Signal {
 	return make(chan os.Signal, 1)
 }
 
-var (
-	screenLineWipper = []byte("\r")
-)
+var screenLineWipper = []byte("\r")
 
 // Application contains data required for the application, and yes I don't like
 // to write comments
@@ -100,7 +98,7 @@ func (a Application) run(
 	}
 
 	closeNotify := closeSigBuilder()
-	signal.Notify(closeNotify, os.Kill, os.Interrupt, syscall.SIGHUP)
+	signal.Notify(closeNotify, syscall.SIGTERM, os.Interrupt, syscall.SIGHUP)
 	defer signal.Stop(closeNotify)
 
 	servers := make([]*server.Serving, 0, len(c.Servers))

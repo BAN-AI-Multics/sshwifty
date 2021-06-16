@@ -6,7 +6,7 @@ export function build(ctx) {
   // This renames "knowns" to "sshwifty-knowns"
   // TODO: Remove this after some few years
   try {
-    let oldStore = localStorage.getItem("knowns");
+    const oldStore = localStorage.getItem("knowns");
 
     if (oldStore) {
       localStorage.setItem("sshwifty-knowns", oldStore);

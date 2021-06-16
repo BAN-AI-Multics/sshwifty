@@ -32,10 +32,10 @@ import (
 
 	"github.com/gorilla/websocket"
 
-	"github.com/nirui/sshwifty/application/command"
-	"github.com/nirui/sshwifty/application/configuration"
-	"github.com/nirui/sshwifty/application/log"
-	"github.com/nirui/sshwifty/application/rw"
+	"github.com/BAN-AI-Multics/sshwifty/application/command"
+	"github.com/BAN-AI-Multics/sshwifty/application/configuration"
+	"github.com/BAN-AI-Multics/sshwifty/application/log"
+	"github.com/BAN-AI-Multics/sshwifty/application/rw"
 )
 
 // Errors
@@ -69,7 +69,7 @@ type socket struct {
 	commander command.Commander
 }
 
-func hashCombineSocketKeys(addedKey string, privateKey string) []byte {
+func hashCombineSocketKeys(addedKey, privateKey string) []byte {
 	h := hmac.New(sha512.New, []byte(privateKey))
 
 	h.Write([]byte(addedKey))
@@ -147,7 +147,6 @@ func (s socket) buildWSFetcher(c *websocket.Conn) rw.FetchReaderFetcher {
 	return func() ([]byte, error) {
 		for {
 			mt, message, err := c.ReadMessage()
-
 			if err != nil {
 				return nil, err
 			}
@@ -232,7 +231,6 @@ func (s socket) Get(
 	// Error will not be returned when Websocket already handled
 	// (i.e. returned the error to client). We just log the error and that's it
 	c, err := s.upgrader.Upgrade(w, r, nil)
-
 	if err != nil {
 		return NewError(http.StatusBadRequest, err.Error())
 	}

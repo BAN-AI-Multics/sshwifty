@@ -27,7 +27,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/nirui/sshwifty/application/log"
+	"github.com/BAN-AI-Multics/sshwifty/application/log"
 )
 
 const (
@@ -83,7 +83,6 @@ type fileCfgPreset struct {
 
 func (f fileCfgPreset) concretize() (Preset, error) {
 	m, err := f.Meta.Concretize()
-
 	if err != nil {
 		return Preset{}, err
 	}
@@ -103,7 +102,6 @@ func (f fileCfgPresets) concretize() ([]Preset, error) {
 
 	for i, p := range f {
 		pp, err := p.concretize()
-
 		if err != nil {
 			return nil, fmt.Errorf(
 				"Unable to concretize Preset %d (titled \"%s\"): %s",
@@ -190,7 +188,6 @@ func loadFile(filePath string) (string, Configuration, error) {
 	}
 
 	presets, err := finalCfg.Presets.concretize()
-
 	if err != nil {
 		return fileTypeName, Configuration{}, err
 	}

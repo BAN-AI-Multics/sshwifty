@@ -55,6 +55,7 @@ class Dial {
   connect(address, timeout) {
     const self = this;
     return new Promise((resolve, reject) => {
+      // const ws = new WebSocket(this.address);
       const ws = new WebSocket(address.webSocket);
       let promised = false;
       const timeoutTimer = setTimeout(() => {
@@ -137,6 +138,7 @@ class Dial {
    *
    */
   async dial(callbacks) {
+    // const ws = await this.connect(this.timeout);
     const ws = await this.connect(this.address, this.timeout);
 
     try {
@@ -200,8 +202,7 @@ class Dial {
             throw e;
           }
         },
-        4096 - 64, // Server has a 4096 bytes receive buffer, can be no
-        // greater,
+        4096 - 64, // Server has a 4096 bytes receive buffer, can be no greater,
         minSenderDelay, // 30ms input delay
         10 // max 10 buffered requests
       );

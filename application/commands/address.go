@@ -22,10 +22,10 @@ import (
 	"net"
 	"strconv"
 
-	"github.com/nirui/sshwifty/application/rw"
+	"github.com/BAN-AI-Multics/sshwifty/application/rw"
 )
 
-//Errors
+// Errors
 var (
 	ErrAddressParseBufferTooSmallForHeader = errors.New(
 		"Buffer space was too small to parse the address header")

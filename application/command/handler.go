@@ -24,8 +24,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/nirui/sshwifty/application/log"
-	"github.com/nirui/sshwifty/application/rw"
+	"github.com/BAN-AI-Multics/sshwifty/application/log"
+	"github.com/BAN-AI-Multics/sshwifty/application/rw"
 )
 
 // Errors
@@ -75,7 +75,7 @@ func (h *handlerSender) resume() {
 }
 
 // signal sends handler signal
-func (h *handlerSender) signal(hd Header, d []byte, buf []byte) error {
+func (h *handlerSender) signal(hd Header, d, buf []byte) error {
 	bufLen := len(buf)
 	dLen := len(d)
 
@@ -114,7 +114,7 @@ type streamHandlerSender struct {
 }
 
 // signal sends handler signal
-func (h streamHandlerSender) signal(hd Header, d []byte, buf []byte) error {
+func (h streamHandlerSender) signal(hd Header, d, buf []byte) error {
 	return h.handlerSender.signal(hd, d, buf)
 }
 

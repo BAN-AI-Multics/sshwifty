@@ -21,6 +21,4 @@ import (
 	"time"
 )
 
-var (
-	emptyTime = time.Time{}
-)
+var emptyTime = time.Time{}

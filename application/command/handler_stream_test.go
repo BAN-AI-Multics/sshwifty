@@ -24,8 +24,8 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/nirui/sshwifty/application/log"
-	"github.com/nirui/sshwifty/application/rw"
+	"github.com/BAN-AI-Multics/sshwifty/application/log"
+	"github.com/BAN-AI-Multics/sshwifty/application/rw"
 )
 
 func testDummyFetchChainGen(dd <-chan []byte) rw.FetchReaderFetcher {
@@ -134,7 +134,7 @@ func (d *dummyStreamCommand) Bootup(
 
 func (d *dummyStreamCommand) run(
 	f *FSM, r *rw.LimitedReader, h StreamHeader, b []byte) error {
-	rLen, rErr := rw.ReadUntilCompleted(r, b[:])
+	rLen, rErr := rw.ReadUntilCompleted(r, b)
 
 	if rErr != nil {
 		return rErr

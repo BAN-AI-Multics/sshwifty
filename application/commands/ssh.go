@@ -26,11 +26,11 @@ import (
 
 	"golang.org/x/crypto/ssh"
 
-	"github.com/nirui/sshwifty/application/command"
-	"github.com/nirui/sshwifty/application/configuration"
-	"github.com/nirui/sshwifty/application/log"
-	"github.com/nirui/sshwifty/application/network"
-	"github.com/nirui/sshwifty/application/rw"
+	"github.com/BAN-AI-Multics/sshwifty/application/command"
+	"github.com/BAN-AI-Multics/sshwifty/application/configuration"
+	"github.com/BAN-AI-Multics/sshwifty/application/log"
+	"github.com/BAN-AI-Multics/sshwifty/application/network"
+	"github.com/BAN-AI-Multics/sshwifty/application/rw"
 )
 
 // Server -> client signal Consts
@@ -104,9 +104,7 @@ var (
 		"Unknown client signal")
 )
 
-var (
-	sshEmptyTime = time.Time{}
-)
+var sshEmptyTime = time.Time{}
 
 const (
 	sshDefaultPortString = "22"
@@ -196,8 +194,8 @@ func newSSH(
 		credentialProcessed:                  false,
 		credentialReceiveClosed:              false,
 		fingerprintVerifyResultReceive:       make(chan bool, 1),
-		fingerprintProcessed:                 false,
-		fingerprintVerifyResultReceiveClosed: false,
+		fingerprintProcessed:                 true,
+		fingerprintVerifyResultReceiveClosed: true,
 		remoteConnReceive:                    make(chan sshRemoteConn, 1),
 		remoteConn:                           sshRemoteConn{},
 	}
@@ -347,6 +345,8 @@ func (d *sshClient) comfirmRemoteFingerprint(
 	key ssh.PublicKey,
 	buf []byte,
 ) error {
+	// Always allow fingerprint, dangerous.
+	return nil
 	d.enableRemoteReadTimeoutRetry()
 	defer d.disableRemoteReadTimeoutRetry()
 
@@ -395,7 +395,6 @@ func (d *sshClient) dialRemote(
 	addr string,
 	config *ssh.ClientConfig) (*ssh.Client, func(), error) {
 	conn, err := d.cfg.Dial(networkName, addr, config.Timeout)
-
 	if err != nil {
 		return nil, nil, err
 	}
@@ -427,7 +426,6 @@ func (d *sshClient) dialRemote(
 	sshConn.SetReadDeadline(time.Now().Add(config.Timeout))
 
 	c, chans, reqs, err := ssh.NewClientConn(sshConn, addr, config)
-
 	if err != nil {
 		sshConn.Close()
 
@@ -446,7 +444,7 @@ func (d *sshClient) dialRemote(
 }
 
 func (d *sshClient) remote(
-	user string, address string, authMethodBuilder sshAuthMethodBuilder) {
+	user, address string, authMethodBuilder sshAuthMethodBuilder) {
 	defer func() {
 		d.w.Signal(command.HeaderClose)
 
@@ -692,31 +690,31 @@ func (d *sshClient) local(
 		return nil
 
 	case SSHClientRespondFingerprint:
-		if d.fingerprintProcessed {
-			return ErrSSHUnexpectedFingerprintVerificationRespond
-		}
+		//	if d.fingerprintProcessed {
+		//		return ErrSSHUnexpectedFingerprintVerificationRespond
+		//	}
 
 		d.fingerprintProcessed = true
 
-		rData, rErr := rw.FetchOneByte(r.Fetch)
+		//		rData, rErr := rw.FetchOneByte(r.Fetch)
 
-		if rErr != nil {
-			return rErr
-		}
+		//		if rErr != nil {
+		//			return rErr
+		//		}
 
-		comfirmed := rData[0] == 0
+		//		comfirmed := rData[0] == 0
 
-		if !comfirmed {
-			d.fingerprintVerifyResultReceive <- false
+		//	if !comfirmed {
+		//		d.fingerprintVerifyResultReceive <- false
 
-			remote, remoteErr := d.getRemote()
+		//			remote, remoteErr := d.getRemote()
 
-			if remoteErr == nil {
-				remote.closer()
-			}
-		} else {
-			d.fingerprintVerifyResultReceive <- true
-		}
+		//			if remoteErr == nil {
+		//				remote.closer()
+		//			}
+		//		} else {
+		//			d.fingerprintVerifyResultReceive <- true
+		//		}
 
 		return nil
 

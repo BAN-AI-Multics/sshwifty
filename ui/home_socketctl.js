@@ -2,32 +2,19 @@ import * as history from "./history.js";
 import { ECHO_FAILED } from "./socket.js";
 
 export function build(ctx) {
-  const connectionStatusNotConnected = "Sshwifty is ready to connect";
-  const connectionStatusConnecting =
-    "Connecting to Sshwifty backend server. It should only take " +
-    "less than a second, or two";
-  const connectionStatusDisconnected =
-    "Sshwifty is disconnected from it's backend server";
-  const connectionStatusConnected =
-    "Sshwifty is connected to it's backend server, user interface operational";
-  const connectionStatusUnmeasurable =
-    "Unable to measure connection delay. The connection maybe very " +
-    "busy or already lost";
+  const connectionStatusNotConnected = "Ready to connect";
+  const connectionStatusConnecting = "Connecting to server...";
+  const connectionStatusDisconnected = "Disconnected from server";
+  const connectionStatusConnected = "Connected to server";
+  const connectionStatusUnmeasurable = "Connection failure";
 
-  const connectionDelayGood =
-    "Connection delay is low, operation should be very responsive";
-  const connectionDelayFair =
-    "Experiencing minor connection delay, operation should be responded " +
-    "within a reasonable time";
-  const connectionDelayMedian =
-    "Experiencing median connection delay, consider to slow down your input " +
-    "to avoid misoperation";
-  const connectionDelayHeavy =
-    "Experiencing bad connection delay, operation may freeze at any moment. " +
-    "Consider to pause your input until remote is responsive";
+  const connectionDelayGood = "Excellent link quality.";
+  const connectionDelayFair = "Good link quality.";
+  const connectionDelayMedian = "Fair link quality.";
+  const connectionDelayHeavy = "Very poor link quality!";
 
   const buildEmptyHistory = () => {
-    let r = [];
+    const r = [];
 
     for (let i = 0; i < 32; i++) {
       r.push({ data: 0, class: "" });
@@ -36,20 +23,20 @@ export function build(ctx) {
     return r;
   };
 
-  let isClosed = false,
-    inboundPerSecond = 0,
-    outboundPerSecond = 0,
-    trafficPreSecondNextUpdate = new Date(),
-    inboundPre10Seconds = 0,
-    outboundPre10Seconds = 0,
-    trafficPre10sNextUpdate = new Date(),
-    inboundHistory = new history.Records(buildEmptyHistory()),
-    outboundHistory = new history.Records(buildEmptyHistory()),
-    trafficSamples = 0;
+  let isClosed = false;
+  let inboundPerSecond = 0;
+  let outboundPerSecond = 0;
+  let trafficPreSecondNextUpdate = new Date();
+  let inboundPre10Seconds = 0;
+  let outboundPre10Seconds = 0;
+  let trafficPre10sNextUpdate = new Date();
+  const inboundHistory = new history.Records(buildEmptyHistory());
+  const outboundHistory = new history.Records(buildEmptyHistory());
+  let trafficSamples = 0;
 
-  let delayHistory = new history.Records(buildEmptyHistory()),
-    delaySamples = 0,
-    delayPerInterval = 0;
+  const delayHistory = new history.Records(buildEmptyHistory());
+  let delaySamples = 0;
+  let delayPerInterval = 0;
 
   return {
     update(time) {
@@ -101,7 +88,7 @@ export function build(ctx) {
       inbound: 0,
       inboundHistory: inboundHistory.get(),
       outbound: 0,
-      outboundHistory: outboundHistory.get()
+      outboundHistory: outboundHistory.get(),
     },
     connecting() {
       isClosed = false;
@@ -137,7 +124,7 @@ export function build(ctx) {
         return;
       }
 
-      let avgDelay = Math.round(delayPerInterval / delaySamples);
+      const avgDelay = Math.round(delayPerInterval / delaySamples);
 
       this.message = Number(avgDelay).toLocaleString() + "ms";
       this.status.delay = avgDelay;
@@ -201,6 +188,6 @@ export function build(ctx) {
       this.classStyle = "red flash";
       this.windowClass = "red";
       this.status.description = connectionStatusDisconnected + ". Error: " + e;
-    }
+    },
   };
 }

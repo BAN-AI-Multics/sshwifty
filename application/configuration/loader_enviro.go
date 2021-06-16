@@ -25,7 +25,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/nirui/sshwifty/application/log"
+	"github.com/BAN-AI-Multics/sshwifty/application/log"
 )
 
 const (
@@ -42,7 +42,7 @@ func parseEnv(name string) string {
 	return os.Getenv(v[21:])
 }
 
-func parseEnvDef(name string, def string) string {
+func parseEnvDef(name, def string) string {
 	v := parseEnv(name)
 
 	if len(v) > 0 {
@@ -127,7 +127,6 @@ func Enviro() Loader {
 		}
 
 		concretizePresets, err := presets.concretize()
-
 		if err != nil {
 			return enviroTypeName, Configuration{}, fmt.Errorf(
 				"Unable to parse Preset data: %s", err)

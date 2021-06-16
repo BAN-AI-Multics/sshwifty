@@ -23,7 +23,7 @@ import (
 	"net"
 	"time"
 
-	"github.com/nirui/sshwifty/application/network"
+	"github.com/BAN-AI-Multics/sshwifty/application/network"
 )
 
 // Server contains configuration of a HTTP server
@@ -130,7 +130,6 @@ func (m Meta) Concretize() (map[string]string, error) {
 
 	for k, v := range m {
 		result, err := v.Parse()
-
 		if err != nil {
 			return nil, fmt.Errorf("Unable to parse Meta \"%s\": %s", k, err)
 		}

@@ -27,9 +27,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/nirui/sshwifty/application/command"
-	"github.com/nirui/sshwifty/application/configuration"
-	"github.com/nirui/sshwifty/application/log"
+	"github.com/BAN-AI-Multics/sshwifty/application/command"
+	"github.com/BAN-AI-Multics/sshwifty/application/configuration"
+	"github.com/BAN-AI-Multics/sshwifty/application/log"
 )
 
 type dumpWrite struct{}
@@ -175,7 +175,6 @@ func (s *Serving) run(
 		cfg.ReadTimeout,
 		cfg.WriteTimeout,
 	)
-
 	if err != nil {
 		return err
 	}

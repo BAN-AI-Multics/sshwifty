@@ -20,7 +20,7 @@
 <template>
   <div id="home">
     <header id="home-header">
-      <h1 id="home-hd-title">Sshwifty</h1>
+      <h1 id="home-hd-title"><b>BAN.AI</b></h1>
 
       <a id="home-hd-delay" href="javascript:;" @click="showDelayWindow">
         <span
@@ -68,39 +68,14 @@
       @updated="tabUpdated"
     >
       <div id="home-content-wrap">
-        <h1>Hi, this is Sshwifty</h1>
-
         <p>
-          An Open Source Web SSH Client that enables you to connect to SSH
-          servers without download any additional software.
-        </p>
-
-        <p>
-          To get started, click the
+          Click&nbsp;
           <span
             id="home-content-connect"
             class="icon icon-plus1"
             @click="showConnectWindow"
-          ></span>
-          icon near the top left corner.
-        </p>
-
-        <hr />
-
-        <p class="secondary">
-          Programmers in China launched an online campaign against
-          <a
-            href="https://en.wikipedia.org/wiki/996_working_hour_system"
-            target="blank"
-            >implicitly forced overtime work</a
-          >. Sshwifty wouldn't exist if it's author must work such extreme
-          hours. If you're benefiting from hobbyist project like this one,
-          please consider to
-          <a
-            href="https://github.com/996icu/996.ICU/#what-can-i-do"
-            target="blank"
-            >support the action</a
-          >.
+          ></span
+          >&nbsp; to connect.
         </p>
       </div>
     </screens>
@@ -164,8 +139,7 @@ import * as home_history from "./home_historyctl.js";
 
 import * as presets from "./commands/presets.js";
 
-const BACKEND_CONNECT_ERROR =
-  "Unable to connect to the Sshwifty backend server: ";
+const BACKEND_CONNECT_ERROR = "Unable to connect to the backend server: ";
 const BACKEND_REQUEST_ERROR = "Unable to perform request: ";
 
 export default {

@@ -39,7 +39,7 @@ import * as xhr from "./xhr.js";
 
 const backendQueryRetryDelay = 2000;
 
-const maxTimeDiff = 30000;
+const maxTimeDiff = 990000;
 
 const updateIndicatorMaxDisplayTime = 3000;
 
@@ -284,17 +284,6 @@ function startApp(rootEl) {
             const serverTime = result.date.getTime();
             const clientTime = new Date().getTime();
             const timeDiff = Math.abs(serverTime - clientTime);
-
-            if (timeDiff > maxTimeDiff) {
-              this.loadErr =
-                "The time difference between this client " +
-                "and the backend server is beyond operational limit.\r\n\r\n" +
-                "Please try reload the page, and if the problem persisted, " +
-                "consider to adjust your local time so both the client and " +
-                "the server are running at same date time";
-
-              return;
-            }
           }
 
           const self = this;

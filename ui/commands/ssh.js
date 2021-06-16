@@ -79,7 +79,6 @@ class SSH {
         "initialized",
         "connect.failed",
         "connect.succeed",
-        "connect.fingerprint",
         "connect.credential",
         "@stdout",
         "@stderr",
@@ -157,12 +156,6 @@ class SSH {
       case SERVER_CONNECT_FAILED:
         if (!this.connected) {
           return this.events.fire("connect.failed", rd);
-        }
-        break;
-
-      case SERVER_CONNECT_REQUEST_FINGERPRINT:
-        if (!this.connected) {
-          return this.events.fire("connect.fingerprint", rd, this.sender);
         }
         break;
 
@@ -326,9 +319,7 @@ const initialFieldDef = {
     name: "Notice",
     description: "",
     type: "textdata",
-    value:
-      "SSH session is handled by the backend. Traffic will be decrypted " +
-      "on the backend server and then transmit back to your client.",
+    value: " ",
     example: "",
     readonly: false,
     suggestions(input) {
@@ -430,10 +421,7 @@ const initialFieldDef = {
   },
   Authentication: {
     name: "Authentication",
-    description:
-      "Please make sure the authentication method that you selected is " +
-      "supported by the server, otherwise it will be ignored and likely " +
-      "cause the login to fail",
+    description: "",
     type: "radio",
     value: "",
     example: "Password,Private Key,None",
@@ -451,23 +439,6 @@ const initialFieldDef = {
         default:
           throw new Error("Authentication method must be specified");
       }
-    },
-  },
-  Fingerprint: {
-    name: "Fingerprint",
-    description:
-      "Please carefully verify the fingerprint. DO NOT continue " +
-      "if the fingerprint is unknown to you, otherwise you maybe " +
-      "giving your own secrets to an imposter",
-    type: "textdata",
-    value: "",
-    example: "",
-    readonly: false,
-    suggestions(input) {
-      return [];
-    },
-    verify(d) {
-      return "";
     },
   },
 };
@@ -606,7 +577,6 @@ class Wizard {
       charset: configInput.charset,
       credential: sessionData.credential,
       host: address.parseHostPort(configInput.host, DEFAULT_PORT),
-      fingerprint: configInput.fingerprint,
     };
 
     // Copy the keptSessions from the record so it will not be overwritten here
@@ -686,28 +656,7 @@ class Wizard {
           keptSessions
         );
       },
-      async "connect.fingerprint"(rd, sd) {
-        self.step.resolve(
-          await self.stepFingerprintPrompt(
-            rd,
-            sd,
-            (v) => {
-              if (!configInput.fingerprint) {
-                return FingerprintPromptVerifyNoRecord;
-              }
-
-              if (configInput.fingerprint === v) {
-                return FingerprintPromptVerifyPassed;
-              }
-
-              return FingerprintPromptVerifyMismatch;
-            },
-            (newFingerprint) => {
-              configInput.fingerprint = newFingerprint;
-            }
-          )
-        );
-      },
+      // return FingerprintPromptVerifyPassed;
       async "connect.credential"(rd, sd) {
         self.step.resolve(
           self.stepCredentialPrompt(rd, sd, config, (newCred, fromPreset) => {
@@ -739,8 +688,8 @@ class Wizard {
 
     return command.prompt(
       "SSH",
-      "Secure Shell Host",
-      "Connect",
+      "Secure Connection",
+      "Click to Connect",
       (r) => {
         self.hasStarted = true;
 
@@ -752,9 +701,6 @@ class Wizard {
               authentication: r.authentication,
               host: r.host,
               charset: r.encoding,
-              fingerprint: self.preset
-                ? self.preset.metaDefault("Fingerprint", "")
-                : "",
             },
             self.session
           );
@@ -796,60 +742,10 @@ class Wizard {
           },
           { name: "Authentication" },
           { name: "Encoding" },
-          { name: "Notice" },
         ],
         self.preset,
         (r) => {}
       )
-    );
-  }
-
-  async stepFingerprintPrompt(rd, sd, verify, newFingerprint) {
-    const self = this;
-
-    const fingerprintData = new TextDecoder("utf-8").decode(
-      await reader.readCompletely(rd)
-    );
-    let fingerprintChanged = false;
-
-    switch (verify(fingerprintData)) {
-      case FingerprintPromptVerifyPassed:
-        sd.send(CLIENT_CONNECT_RESPOND_FINGERPRINT, new Uint8Array([0]));
-
-        return self.stepContinueWaitForEstablishWait();
-
-      case FingerprintPromptVerifyMismatch:
-        fingerprintChanged = true;
-    }
-
-    return command.prompt(
-      !fingerprintChanged
-        ? "Do you recognize this server?"
-        : "Danger! Server fingerprint has changed!",
-      !fingerprintChanged
-        ? "Verify server fingerprint displayed below"
-        : "It's very unusual. Please verify the new server fingerprint below",
-      !fingerprintChanged ? "Yes, I do" : "I'm aware of the change",
-      (r) => {
-        newFingerprint(fingerprintData);
-
-        sd.send(CLIENT_CONNECT_RESPOND_FINGERPRINT, new Uint8Array([0]));
-
-        self.step.resolve(self.stepContinueWaitForEstablishWait());
-      },
-      () => {
-        sd.send(CLIENT_CONNECT_RESPOND_FINGERPRINT, new Uint8Array([1]));
-
-        self.step.resolve(
-          command.wait("Rejecting", "Sending rejection to the backend")
-        );
-      },
-      command.fields(initialFieldDef, [
-        {
-          name: "Fingerprint",
-          value: fingerprintData,
-        },
-      ])
     );
   }
 
@@ -978,7 +874,6 @@ class Executer extends Wizard {
           authentication: self.config.authentication,
           host: self.config.host,
           charset: self.config.charset ? self.config.charset : "utf-8",
-          fingerprint: self.config.fingerprint,
         },
         self.session
       );
