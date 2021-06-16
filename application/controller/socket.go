@@ -226,6 +226,7 @@ func (s socket) buildCipherKey(r *http.Request) [16]byte {
 	return key
 }
 
+// nolint
 func (s socket) Get(
 	w http.ResponseWriter, r *http.Request, l log.Logger) error {
 	// Error will not be returned when Websocket already handled

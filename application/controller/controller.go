@@ -49,6 +49,7 @@ type handler struct {
 	socketVerifyCtl socketVerification
 }
 
+// nolint
 func (h handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	var err error
 
