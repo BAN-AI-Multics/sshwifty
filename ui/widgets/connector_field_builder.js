@@ -21,33 +21,33 @@ function getTabIndex(tabIndex, field) {
   }
 
   switch (field.type) {
-    case "text":
-    case "password":
-    case "checkbox":
-    case "textarea":
-    case "textfile":
-    case "select":
-    case "radio":
-      return tabIndex;
+  case "text":
+  case "password":
+  case "checkbox":
+  case "textarea":
+  case "textfile":
+  case "select":
+  case "radio":
+    return tabIndex;
 
-    default:
-      return 0;
+  default:
+    return 0;
   }
 }
 
 export function build(tabIndex, i, field) {
   return {
-    verified: false,
-    modified: false,
-    inputted: false,
-    highlighted: false,
-    error: "",
-    message: "",
-    field: field,
-    autofocus: tabIndex === 1 && !field.readonly,
-    tabIndex: getTabIndex(tabIndex, field),
-    blockedSuggestionValue: "",
-    blockingSuggestion: false,
+    verified : false,
+    modified : false,
+    inputted : false,
+    highlighted : false,
+    error : "",
+    message : "",
+    field : field,
+    autofocus : tabIndex === 1 && !field.readonly,
+    tabIndex : getTabIndex(tabIndex, field),
+    blockedSuggestionValue : "",
+    blockingSuggestion : false,
     nextTabIndex() {
       let nextTabIndex = 0;
 
@@ -55,12 +55,12 @@ export function build(tabIndex, i, field) {
         nextTabIndex = this.tabIndex;
       } else {
         switch (this.field.type) {
-          case "radio":
-            nextTabIndex = this.tabIndex + this.field.example.split(",").length;
-            break;
+        case "radio":
+          nextTabIndex = this.tabIndex + this.field.example.split(",").length;
+          break;
 
-          default:
-            nextTabIndex = this.tabIndex + 1;
+        default:
+          nextTabIndex = this.tabIndex + 1;
         }
       }
 
@@ -77,13 +77,13 @@ export function build(tabIndex, i, field) {
 
       return this.tabIndex + subIndex;
     },
-    suggestion: {
-      selected: -1,
-      suggestions: [],
-      orignalValue: "",
-      orignalValueStored: false,
-      holding: false,
-      needsReset: false,
+    suggestion : {
+      selected : -1,
+      suggestions : [],
+      orignalValue : "",
+      orignalValueStored : false,
+      holding : false,
+      needsReset : false,
       reset() {
         this.selected = -1;
         this.suggestions = [];
@@ -137,12 +137,8 @@ export function build(tabIndex, i, field) {
 
         this.selected = index;
       },
-      cursorUp(fieldValue) {
-        this.select(this.selected - 1, fieldValue);
-      },
-      cursorDown(fieldValue) {
-        this.select(this.selected + 1, fieldValue);
-      },
+      cursorUp(fieldValue) { this.select(this.selected - 1, fieldValue); },
+      cursorDown(fieldValue) { this.select(this.selected + 1, fieldValue); },
       cursorMove(toUp, fieldValue) {
         toUp ? this.cursorUp(fieldValue) : this.cursorDown(fieldValue);
       },
@@ -158,18 +154,18 @@ export function build(tabIndex, i, field) {
 
         for (let v in suggestions) {
           this.suggestions.push({
-            title: suggestions[v].title,
-            value: suggestions[v].value,
-            fields: suggestions[v].meta,
+            title : suggestions[v].title,
+            value : suggestions[v].value,
+            fields : suggestions[v].meta,
           });
         }
       },
       current(defaultValue) {
         if (this.selected < 0) {
           return {
-            title: "Input",
-            value: this.loadStored(defaultValue),
-            fields: {},
+            title : "Input",
+            value : this.loadStored(defaultValue),
+            fields : {},
           };
         }
 
@@ -184,39 +180,25 @@ export function build(tabIndex, i, field) {
       this.blockedSuggestionValue = "";
       this.blockingSuggestion = false;
     },
-    suggestionsPending() {
-      return this.suggestion.suggestions.length > 0;
-    },
+    suggestionsPending() { return this.suggestion.suggestions.length > 0; },
     reloadSuggestions() {
-      if (
-        this.blockingSuggestion &&
-        this.field.value === this.blockedSuggestionValue
-      ) {
+      if (this.blockingSuggestion &&
+          this.field.value === this.blockedSuggestionValue) {
         return;
       }
 
-      this.suggestion.reload(
-        this.field.value,
-        this.field.suggestions(this.field.value)
-      );
+      this.suggestion.reload(this.field.value,
+                             this.field.suggestions(this.field.value));
     },
     resetSuggestions(force) {
       return force ? this.suggestion.reset() : this.suggestion.softReset();
     },
-    holdSuggestions(toHold) {
-      this.suggestion.hold(toHold);
-    },
-    moveSuggestionsCursor(toUp) {
-      this.suggestion.cursorMove(toUp, this.field.value);
-    },
-    selectSuggestion(index) {
-      this.suggestion.select(index, this.field.value);
-    },
-    curentSuggestion() {
-      return this.suggestion.current(this.field.value);
-    },
-    selectedSuggestionIndex() {
-      return this.suggestion.selected;
-    },
+    holdSuggestions(toHold) { this.suggestion.hold(toHold); },
+    moveSuggestionsCursor(
+        toUp) { this.suggestion.cursorMove(toUp, this.field.value); },
+    selectSuggestion(
+        index) { this.suggestion.select(index, this.field.value); },
+    curentSuggestion() { return this.suggestion.current(this.field.value); },
+    selectedSuggestionIndex() { return this.suggestion.selected; },
   };
 }

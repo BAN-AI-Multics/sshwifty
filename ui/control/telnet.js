@@ -68,33 +68,33 @@ class Parser {
     this.callbacks = callbacks;
     this.reader = new reader.Multiple(() => {});
     this.options = {
-      echoEnabled: false,
-      suppressGoAhead: false,
-      nawsAccpeted: false,
+      echoEnabled : false,
+      suppressGoAhead : false,
+      nawsAccpeted : false,
     };
     this.current = 0;
   }
 
   sendNego(cmd, option) {
-    return this.sender(new Uint8Array([cmdIAC, cmd, option]));
+    return this.sender(new Uint8Array([ cmdIAC, cmd, option ]));
   }
 
   sendDeny(cmd, o) {
     switch (cmd) {
-      case cmdDo:
-        return this.sendNego(cmdWont, o);
+    case cmdDo:
+      return this.sendNego(cmdWont, o);
 
-      case (cmdWill, cmdWont):
-        return this.sendNego(cmdDont, o);
+    case (cmdWill, cmdWont):
+      return this.sendNego(cmdDont, o);
     }
   }
 
   sendWillSubNego(willCmd, data, option) {
     let b = new Uint8Array(6 + data.length + 2);
 
-    b.set([cmdIAC, willCmd, option, cmdIAC, cmdSB, option], 0);
+    b.set([ cmdIAC, willCmd, option, cmdIAC, cmdSB, option ], 0);
     b.set(data, 6);
-    b.set([cmdIAC, cmdSE], data.length + 6);
+    b.set([ cmdIAC, cmdSE ], data.length + 6);
 
     return this.sender(b);
   }
@@ -102,9 +102,9 @@ class Parser {
   sendSubNego(data, option) {
     let b = new Uint8Array(3 + data.length + 2);
 
-    b.set([cmdIAC, cmdSB, option], 0);
+    b.set([ cmdIAC, cmdSB, option ], 0);
     b.set(data, 3);
-    b.set([cmdIAC, cmdSE], data.length + 3);
+    b.set([ cmdIAC, cmdSE ], data.length + 3);
 
     return this.sender(b);
   }
@@ -130,15 +130,15 @@ class Parser {
       let d = await reader.readOne(rd);
 
       switch (d[0]) {
-        case optTerminalType:
-          endExec = await this.handleTermTypeSubNego(rd);
-          continue;
+      case optTerminalType:
+        endExec = await this.handleTermTypeSubNego(rd);
+        continue;
 
-        case cmdIAC:
-          break;
+      case cmdIAC:
+        break;
 
-        default:
-          continue;
+      default:
+        continue;
       }
 
       let e = await reader.readOne(rd);
@@ -157,37 +157,37 @@ class Parser {
 
   handleOption(cmd, option, oldVal, newVal) {
     switch (cmd) {
-      case cmdWill:
-        if (!oldVal) {
-          this.sendNego(cmdDo, option);
-        }
+    case cmdWill:
+      if (!oldVal) {
+        this.sendNego(cmdDo, option);
+      }
 
-        newVal(true, cmdWill);
-        return;
+      newVal(true, cmdWill);
+      return;
 
-      case cmdWont:
-        if (oldVal) {
-          this.sendNego(cmdDont, option);
-        }
+    case cmdWont:
+      if (oldVal) {
+        this.sendNego(cmdDont, option);
+      }
 
-        newVal(false, cmdWont);
-        return;
+      newVal(false, cmdWont);
+      return;
 
-      case cmdDo:
-        if (!oldVal) {
-          this.sendNego(cmdWill, option);
-        }
+    case cmdDo:
+      if (!oldVal) {
+        this.sendNego(cmdWill, option);
+      }
 
-        newVal(true, cmdDo);
-        return;
+      newVal(true, cmdDo);
+      return;
 
-      case cmdDont:
-        if (oldVal) {
-          this.sendNego(cmdWont, option);
-        }
+    case cmdDont:
+      if (oldVal) {
+        this.sendNego(cmdWont, option);
+      }
 
-        newVal(false, cmdDont);
-        return;
+      newVal(false, cmdDont);
+      return;
     }
   }
 
@@ -195,97 +195,88 @@ class Parser {
     let d = await reader.readOne(rd);
 
     switch (d[0]) {
-      case cmdWill:
-      case cmdWont:
-      case cmdDo:
-      case cmdDont:
-        break;
+    case cmdWill:
+    case cmdWont:
+    case cmdDo:
+    case cmdDont:
+      break;
 
-      case cmdIAC:
-        this.flusher(d);
-        return;
+    case cmdIAC:
+      this.flusher(d);
+      return;
 
-      case cmdGoAhead:
-        return;
+    case cmdGoAhead:
+      return;
 
-      case cmdSB:
-        await this.handleSubNego(rd);
-        return;
+    case cmdSB:
+      await this.handleSubNego(rd);
+      return;
 
-      default:
-        throw new Exception("Unknown command");
+    default:
+      throw new Exception("Unknown command");
     }
 
     let o = await reader.readOne(rd);
 
     switch (o[0]) {
-      case optEcho:
-        return this.handleOption(
-          d[0],
-          o[0],
-          this.options.echoEnabled,
-          (d, action) => {
-            this.options.echoEnabled = d;
+    case optEcho:
+      return this.handleOption(d[0], o[0], this.options.echoEnabled,
+                               (d, action) => {
+                                 this.options.echoEnabled = d;
 
-            switch (action) {
-              case cmdWill:
-              case cmdDont:
-                this.callbacks.setEcho(false);
-                break;
+                                 switch (action) {
+                                 case cmdWill:
+                                 case cmdDont:
+                                   this.callbacks.setEcho(false);
+                                   break;
 
-              case cmdWont:
-              case cmdDo:
-                this.callbacks.setEcho(true);
-                break;
-            }
-          }
-        );
+                                 case cmdWont:
+                                 case cmdDo:
+                                   this.callbacks.setEcho(true);
+                                   break;
+                                 }
+                               });
 
-      case optSuppressGoAhead:
-        return this.handleOption(
-          d[0],
-          o[0],
-          this.options.suppressGoAhead,
-          (d, _action) => {
-            this.options.suppressGoAhead = d;
-          }
-        );
+    case optSuppressGoAhead:
+      return this.handleOption(
+          d[0], o[0], this.options.suppressGoAhead,
+          (d, _action) => { this.options.suppressGoAhead = d; });
 
-      case optNAWS:
-        // Window resize allowed?
-        if (d[0] !== cmdDo) {
-          this.sendDeny(d[0], o[0]);
+    case optNAWS:
+      // Window resize allowed?
+      if (d[0] !== cmdDo) {
+        this.sendDeny(d[0], o[0]);
 
-          return;
-        }
+        return;
+      }
 
-        let dim = this.callbacks.getWindowDim(),
+      let dim = this.callbacks.getWindowDim(),
           dimData = new DataView(new ArrayBuffer(4));
 
-        dimData.setUint16(0, dim.cols);
-        dimData.setUint16(2, dim.rows);
+      dimData.setUint16(0, dim.cols);
+      dimData.setUint16(2, dim.rows);
 
-        let dimBytes = new Uint8Array(dimData.buffer);
+      let dimBytes = new Uint8Array(dimData.buffer);
 
-        if (this.options.nawsAccpeted) {
-          this.sendSubNego(dimBytes, optNAWS);
+      if (this.options.nawsAccpeted) {
+        this.sendSubNego(dimBytes, optNAWS);
 
-          return;
-        }
-
-        this.options.nawsAccpeted = true;
-        this.sendWillSubNego(cmdWill, dimBytes, optNAWS);
         return;
+      }
 
-      case optTerminalType:
-        if (d[0] !== cmdDo) {
-          this.sendDeny(d[0], o[0]);
+      this.options.nawsAccpeted = true;
+      this.sendWillSubNego(cmdWill, dimBytes, optNAWS);
+      return;
 
-          return;
-        }
+    case optTerminalType:
+      if (d[0] !== cmdDo) {
+        this.sendDeny(d[0], o[0]);
 
-        this.sendNego(cmdWill, o[0]);
         return;
+      }
+
+      this.sendNego(cmdWill, o[0]);
+      return;
     }
 
     this.sendDeny(d[0], o[0]);
@@ -319,13 +310,9 @@ class Parser {
     }
   }
 
-  feed(rd, cb) {
-    this.reader.feed(rd, cb);
-  }
+  feed(rd, cb) { this.reader.feed(rd, cb); }
 
-  close() {
-    this.reader.close();
-  }
+  close() { this.reader.close(); }
 }
 
 class Control {
@@ -338,28 +325,20 @@ class Control {
     if (this.charset === "utf-8") {
       let enc = new TextEncoder();
 
-      this.charsetDecoder = (d) => {
-        return d;
-      };
+      this.charsetDecoder = (d) => { return d; };
 
-      this.charsetEncoder = (dStr) => {
-        return enc.encode(dStr);
-      };
+      this.charsetEncoder = (dStr) => { return enc.encode(dStr); };
     } else {
-      let dec = new TextDecoder(this.charset),
-        enc = new TextEncoder();
+      let dec = new TextDecoder(this.charset), enc = new TextEncoder();
 
       this.charsetDecoder = (d) => {
-        return enc.encode(
-          dec.decode(d, {
-            stream: true,
-          })
-        );
+        return enc.encode(dec.decode(d, {
+          stream : true,
+        }));
       };
 
-      this.charsetEncoder = (dStr) => {
-        return iconv.encode(dStr, this.charset);
-      };
+      this.charsetEncoder =
+          (dStr) => { return iconv.encode(dStr, this.charset); };
     }
 
     this.sender = data.send;
@@ -369,35 +348,24 @@ class Control {
     this.subs = new subscribe.Subscribe();
     this.enable = false;
     this.windowDim = {
-      cols: 65535,
-      rows: 65535,
+      cols : 65535,
+      rows : 65535,
     };
 
     let self = this;
 
     this.parser = new Parser(
-      this.sender,
-      (d) => {
-        self.subs.resolve(this.charsetDecoder(d));
-      },
-      {
-        setEcho(newVal) {
-          self.localEchoEnabled = newVal;
-        },
-        getWindowDim() {
-          return self.windowDim;
-        },
-      }
-    );
+        this.sender, (d) => { self.subs.resolve(this.charsetDecoder(d)); }, {
+          setEcho(newVal) { self.localEchoEnabled = newVal; },
+          getWindowDim() { return self.windowDim; },
+        });
 
     let runWait = this.parser.run();
 
     data.events.place("inband", (rd) => {
-      return new Promise((resolve, _reject) => {
-        self.parser.feed(rd, () => {
-          resolve(true);
-        });
-      });
+      return new Promise(
+          (resolve,
+           _reject) => { self.parser.feed(rd, () => { resolve(true); }); });
     });
 
     data.events.place("completed", async () => {
@@ -412,9 +380,7 @@ class Control {
     });
   }
 
-  echo() {
-    return this.localEchoEnabled;
-  }
+  echo() { return this.localEchoEnabled; }
 
   resize(dim) {
     if (this.closed) {
@@ -427,19 +393,13 @@ class Control {
     this.parser.requestWindowResize();
   }
 
-  enabled() {
-    this.enable = true;
-  }
+  enabled() { this.enable = true; }
 
-  disabled() {
-    this.enable = false;
-  }
+  disabled() { this.enable = false; }
 
   retap(_isOn) {}
 
-  receive() {
-    return this.subs.subscribe();
-  }
+  receive() { return this.subs.subscribe(); }
 
   searchNextIAC(start, data) {
     for (let i = start; i < data.length; i++) {
@@ -488,13 +448,9 @@ class Control {
     return this.sendSeg(common.strToBinary(data));
   }
 
-  color() {
-    return this.colors.dark;
-  }
+  color() { return this.colors.dark; }
 
-  activeColor() {
-    return this.colors.color;
-  }
+  activeColor() { return this.colors.color; }
 
   close() {
     if (this.closer === null) {
@@ -514,19 +470,11 @@ export class Telnet {
    *
    * @param {color.Color} c
    */
-  constructor(c) {
-    this.color = c;
-  }
+  constructor(c) { this.color = c; }
 
-  type() {
-    return "Telnet";
-  }
+  type() { return "Telnet"; }
 
-  ui() {
-    return "Console";
-  }
+  ui() { return "Console"; }
 
-  build(data) {
-    return new Control(data, this.color);
-  }
+  build(data) { return new Control(data, this.color); }
 }

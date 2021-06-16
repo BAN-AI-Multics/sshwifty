@@ -75,9 +75,8 @@ export class Streams {
       throw new Exception("Already started", false);
     }
 
-    this.echoTimer = setInterval(() => {
-      this.sendEcho();
-    }, this.config.echoInterval);
+    this.echoTimer =
+        setInterval(() => { this.sendEcho(); }, this.config.echoInterval);
 
     this.stop = false;
 
@@ -134,7 +133,7 @@ export class Streams {
       try {
         this.streams[i].completed();
       } catch (e) {
-        //Do nothing
+        // Do nothing
       }
     }
 
@@ -163,8 +162,7 @@ export class Streams {
     pauseHeader.set(1);
 
     return this.sender.send(
-      new Uint8Array([pauseHeader.value(), header.CONTROL_PAUSESTREAM])
-    );
+        new Uint8Array([ pauseHeader.value(), header.CONTROL_PAUSESTREAM ]));
   }
 
   /**
@@ -177,8 +175,7 @@ export class Streams {
     pauseHeader.set(1);
 
     return this.sender.send(
-      new Uint8Array([pauseHeader.value(), header.CONTROL_RESUMESTREAM])
-    );
+        new Uint8Array([ pauseHeader.value(), header.CONTROL_RESUMESTREAM ]));
   }
 
   /**
@@ -198,9 +195,8 @@ export class Streams {
         }
 
         return new Requested(
-          this.streams[i],
-          this.streams[i].run(commandID, commandBuilder, this.sender)
-        );
+            this.streams[i],
+            this.streams[i].run(commandID, commandBuilder, this.sender));
       }
 
       throw new Exception("No stream is currently available", true);
@@ -215,7 +211,7 @@ export class Streams {
    */
   sendEcho() {
     let echoHeader = header.header(header.CONTROL),
-      randomNum = new Uint8Array(common.getRands(8, 0, 255));
+        randomNum = new Uint8Array(common.getRands(8, 0, 255));
 
     echoHeader.set(randomNum.length - 1);
 
@@ -242,47 +238,45 @@ export class Streams {
    *
    */
   async handleControl(rd) {
-    let controlType = await reader.readOne(rd),
-      delay = 0,
-      echoBytes = null;
+    let controlType = await reader.readOne(rd), delay = 0, echoBytes = null;
 
     switch (controlType[0]) {
-      case header.CONTROL_ECHO:
-        echoBytes = await reader.readCompletely(rd);
+    case header.CONTROL_ECHO:
+      echoBytes = await reader.readCompletely(rd);
 
-        if (this.lastEchoTime === null || this.lastEchoData === null) {
-          return;
-        }
+      if (this.lastEchoTime === null || this.lastEchoData === null) {
+        return;
+      }
 
-        if (this.lastEchoData.length !== echoBytes.length) {
-          return;
-        }
+      if (this.lastEchoData.length !== echoBytes.length) {
+        return;
+      }
 
-        for (let i in this.lastEchoData) {
-          if (this.lastEchoData[i] == echoBytes[i]) {
-            continue;
-          }
-
-          this.lastEchoTime = null;
-          this.lastEchoData = null;
-
-          this.config.echoUpdater(ECHO_FAILED);
-
-          return;
-        }
-
-        delay = new Date().getTime() - this.lastEchoTime.getTime();
-
-        if (delay < 0) {
-          delay = 0;
+      for (let i in this.lastEchoData) {
+        if (this.lastEchoData[i] == echoBytes[i]) {
+          continue;
         }
 
         this.lastEchoTime = null;
         this.lastEchoData = null;
 
-        this.config.echoUpdater(delay);
+        this.config.echoUpdater(ECHO_FAILED);
 
         return;
+      }
+
+      delay = new Date().getTime() - this.lastEchoTime.getTime();
+
+      if (delay < 0) {
+        delay = 0;
+      }
+
+      this.lastEchoTime = null;
+      this.lastEchoData = null;
+
+      this.config.echoUpdater(delay);
+
+      return;
     }
 
     await reader.readCompletely(rd);
@@ -309,12 +303,9 @@ export class Streams {
     if (!stream.running()) {
       // WARNING: Connection must be reset at this point because we cannot
       //          determine how many bytes to read
-      throw new Exception(
-        'Remote is requesting for stream "' +
-          hd.data() +
-          '" which is not running',
-        false
-      );
+      throw new Exception('Remote is requesting for stream "' + hd.data() +
+                              '" which is not running',
+                          false);
     }
 
     let initialHeaderBytes = await reader.readN(rd, 2);
@@ -322,19 +313,15 @@ export class Streams {
     // WARNING: It's the stream's responsibility to ensure stream data is
     //          completely readed before return
     if (stream.initializing()) {
-      let streamHeader = new header.InitialStream(
-        initialHeaderBytes[0],
-        initialHeaderBytes[1]
-      );
+      let streamHeader = new header.InitialStream(initialHeaderBytes[0],
+                                                  initialHeaderBytes[1]);
 
       return stream.initialize(streamHeader);
     }
 
-    let streamHeader = new header.Stream(
-        initialHeaderBytes[0],
-        initialHeaderBytes[1]
-      ),
-      streamReader = new reader.Limited(rd, streamHeader.length());
+    let streamHeader =
+            new header.Stream(initialHeaderBytes[0], initialHeaderBytes[1]),
+        streamReader = new reader.Limited(rd, streamHeader.length());
 
     let tickResult = await stream.tick(streamHeader, streamReader);
 
@@ -361,19 +348,16 @@ export class Streams {
     if (!stream.running()) {
       // WARNING: Connection must be reset at this point because we cannot
       //          determine how many bytes to read
-      throw new Exception(
-        'Remote is requesting for stream "' +
-          hd.data() +
-          '" to be closed, but the stream is not running',
-        false
-      );
+      throw new Exception('Remote is requesting for stream "' + hd.data() +
+                              '" to be closed, but the stream is not running',
+                          false);
     }
 
     let cResult = await stream.close();
 
     let completedHeader = new header.Header(header.COMPLETED);
     completedHeader.set(hd.data());
-    this.sender.send(new Uint8Array([completedHeader.value()]));
+    this.sender.send(new Uint8Array([ completedHeader.value() ]));
 
     return cResult;
   }
@@ -397,11 +381,9 @@ export class Streams {
       // WARNING: Connection must be reset at this point because we cannot
       //          determine how many bytes to read
       throw new Exception(
-        'Remote is requesting for stream "' +
-          hd.data() +
-          '" to be completed, but the stream is not running',
-        false
-      );
+          'Remote is requesting for stream "' + hd.data() +
+              '" to be completed, but the stream is not running',
+          false);
     }
 
     return stream.completed();
@@ -414,23 +396,23 @@ export class Streams {
    */
   async tick() {
     let headerBytes = await reader.readOne(this.reader),
-      hd = new header.Header(headerBytes[0]);
+        hd = new header.Header(headerBytes[0]);
 
     switch (hd.type()) {
-      case header.CONTROL:
-        return this.handleControl(new reader.Limited(this.reader, hd.data()));
+    case header.CONTROL:
+      return this.handleControl(new reader.Limited(this.reader, hd.data()));
 
-      case header.STREAM:
-        return this.handleStream(hd, this.reader);
+    case header.STREAM:
+      return this.handleStream(hd, this.reader);
 
-      case header.CLOSE:
-        return this.handleClose(hd);
+    case header.CLOSE:
+      return this.handleClose(hd);
 
-      case header.COMPLETED:
-        return this.handleCompleted(hd);
+    case header.COMPLETED:
+      return this.handleCompleted(hd);
 
-      default:
-        throw new Exception("Unknown header", false);
+    default:
+      throw new Exception("Unknown header", false);
     }
   }
 }

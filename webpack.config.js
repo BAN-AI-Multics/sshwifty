@@ -15,26 +15,23 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-const webpack = require("webpack"),
-  { spawn } = require("child_process"),
-  path = require("path"),
-  os = require("os"),
-  HtmlWebpackPlugin = require("html-webpack-plugin"),
-  MiniCssExtractPlugin = require("mini-css-extract-plugin"),
-  CssMinimizerPlugin = require("css-minimizer-webpack-plugin"),
-  ImageMinimizerPlugin = require("image-minimizer-webpack-plugin"),
-  { VueLoaderPlugin } = require("vue-loader"),
-  FaviconsWebpackPlugin = require("favicons-webpack-plugin"),
-  CopyPlugin = require("copy-webpack-plugin"),
-  TerserPlugin = require("terser-webpack-plugin"),
-  { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const webpack = require("webpack"), {spawn} = require("child_process"),
+      path = require("path"), os = require("os"),
+      HtmlWebpackPlugin = require("html-webpack-plugin"),
+      MiniCssExtractPlugin = require("mini-css-extract-plugin"),
+      CssMinimizerPlugin = require("css-minimizer-webpack-plugin"),
+      ImageMinimizerPlugin = require("image-minimizer-webpack-plugin"),
+      {VueLoaderPlugin} = require("vue-loader"),
+      FaviconsWebpackPlugin = require("favicons-webpack-plugin"),
+      CopyPlugin = require("copy-webpack-plugin"),
+      TerserPlugin = require("terser-webpack-plugin"),
+      {CleanWebpackPlugin} = require("clean-webpack-plugin");
 
 const inDevMode = process.env.NODE_ENV === "development";
 
 process.traceDeprecation = true;
 
-let appSpawnProc = null,
-  appBuildProc = null;
+let appSpawnProc = null, appBuildProc = null;
 
 const killSpawnProc = (proc, then) => {
   if (proc === null) {
@@ -47,9 +44,7 @@ const killSpawnProc = (proc, then) => {
 
   process.kill(-proc.proc.pid, "SIGINT");
 
-  let forceKill = setTimeout(() => {
-    process.kill(-proc.proc.pid);
-  }, 3000);
+  let forceKill = setTimeout(() => { process.kill(-proc.proc.pid); }, 3000);
 
   proc.waiter.then(() => {
     clearTimeout(forceKill);
@@ -66,45 +61,41 @@ const startAppSpawnProc = (onExit) => {
       mEnv[i] = process.env[i];
     }
 
-    mEnv["SSHWIFTY_CONFIG"] = path.join(
-      __dirname,
-      "sshwifty.conf.example.json"
-    );
+    mEnv["SSHWIFTY_CONFIG"] =
+        path.join(__dirname, "sshwifty.conf.example.json");
 
     mEnv["SSHWIFTY_DEBUG"] = "_";
 
     process.stdout.write("Starting application ...\n");
 
-    let proc = spawn("go", ["run", "sshwifty.go"], {
-        env: mEnv,
-        detached: true,
-      }),
-      waiter = new Promise((resolve) => {
-        let closed = false;
+    let proc = spawn("go", [ "run", "sshwifty.go" ], {
+      env : mEnv,
+      detached : true,
+    }),
+        waiter = new Promise((resolve) => {
+          let closed = false;
 
-        proc.stdout.on("data", (msg) => {
-          process.stdout.write(msg.toString());
+          proc.stdout.on("data",
+                         (msg) => { process.stdout.write(msg.toString()); });
+
+          proc.stderr.on("data",
+                         (msg) => { process.stderr.write(msg.toString()); });
+
+          proc.on("exit", (n) => {
+            process.stdout.write("Application process is exited.\n");
+
+            if (closed) {
+              return;
+            }
+
+            closed = true;
+
+            appSpawnProc = null;
+            resolve(n);
+
+            onExit();
+          });
         });
-
-        proc.stderr.on("data", (msg) => {
-          process.stderr.write(msg.toString());
-        });
-
-        proc.on("exit", (n) => {
-          process.stdout.write("Application process is exited.\n");
-
-          if (closed) {
-            return;
-          }
-
-          closed = true;
-
-          appSpawnProc = null;
-          resolve(n);
-
-          onExit();
-        });
-      });
 
     appSpawnProc = {
       proc,
@@ -125,36 +116,34 @@ const startBuildSpawnProc = (onExit) => {
 
     process.stdout.write("Generating source code ...\n");
 
-    let proc = spawn("go", ["generate", "./..."], {
-        env: mEnv,
-        detached: true,
-      }),
-      waiter = new Promise((resolve) => {
-        let closed = false;
+    let proc = spawn("go", [ "generate", "./..." ], {
+      env : mEnv,
+      detached : true,
+    }),
+        waiter = new Promise((resolve) => {
+          let closed = false;
 
-        proc.stdout.on("data", (msg) => {
-          process.stdout.write(msg.toString());
+          proc.stdout.on("data",
+                         (msg) => { process.stdout.write(msg.toString()); });
+
+          proc.stderr.on("data",
+                         (msg) => { process.stderr.write(msg.toString()); });
+
+          proc.on("exit", (n) => {
+            process.stdout.write("Code generation process is exited.\n");
+
+            if (closed) {
+              return;
+            }
+
+            closed = true;
+
+            appBuildProc = null;
+            resolve(n);
+
+            onExit();
+          });
         });
-
-        proc.stderr.on("data", (msg) => {
-          process.stderr.write(msg.toString());
-        });
-
-        proc.on("exit", (n) => {
-          process.stdout.write("Code generation process is exited.\n");
-
-          if (closed) {
-            return;
-          }
-
-          closed = true;
-
-          appBuildProc = null;
-          resolve(n);
-
-          onExit();
-        });
-      });
 
     appBuildProc = {
       proc,
@@ -165,18 +154,14 @@ const startBuildSpawnProc = (onExit) => {
 
 const killAllProc = () => {
   if (appBuildProc !== null) {
-    killSpawnProc(appBuildProc, () => {
-      killSpawnProc(appSpawnProc, () => {
-        process.exit(0);
-      });
-    });
+    killSpawnProc(
+        appBuildProc,
+        () => { killSpawnProc(appSpawnProc, () => { process.exit(0); }); });
 
     return;
   }
 
-  killSpawnProc(appSpawnProc, () => {
-    process.exit(0);
-  });
+  killSpawnProc(appSpawnProc, () => { process.exit(0); });
 };
 
 process.on("SIGTERM", killAllProc);

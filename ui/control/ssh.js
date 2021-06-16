@@ -31,28 +31,20 @@ class Control {
     if (this.charset === "utf-8") {
       let enc = new TextEncoder();
 
-      this.charsetDecoder = (d) => {
-        return d;
-      };
+      this.charsetDecoder = (d) => { return d; };
 
-      this.charsetEncoder = (dStr) => {
-        return enc.encode(dStr);
-      };
+      this.charsetEncoder = (dStr) => { return enc.encode(dStr); };
     } else {
-      let dec = new TextDecoder(this.charset),
-        enc = new TextEncoder();
+      let dec = new TextDecoder(this.charset), enc = new TextEncoder();
 
       this.charsetDecoder = (d) => {
-        return enc.encode(
-          dec.decode(d, {
-            stream: true,
-          })
-        );
+        return enc.encode(dec.decode(d, {
+          stream : true,
+        }));
       };
 
-      this.charsetEncoder = (dStr) => {
-        return iconv.encode(dStr, this.charset);
-      };
+      this.charsetEncoder =
+          (dStr) => { return iconv.encode(dStr, this.charset); };
     }
 
     this.enable = false;
@@ -87,9 +79,7 @@ class Control {
     });
   }
 
-  echo() {
-    return false;
-  }
+  echo() { return false; }
 
   resize(dim) {
     if (this.closed) {
@@ -99,19 +89,13 @@ class Control {
     this.resizer(dim.rows, dim.cols);
   }
 
-  enabled() {
-    this.enable = true;
-  }
+  enabled() { this.enable = true; }
 
-  disabled() {
-    this.enable = false;
-  }
+  disabled() { this.enable = false; }
 
   retap(isOn) {}
 
-  receive() {
-    return this.subs.subscribe();
-  }
+  receive() { return this.subs.subscribe(); }
 
   send(data) {
     if (this.closed) {
@@ -129,13 +113,9 @@ class Control {
     return this.sender(common.strToBinary(data));
   }
 
-  color() {
-    return this.colors.dark;
-  }
+  color() { return this.colors.dark; }
 
-  activeColor() {
-    return this.colors.color;
-  }
+  activeColor() { return this.colors.color; }
 
   close() {
     if (this.closer === null) {
@@ -155,19 +135,11 @@ export class SSH {
    *
    * @param {color.Color} c
    */
-  constructor(c) {
-    this.color = c;
-  }
+  constructor(c) { this.color = c; }
 
-  type() {
-    return "SSH";
-  }
+  type() { return "SSH"; }
 
-  ui() {
-    return "Console";
-  }
+  ui() { return "Console"; }
 
-  build(data) {
-    return new Control(data, this.color);
-  }
+  build(data) { return new Control(data, this.color); }
 }

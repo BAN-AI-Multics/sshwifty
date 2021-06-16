@@ -37,9 +37,7 @@ export class Header {
    *
    * @param {number} headerByte one byte data of the header
    */
-  constructor(headerByte) {
-    this.headerByte = headerByte;
-  }
+  constructor(headerByte) { this.headerByte = headerByte; }
 
   /**
    * Return the header type
@@ -47,9 +45,7 @@ export class Header {
    * @returns {number} Type number
    *
    */
-  type() {
-    return this.headerByte & headerHeaderCutter;
-  }
+  type() { return this.headerByte & headerHeaderCutter; }
 
   /**
    * Return the header data
@@ -57,9 +53,7 @@ export class Header {
    * @returns {number} Data number
    *
    */
-  data() {
-    return this.headerByte & headerDataCutter;
-  }
+  data() { return this.headerByte & headerDataCutter; }
 
   /**
    * Set the reader data
@@ -80,9 +74,7 @@ export class Header {
    * @returns {number} Header byte data
    *
    */
-  value() {
-    return this.headerByte;
-  }
+  value() { return this.headerByte; }
 }
 
 export const STREAM_HEADER_BYTE_LENGTH = 2;
@@ -110,9 +102,7 @@ export class Stream {
    * @returns {number} the marker
    *
    */
-  marker() {
-    return this.headerByte1 >> 5;
-  }
+  marker() { return this.headerByte1 >> 5; }
 
   /**
    * Return the stream data length
@@ -147,7 +137,7 @@ export class Stream {
     }
 
     this.headerByte1 =
-      (marker << 5) | ((length >> 8) & streamHeaderLengthFirstByteCutter);
+        (marker << 5) | ((length >> 8) & streamHeaderLengthFirstByteCutter);
     this.headerByte2 = length & 0xff;
   }
 
@@ -157,9 +147,7 @@ export class Stream {
    * @returns {Uint8Array} Header data
    *
    */
-  buffer() {
-    return new Uint8Array([this.headerByte1, this.headerByte2]);
-  }
+  buffer() { return new Uint8Array([ this.headerByte1, this.headerByte2 ]); }
 }
 
 export class InitialStream extends Stream {
@@ -169,9 +157,7 @@ export class InitialStream extends Stream {
    * @returns {number} Max data size
    *
    */
-  static maxDataSize() {
-    return 0x07ff;
-  }
+  static maxDataSize() { return 0x07ff; }
 
   /**
    * constructor
@@ -180,9 +166,7 @@ export class InitialStream extends Stream {
    * @param {number} headerByte2 Second header byte
    *
    */
-  constructor(headerByte1, headerByte2) {
-    super(headerByte1, headerByte2);
-  }
+  constructor(headerByte1, headerByte2) { super(headerByte1, headerByte2); }
 
   /**
    * Return command ID
@@ -190,9 +174,7 @@ export class InitialStream extends Stream {
    * @returns {number} Command ID
    *
    */
-  command() {
-    return this.headerByte1 >> 4;
-  }
+  command() { return this.headerByte1 >> 4; }
 
   /**
    * Return data
@@ -216,9 +198,7 @@ export class InitialStream extends Stream {
    * @returns {boolean} True when the request is successful, false otherwise
    *
    */
-  success() {
-    return (this.headerByte1 & 0x08) != 0;
-  }
+  success() { return (this.headerByte1 & 0x08) != 0; }
 
   /**
    * Set the header
@@ -259,6 +239,4 @@ export class InitialStream extends Stream {
  * @returns {Header} The header which been built
  *
  */
-export function header(h) {
-  return new Header(h);
-}
+export function header(h) { return new Header(h); }

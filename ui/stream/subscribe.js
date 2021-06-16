@@ -36,9 +36,8 @@ export class Subscribe {
    * Returns how many resolve/reject in the pending
    */
   pendings() {
-    return (
-      this.pending.length + (this.rej !== null || this.res !== null ? 1 : 0)
-    );
+    return (this.pending.length +
+            (this.rej !== null || this.res !== null ? 1 : 0));
   }
 
   /**
@@ -53,7 +52,7 @@ export class Subscribe {
       return;
     }
 
-    this.pending.push([typeResolve, d]);
+    this.pending.push([ typeResolve, d ]);
   }
 
   /**
@@ -69,7 +68,7 @@ export class Subscribe {
       return;
     }
 
-    this.pending.push([typeReject, e]);
+    this.pending.push([ typeReject, e ]);
   }
 
   /**
@@ -83,14 +82,14 @@ export class Subscribe {
       let p = this.pending.shift();
 
       switch (p[0]) {
-        case typeReject:
-          throw p[1];
+      case typeReject:
+        throw p[1];
 
-        case typeResolve:
-          return p[1];
+      case typeResolve:
+        return p[1];
 
-        default:
-          throw new Exception("Unknown pending type", false);
+      default:
+        throw new Exception("Unknown pending type", false);
       }
     }
 
@@ -123,7 +122,5 @@ export class Subscribe {
    * @param {string} reason Reason of the disable
    *
    */
-  disable(reason) {
-    this.disabled = reason;
-  }
+  disable(reason) { this.disabled = reason; }
 }

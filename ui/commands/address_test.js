@@ -22,11 +22,10 @@ import * as address from "./address.js";
 describe("Address", () => {
   it("Address Loopback", async () => {
     let addr = new address.Address(address.LOOPBACK, null, 8080),
-      buf = addr.buffer();
+        buf = addr.buffer();
 
-    let r = new reader.Reader(new reader.Multiple(), (data) => {
-      return data;
-    });
+    let r =
+        new reader.Reader(new reader.Multiple(), (data) => { return data; });
 
     r.feed(buf);
 
@@ -38,16 +37,12 @@ describe("Address", () => {
   });
 
   it("Address IPv4", async () => {
-    let addr = new address.Address(
-        address.IPV4,
-        new Uint8Array([127, 0, 0, 1]),
-        8080
-      ),
-      buf = addr.buffer();
+    let addr = new address.Address(address.IPV4,
+                                   new Uint8Array([ 127, 0, 0, 1 ]), 8080),
+        buf = addr.buffer();
 
-    let r = new reader.Reader(new reader.Multiple(() => {}), (data) => {
-      return data;
-    });
+    let r = new reader.Reader(new reader.Multiple(() => {}),
+                              (data) => { return data; });
 
     r.feed(buf);
 
@@ -60,15 +55,13 @@ describe("Address", () => {
 
   it("Address IPv6", async () => {
     let addr = new address.Address(
-        address.IPV6,
-        new Uint8Array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]),
-        8080
-      ),
-      buf = addr.buffer();
+            address.IPV6,
+            new Uint8Array([ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 ]),
+            8080),
+        buf = addr.buffer();
 
-    let r = new reader.Reader(new reader.Multiple(() => {}), (data) => {
-      return data;
-    });
+    let r = new reader.Reader(new reader.Multiple(() => {}),
+                              (data) => { return data; });
 
     r.feed(buf);
 
@@ -81,15 +74,12 @@ describe("Address", () => {
 
   it("Address HostName", async () => {
     let addr = new address.Address(
-        address.HOSTNAME,
-        new Uint8Array(["v", "a", "g", "u", "l", "1", "2", "3"]),
-        8080
-      ),
-      buf = addr.buffer();
+            address.HOSTNAME,
+            new Uint8Array([ "v", "a", "g", "u", "l", "1", "2", "3" ]), 8080),
+        buf = addr.buffer();
 
-    let r = new reader.Reader(new reader.Multiple(() => {}), (data) => {
-      return data;
-    });
+    let r = new reader.Reader(new reader.Multiple(() => {}),
+                              (data) => { return data; });
 
     r.feed(buf);
 

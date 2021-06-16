@@ -74,20 +74,19 @@ class SSH {
     this.config = config;
     this.connected = false;
     this.events = new event.Events(
-      [
-        "initialization.failed",
-        "initialized",
-        "connect.failed",
-        "connect.succeed",
-        "connect.fingerprint",
-        "connect.credential",
-        "@stdout",
-        "@stderr",
-        "close",
-        "@completed",
-      ],
-      callbacks
-    );
+        [
+          "initialization.failed",
+          "initialized",
+          "connect.failed",
+          "connect.succeed",
+          "connect.fingerprint",
+          "connect.credential",
+          "@stdout",
+          "@stderr",
+          "close",
+          "@completed",
+        ],
+        callbacks);
   }
 
   /**
@@ -97,15 +96,12 @@ class SSH {
    *
    */
   run(initialSender) {
-    let user = new strings.String(this.config.user),
-      userBuf = user.buffer(),
-      addr = new address.Address(
-        this.config.host.type,
-        this.config.host.address,
-        this.config.host.port
-      ),
-      addrBuf = addr.buffer(),
-      authMethod = new Uint8Array([this.config.auth]);
+    let user = new strings.String(this.config.user), userBuf = user.buffer(),
+        addr =
+            new address.Address(this.config.host.type, this.config.host.address,
+                                this.config.host.port),
+        addrBuf = addr.buffer(),
+        authMethod = new Uint8Array([ this.config.auth ]);
 
     let data = new Uint8Array(userBuf.length + addrBuf.length + 1);
 
@@ -146,43 +142,43 @@ class SSH {
    */
   tick(streamHeader, rd) {
     switch (streamHeader.marker()) {
-      case SERVER_CONNECTED:
-        if (!this.connected) {
-          this.connected = true;
+    case SERVER_CONNECTED:
+      if (!this.connected) {
+        this.connected = true;
 
-          return this.events.fire("connect.succeed", rd, this);
-        }
-        break;
+        return this.events.fire("connect.succeed", rd, this);
+      }
+      break;
 
-      case SERVER_CONNECT_FAILED:
-        if (!this.connected) {
-          return this.events.fire("connect.failed", rd);
-        }
-        break;
+    case SERVER_CONNECT_FAILED:
+      if (!this.connected) {
+        return this.events.fire("connect.failed", rd);
+      }
+      break;
 
-      case SERVER_CONNECT_REQUEST_FINGERPRINT:
-        if (!this.connected) {
-          return this.events.fire("connect.fingerprint", rd, this.sender);
-        }
-        break;
+    case SERVER_CONNECT_REQUEST_FINGERPRINT:
+      if (!this.connected) {
+        return this.events.fire("connect.fingerprint", rd, this.sender);
+      }
+      break;
 
-      case SERVER_CONNECT_REQUEST_CREDENTIAL:
-        if (!this.connected) {
-          return this.events.fire("connect.credential", rd, this.sender);
-        }
-        break;
+    case SERVER_CONNECT_REQUEST_CREDENTIAL:
+      if (!this.connected) {
+        return this.events.fire("connect.credential", rd, this.sender);
+      }
+      break;
 
-      case SERVER_REMOTE_STDOUT:
-        if (this.connected) {
-          return this.events.fire("stdout", rd);
-        }
-        break;
+    case SERVER_REMOTE_STDOUT:
+      if (this.connected) {
+        return this.events.fire("stdout", rd);
+      }
+      break;
 
-      case SERVER_REMOTE_STDERR:
-        if (this.connected) {
-          return this.events.fire("stderr", rd);
-        }
-        break;
+    case SERVER_REMOTE_STDERR:
+      if (this.connected) {
+        return this.events.fire("stderr", rd);
+      }
+      break;
     }
 
     throw new Exception("Unknown stream header marker");
@@ -192,9 +188,7 @@ class SSH {
    * Send close signal to remote
    *
    */
-  async sendClose() {
-    return await this.sender.close();
-  }
+  async sendClose() { return await this.sender.close(); }
 
   /**
    * Send data to remote
@@ -202,9 +196,7 @@ class SSH {
    * @param {Uint8Array} data
    *
    */
-  async sendData(data) {
-    return this.sender.sendData(CLIENT_DATA_STDIN, data);
-  }
+  async sendData(data) { return this.sender.sendData(CLIENT_DATA_STDIN, data); }
 
   /**
    * Send resize request
@@ -236,46 +228,39 @@ class SSH {
    * Tear down the command completely
    *
    */
-  completed() {
-    return this.events.fire("completed");
-  }
+  completed() { return this.events.fire("completed"); }
 }
 
 const initialFieldDef = {
-  User: {
-    name: "User",
-    description: "",
-    type: "text",
-    value: "",
-    example: "guest",
-    readonly: false,
-    suggestions(input) {
-      return [];
-    },
+  User : {
+    name : "User",
+    description : "",
+    type : "text",
+    value : "",
+    example : "guest",
+    readonly : false,
+    suggestions(input) { return []; },
     verify(d) {
       if (d.length <= 0) {
         throw new Error("Username must be specified");
       }
 
       if (d.length > MAX_USERNAME_LEN) {
-        throw new Error(
-          "Username must not longer than " + MAX_USERNAME_LEN + " bytes"
-        );
+        throw new Error("Username must not longer than " + MAX_USERNAME_LEN +
+                        " bytes");
       }
 
       return "We'll login as user \"" + d + '"';
     },
   },
-  Host: {
-    name: "Host",
-    description: "",
-    type: "text",
-    value: "",
-    example: "ssh.vaguly.com:22",
-    readonly: false,
-    suggestions(input) {
-      return [];
-    },
+  Host : {
+    name : "Host",
+    description : "",
+    type : "text",
+    value : "",
+    example : "ssh.vaguly.com:22",
+    readonly : false,
+    suggestions(input) { return []; },
     verify(d) {
       if (d.length <= 0) {
         throw new Error("Hostname must be specified");
@@ -288,9 +273,8 @@ const initialFieldDef = {
       }
 
       if (addr.addr.length > address.MAX_ADDR_LEN) {
-        throw new Error(
-          "Can no longer than " + address.MAX_ADDR_LEN + " bytes"
-        );
+        throw new Error("Can no longer than " + address.MAX_ADDR_LEN +
+                        " bytes");
       }
 
       if (addr.port <= 0) {
@@ -300,16 +284,14 @@ const initialFieldDef = {
       return "Look like " + addr.type + " address";
     },
   },
-  Encoding: {
-    name: "Encoding",
-    description: "The character encoding of the server",
-    type: "select",
-    value: "utf-8",
-    example: common.charsetPresets.join(","),
-    readonly: false,
-    suggestions(input) {
-      return [];
-    },
+  Encoding : {
+    name : "Encoding",
+    description : "The character encoding of the server",
+    type : "select",
+    value : "utf-8",
+    example : common.charsetPresets.join(","),
+    readonly : false,
+    suggestions(input) { return []; },
     verify(d) {
       for (let i in common.charsetPresets) {
         if (common.charsetPresets[i] !== d) {
@@ -322,76 +304,66 @@ const initialFieldDef = {
       throw new Error('The character encoding "' + d + '" is not supported');
     },
   },
-  Notice: {
-    name: "Notice",
-    description: "",
-    type: "textdata",
-    value:
-      "SSH session is handled by the backend. Traffic will be decrypted " +
-      "on the backend server and then transmit back to your client.",
-    example: "",
-    readonly: false,
-    suggestions(input) {
-      return [];
-    },
-    verify(d) {
-      return "";
-    },
+  Notice : {
+    name : "Notice",
+    description : "",
+    type : "textdata",
+    value :
+        "SSH session is handled by the backend. Traffic will be decrypted " +
+            "on the backend server and then transmit back to your client.",
+    example : "",
+    readonly : false,
+    suggestions(input) { return []; },
+    verify(d) { return ""; },
   },
-  Password: {
-    name: "Password",
-    description: "",
-    type: "password",
-    value: "",
-    example: "----------",
-    readonly: false,
-    suggestions(input) {
-      return [];
-    },
+  Password : {
+    name : "Password",
+    description : "",
+    type : "password",
+    value : "",
+    example : "----------",
+    readonly : false,
+    suggestions(input) { return []; },
     verify(d) {
       if (d.length <= 0) {
         throw new Error("Password must be specified");
       }
 
       if (d.length > MAX_PASSWORD_LEN) {
-        throw new Error(
-          "It's too long, make it shorter than " + MAX_PASSWORD_LEN + " bytes"
-        );
+        throw new Error("It's too long, make it shorter than " +
+                        MAX_PASSWORD_LEN + " bytes");
       }
 
       return "We'll login with this password";
     },
   },
-  "Private Key": {
-    name: "Private Key",
-    description:
-      'Like the one inside <i style="color: #fff; font-style: normal;">' +
-      "~/.ssh/id_rsa</i>, can&apos;t be encrypted<br /><br />" +
-      'To decrypt the Private Key, use command: <i style="color: #fff;' +
-      ' font-style: normal;">ssh-keygen -f /path/to/private_key -p</i><br />' +
-      "<br />" +
-      "It is strongly recommended to use one Private Key per SSH server if " +
-      "the Private Key will be submitted to Sshwifty. To generate a new SSH " +
-      'key pair, use command <i style="color: #fff; font-style: normal;">' +
-      "ssh-keygen -o -f /path/to/my_server_key</i> and then deploy the " +
-      'generated <i style="color: #fff; font-style: normal;">' +
-      "/path/to/my_server_key.pub</i> file onto the target SSH server",
-    type: "textfile",
-    value: "",
-    example: "",
-    readonly: false,
-    suggestions(input) {
-      return [];
-    },
+  "Private Key" : {
+    name : "Private Key",
+    description :
+        'Like the one inside <i style="color: #fff; font-style: normal;">' +
+            "~/.ssh/id_rsa</i>, can&apos;t be encrypted<br /><br />" +
+            'To decrypt the Private Key, use command: <i style="color: #fff;' +
+            ' font-style: normal;">ssh-keygen -f /path/to/private_key -p</i><br />' +
+            "<br />" +
+            "It is strongly recommended to use one Private Key per SSH server if " +
+            "the Private Key will be submitted to Sshwifty. To generate a new SSH " +
+            'key pair, use command <i style="color: #fff; font-style: normal;">' +
+            "ssh-keygen -o -f /path/to/my_server_key</i> and then deploy the " +
+            'generated <i style="color: #fff; font-style: normal;">' +
+            "/path/to/my_server_key.pub</i> file onto the target SSH server",
+    type : "textfile",
+    value : "",
+    example : "",
+    readonly : false,
+    suggestions(input) { return []; },
     verify(d) {
       if (d.length <= 0) {
         throw new Error("Private Key must be specified");
       }
 
       if (d.length > MAX_PASSWORD_LEN) {
-        throw new Error(
-          "It's too long, make it shorter than " + MAX_PASSWORD_LEN + " bytes"
-        );
+        throw new Error("It's too long, make it shorter than " +
+                        MAX_PASSWORD_LEN + " bytes");
       }
 
       const lines = d.trim().split("\n");
@@ -428,47 +400,41 @@ const initialFieldDef = {
       return "We'll login with this Private Key";
     },
   },
-  Authentication: {
-    name: "Authentication",
-    description:
-      "Please make sure the authentication method that you selected is " +
-      "supported by the server, otherwise it will be ignored and likely " +
-      "cause the login to fail",
-    type: "radio",
-    value: "",
-    example: "Password,Private Key,None",
-    readonly: false,
-    suggestions(input) {
-      return [];
-    },
+  Authentication : {
+    name : "Authentication",
+    description :
+        "Please make sure the authentication method that you selected is " +
+            "supported by the server, otherwise it will be ignored and likely " +
+            "cause the login to fail",
+    type : "radio",
+    value : "",
+    example : "Password,Private Key,None",
+    readonly : false,
+    suggestions(input) { return []; },
     verify(d) {
       switch (d) {
-        case "Password":
-        case "Private Key":
-        case "None":
-          return "";
+      case "Password":
+      case "Private Key":
+      case "None":
+        return "";
 
-        default:
-          throw new Error("Authentication method must be specified");
+      default:
+        throw new Error("Authentication method must be specified");
       }
     },
   },
-  Fingerprint: {
-    name: "Fingerprint",
-    description:
-      "Please carefully verify the fingerprint. DO NOT continue " +
-      "if the fingerprint is unknown to you, otherwise you maybe " +
-      "giving your own secrets to an imposter",
-    type: "textdata",
-    value: "",
-    example: "",
-    readonly: false,
-    suggestions(input) {
-      return [];
-    },
-    verify(d) {
-      return "";
-    },
+  Fingerprint : {
+    name : "Fingerprint",
+    description :
+        "Please carefully verify the fingerprint. DO NOT continue " +
+            "if the fingerprint is unknown to you, otherwise you maybe " +
+            "giving your own secrets to an imposter",
+    type : "textdata",
+    value : "",
+    example : "",
+    readonly : false,
+    suggestions(input) { return []; },
+    verify(d) { return ""; },
   },
 };
 
@@ -484,17 +450,17 @@ const initialFieldDef = {
  */
 function getAuthMethodFromStr(d) {
   switch (d) {
-    case "None":
-      return AUTHMETHOD_NONE;
+  case "None":
+    return AUTHMETHOD_NONE;
 
-    case "Password":
-      return AUTHMETHOD_PASSPHRASE;
+  case "Password":
+    return AUTHMETHOD_PASSPHRASE;
 
-    case "Private Key":
-      return AUTHMETHOD_PRIVATE_KEY;
+  case "Private Key":
+    return AUTHMETHOD_PRIVATE_KEY;
 
-    default:
-      throw new Exception("Unknown Auth method");
+  default:
+    throw new Exception("Unknown Auth method");
   }
 }
 
@@ -512,50 +478,31 @@ class Wizard {
    * @param {history.History} history
    *
    */
-  constructor(
-    info,
-    preset,
-    session,
-    keptSessions,
-    streams,
-    subs,
-    controls,
-    history
-  ) {
+  constructor(info, preset, session, keptSessions, streams, subs, controls,
+              history) {
     this.info = info;
     this.preset = preset;
     this.hasStarted = false;
     this.streams = streams;
-    this.session = session
-      ? session
-      : {
-          credential: "",
-        };
+    this.session = session ? session : {
+      credential : "",
+    };
     this.keptSessions = keptSessions;
     this.step = subs;
     this.controls = controls.get("SSH");
     this.history = history;
   }
 
-  run() {
-    this.step.resolve(this.stepInitialPrompt());
-  }
+  run() { this.step.resolve(this.stepInitialPrompt()); }
 
-  started() {
-    return this.hasStarted;
-  }
+  started() { return this.hasStarted; }
 
-  control() {
-    return this.controls;
-  }
+  control() { return this.controls; }
 
   close() {
-    this.step.resolve(
-      this.stepErrorDone(
+    this.step.resolve(this.stepErrorDone(
         "Action cancelled",
-        "Action has been cancelled without reach any success"
-      )
-    );
+        "Action has been cancelled without reach any success"));
   }
 
   stepErrorDone(title, message) {
@@ -563,33 +510,25 @@ class Wizard {
   }
 
   stepSuccessfulDone(data) {
-    return command.done(
-      true,
-      data,
-      "Success!",
-      "We have connected to the remote"
-    );
+    return command.done(true, data, "Success!",
+                        "We have connected to the remote");
   }
 
   stepWaitForAcceptWait() {
     return command.wait(
-      "Requesting",
-      "Waiting for the request to be accepted by the backend"
-    );
+        "Requesting", "Waiting for the request to be accepted by the backend");
   }
 
   stepWaitForEstablishWait(host) {
     return command.wait(
-      "Connecting to " + host,
-      "Establishing connection with the remote host, may take a while"
-    );
+        "Connecting to " + host,
+        "Establishing connection with the remote host, may take a while");
   }
 
   stepContinueWaitForEstablishWait() {
     return command.wait(
-      "Connecting",
-      "Establishing connection with the remote host, may take a while"
-    );
+        "Connecting",
+        "Establishing connection with the remote host, may take a while");
   }
 
   /**
@@ -603,12 +542,12 @@ class Wizard {
     let self = this;
 
     let config = {
-      user: common.strToUint8Array(configInput.user),
-      auth: getAuthMethodFromStr(configInput.authentication),
-      charset: configInput.charset,
-      credential: sessionData.credential,
-      host: address.parseHostPort(configInput.host, DEFAULT_PORT),
-      fingerprint: configInput.fingerprint,
+      user : common.strToUint8Array(configInput.user),
+      auth : getAuthMethodFromStr(configInput.authentication),
+      charset : configInput.charset,
+      credential : sessionData.credential,
+      host : address.parseHostPort(configInput.host, DEFAULT_PORT),
+      fingerprint : configInput.fingerprint,
     };
 
     // Copy the keptSessions from the record so it will not be overwritten here
@@ -617,80 +556,57 @@ class Wizard {
     return new SSH(sender, config, {
       "initialization.failed"(hd) {
         switch (hd.data()) {
-          case SERVER_REQUEST_ERROR_BAD_USERNAME:
-            self.step.resolve(
-              self.stepErrorDone("Request failed", "Invalid username")
-            );
-            return;
+        case SERVER_REQUEST_ERROR_BAD_USERNAME:
+          self.step.resolve(
+              self.stepErrorDone("Request failed", "Invalid username"));
+          return;
 
-          case SERVER_REQUEST_ERROR_BAD_ADDRESS:
-            self.step.resolve(
-              self.stepErrorDone("Request failed", "Invalid address")
-            );
-            return;
+        case SERVER_REQUEST_ERROR_BAD_ADDRESS:
+          self.step.resolve(
+              self.stepErrorDone("Request failed", "Invalid address"));
+          return;
 
-          case SERVER_REQUEST_ERROR_BAD_AUTHMETHOD:
-            self.step.resolve(
-              self.stepErrorDone("Request failed", "Invalid authication method")
-            );
-            return;
+        case SERVER_REQUEST_ERROR_BAD_AUTHMETHOD:
+          self.step.resolve(self.stepErrorDone("Request failed",
+                                               "Invalid authication method"));
+          return;
         }
 
-        self.step.resolve(
-          self.stepErrorDone("Request failed", "Unknown error: " + hd.data())
-        );
+        self.step.resolve(self.stepErrorDone("Request failed",
+                                             "Unknown error: " + hd.data()));
       },
       initialized(hd) {
         self.step.resolve(self.stepWaitForEstablishWait(configInput.host));
       },
       async "connect.failed"(rd) {
-        let d = new TextDecoder("utf-8").decode(
-          await reader.readCompletely(rd)
-        );
+        let d =
+            new TextDecoder("utf-8").decode(await reader.readCompletely(rd));
 
         self.step.resolve(self.stepErrorDone("Connection failed", d));
       },
       "connect.succeed"(rd, commandHandler) {
         self.connectionSucceed = true;
 
-        self.step.resolve(
-          self.stepSuccessfulDone(
-            new command.Result(
-              configInput.user + "@" + configInput.host,
-              self.info,
-              self.controls.build({
-                charset: configInput.charset,
-                send(data) {
-                  return commandHandler.sendData(data);
-                },
-                close() {
-                  return commandHandler.sendClose();
-                },
-                resize(rows, cols) {
-                  return commandHandler.sendResize(rows, cols);
-                },
-                events: commandHandler.events,
-              }),
-              self.controls.ui()
-            )
-          )
-        );
+        self.step.resolve(self.stepSuccessfulDone(new command.Result(
+            configInput.user + "@" + configInput.host, self.info,
+            self.controls.build({
+              charset : configInput.charset,
+              send(data) { return commandHandler.sendData(data); },
+              close() { return commandHandler.sendClose(); },
+              resize(rows,
+                     cols) { return commandHandler.sendResize(rows, cols); },
+              events : commandHandler.events,
+            }),
+            self.controls.ui())));
 
-        self.history.save(
-          self.info.name() + ":" + configInput.user + "@" + configInput.host,
-          configInput.user + "@" + configInput.host,
-          new Date(),
-          self.info,
-          configInput,
-          sessionData,
-          keptSessions
-        );
+        self.history.save(self.info.name() + ":" + configInput.user + "@" +
+                              configInput.host,
+                          configInput.user + "@" + configInput.host, new Date(),
+                          self.info, configInput, sessionData, keptSessions);
       },
       async "connect.fingerprint"(rd, sd) {
-        self.step.resolve(
-          await self.stepFingerprintPrompt(
-            rd,
-            sd,
+        self.step.resolve(await self.stepFingerprintPrompt(
+            rd, sd,
             (v) => {
               if (!configInput.fingerprint) {
                 return FingerprintPromptVerifyNoRecord;
@@ -702,34 +618,25 @@ class Wizard {
 
               return FingerprintPromptVerifyMismatch;
             },
-            (newFingerprint) => {
-              configInput.fingerprint = newFingerprint;
-            }
-          )
-        );
+            (newFingerprint) => { configInput.fingerprint = newFingerprint; }));
       },
       async "connect.credential"(rd, sd) {
         self.step.resolve(
-          self.stepCredentialPrompt(rd, sd, config, (newCred, fromPreset) => {
-            sessionData.credential = newCred;
+            self.stepCredentialPrompt(rd, sd, config, (newCred, fromPreset) => {
+              sessionData.credential = newCred;
 
-            // Save the credential if the credential was from a preset
-            if (fromPreset && keptSessions.indexOf("credential") < 0) {
-              keptSessions.push("credential");
-            }
-          })
-        );
+              // Save the credential if the credential was from a preset
+              if (fromPreset && keptSessions.indexOf("credential") < 0) {
+                keptSessions.push("credential");
+              }
+            }));
       },
       "@stdout"(rd) {},
       "@stderr"(rd) {},
       close() {},
       "@completed"() {
-        self.step.resolve(
-          self.stepErrorDone(
-            "Operation has failed",
-            "Connection has been cancelled"
-          )
-        );
+        self.step.resolve(self.stepErrorDone("Operation has failed",
+                                             "Connection has been cancelled"));
       },
     });
   }
@@ -738,119 +645,102 @@ class Wizard {
     let self = this;
 
     return command.prompt(
-      "SSH",
-      "Secure Shell Host",
-      "Connect",
-      (r) => {
-        self.hasStarted = true;
+        "SSH", "Secure Shell Host", "Connect",
+        (r) => {
+          self.hasStarted = true;
 
-        self.streams.request(COMMAND_ID, (sd) => {
-          return self.buildCommand(
-            sd,
-            {
-              user: r.user,
-              authentication: r.authentication,
-              host: r.host,
-              charset: r.encoding,
-              fingerprint: self.preset
-                ? self.preset.metaDefault("Fingerprint", "")
-                : "",
+          self.streams.request(COMMAND_ID, (sd) => {
+            return self.buildCommand(sd, {
+              user : r.user,
+              authentication : r.authentication,
+              host : r.host,
+              charset : r.encoding,
+              fingerprint :
+                  self.preset ? self.preset.metaDefault("Fingerprint", "") : "",
             },
-            self.session
-          );
-        });
+                                     self.session);
+          });
 
-        self.step.resolve(self.stepWaitForAcceptWait());
-      },
-      () => {},
-      command.fieldsWithPreset(
-        initialFieldDef,
-        [
-          { name: "User" },
-          {
-            name: "Host",
-            suggestions(input) {
-              const hosts = self.history.search(
-                "SSH",
-                "host",
-                input,
-                HostMaxSearchResults
-              );
+          self.step.resolve(self.stepWaitForAcceptWait());
+        },
+        () => {},
+        command.fieldsWithPreset(
+            initialFieldDef,
+            [
+              {name : "User"},
+              {
+                name : "Host",
+                suggestions(input) {
+                  const hosts = self.history.search("SSH", "host", input,
+                                                    HostMaxSearchResults);
 
-              let sugg = [];
+                  let sugg = [];
 
-              for (let i = 0; i < hosts.length; i++) {
-                sugg.push({
-                  title: hosts[i].title,
-                  value: hosts[i].data.host,
-                  meta: {
-                    User: hosts[i].data.user,
-                    Authentication: hosts[i].data.authentication,
-                    Encoding: hosts[i].data.charset,
-                  },
-                });
-              }
+                  for (let i = 0; i < hosts.length; i++) {
+                    sugg.push({
+                      title : hosts[i].title,
+                      value : hosts[i].data.host,
+                      meta : {
+                        User : hosts[i].data.user,
+                        Authentication : hosts[i].data.authentication,
+                        Encoding : hosts[i].data.charset,
+                      },
+                    });
+                  }
 
-              return sugg;
-            },
-          },
-          { name: "Authentication" },
-          { name: "Encoding" },
-          { name: "Notice" },
-        ],
-        self.preset,
-        (r) => {}
-      )
-    );
+                  return sugg;
+                },
+              },
+              {name : "Authentication"},
+              {name : "Encoding"},
+              {name : "Notice"},
+            ],
+            self.preset, (r) => {}));
   }
 
   async stepFingerprintPrompt(rd, sd, verify, newFingerprint) {
     const self = this;
 
-    let fingerprintData = new TextDecoder("utf-8").decode(
-        await reader.readCompletely(rd)
-      ),
-      fingerprintChanged = false;
+    let fingerprintData =
+            new TextDecoder("utf-8").decode(await reader.readCompletely(rd)),
+        fingerprintChanged = false;
 
     switch (verify(fingerprintData)) {
-      case FingerprintPromptVerifyPassed:
-        sd.send(CLIENT_CONNECT_RESPOND_FINGERPRINT, new Uint8Array([0]));
+    case FingerprintPromptVerifyPassed:
+      sd.send(CLIENT_CONNECT_RESPOND_FINGERPRINT, new Uint8Array([ 0 ]));
 
-        return self.stepContinueWaitForEstablishWait();
+      return self.stepContinueWaitForEstablishWait();
 
-      case FingerprintPromptVerifyMismatch:
-        fingerprintChanged = true;
+    case FingerprintPromptVerifyMismatch:
+      fingerprintChanged = true;
     }
 
     return command.prompt(
-      !fingerprintChanged
-        ? "Do you recognize this server?"
-        : "Danger! Server fingerprint has changed!",
-      !fingerprintChanged
-        ? "Verify server fingerprint displayed below"
-        : "It's very unusual. Please verify the new server fingerprint below",
-      !fingerprintChanged ? "Yes, I do" : "I'm aware of the change",
-      (r) => {
-        newFingerprint(fingerprintData);
+        !fingerprintChanged ? "Do you recognize this server?"
+                            : "Danger! Server fingerprint has changed!",
+        !fingerprintChanged
+            ? "Verify server fingerprint displayed below"
+            : "It's very unusual. Please verify the new server fingerprint below",
+        !fingerprintChanged ? "Yes, I do" : "I'm aware of the change",
+        (r) => {
+          newFingerprint(fingerprintData);
 
-        sd.send(CLIENT_CONNECT_RESPOND_FINGERPRINT, new Uint8Array([0]));
+          sd.send(CLIENT_CONNECT_RESPOND_FINGERPRINT, new Uint8Array([ 0 ]));
 
-        self.step.resolve(self.stepContinueWaitForEstablishWait());
-      },
-      () => {
-        sd.send(CLIENT_CONNECT_RESPOND_FINGERPRINT, new Uint8Array([1]));
-
-        self.step.resolve(
-          command.wait("Rejecting", "Sending rejection to the backend")
-        );
-      },
-      command.fields(initialFieldDef, [
-        {
-          name: "Fingerprint",
-          value: fingerprintData,
+          self.step.resolve(self.stepContinueWaitForEstablishWait());
         },
-      ])
-    );
+        () => {
+          sd.send(CLIENT_CONNECT_RESPOND_FINGERPRINT, new Uint8Array([ 1 ]));
+
+          self.step.resolve(
+              command.wait("Rejecting", "Sending rejection to the backend"));
+        },
+        command.fields(initialFieldDef, [
+          {
+            name : "Fingerprint",
+            value : fingerprintData,
+          },
+        ]));
   }
 
   async stepCredentialPrompt(rd, sd, config, newCredential) {
@@ -859,71 +749,54 @@ class Wizard {
     let fields = [];
 
     if (config.credential.length > 0) {
-      sd.send(
-        CLIENT_CONNECT_RESPOND_CREDENTIAL,
-        new TextEncoder().encode(config.credential)
-      );
+      sd.send(CLIENT_CONNECT_RESPOND_CREDENTIAL,
+              new TextEncoder().encode(config.credential));
 
       return self.stepContinueWaitForEstablishWait();
     }
 
     switch (config.auth) {
-      case AUTHMETHOD_PASSPHRASE:
-        fields = [{ name: "Password" }];
-        break;
+    case AUTHMETHOD_PASSPHRASE:
+      fields = [ {name : "Password"} ];
+      break;
 
-      case AUTHMETHOD_PRIVATE_KEY:
-        fields = [{ name: "Private Key" }];
-        break;
+    case AUTHMETHOD_PRIVATE_KEY:
+      fields = [ {name : "Private Key"} ];
+      break;
 
-      default:
-        throw new Exception(
-          'Auth method "' + config.auth + '" was unsupported'
-        );
+    default:
+      throw new Exception('Auth method "' + config.auth + '" was unsupported');
     }
 
     let presetCredentialUsed = false;
-    const inputFields = command.fieldsWithPreset(
-      initialFieldDef,
-      fields,
-      self.preset,
-      (r) => {
-        if (r !== fields[0].name) {
-          return;
-        }
+    const inputFields =
+        command.fieldsWithPreset(initialFieldDef, fields, self.preset, (r) => {
+          if (r !== fields[0].name) {
+            return;
+          }
 
-        presetCredentialUsed = true;
-      }
-    );
+          presetCredentialUsed = true;
+        });
 
     return command.prompt(
-      "Provide credential",
-      "Please input your credential",
-      "Login",
-      (r) => {
-        let vv = r[fields[0].name.toLowerCase()];
+        "Provide credential", "Please input your credential", "Login",
+        (r) => {
+          let vv = r[fields[0].name.toLowerCase()];
 
-        sd.send(
-          CLIENT_CONNECT_RESPOND_CREDENTIAL,
-          new TextEncoder().encode(vv)
-        );
+          sd.send(CLIENT_CONNECT_RESPOND_CREDENTIAL,
+                  new TextEncoder().encode(vv));
 
-        newCredential(vv, presetCredentialUsed);
+          newCredential(vv, presetCredentialUsed);
 
-        self.step.resolve(self.stepContinueWaitForEstablishWait());
-      },
-      () => {
-        sd.close();
+          self.step.resolve(self.stepContinueWaitForEstablishWait());
+        },
+        () => {
+          sd.close();
 
-        self.step.resolve(
-          command.wait(
-            "Cancelling login",
-            "Cancelling login request, please wait"
-          )
-        );
-      },
-      inputFields
-    );
+          self.step.resolve(command.wait(
+              "Cancelling login", "Cancelling login request, please wait"));
+        },
+        inputFields);
   }
 }
 
@@ -941,26 +814,10 @@ class Executer extends Wizard {
    * @param {history.History} history
    *
    */
-  constructor(
-    info,
-    config,
-    session,
-    keptSessions,
-    streams,
-    subs,
-    controls,
-    history
-  ) {
-    super(
-      info,
-      presets.emptyPreset(),
-      session,
-      keptSessions,
-      streams,
-      subs,
-      controls,
-      history
-    );
+  constructor(info, config, session, keptSessions, streams, subs, controls,
+              history) {
+    super(info, presets.emptyPreset(), session, keptSessions, streams, subs,
+          controls, history);
 
     this.config = config;
   }
@@ -971,17 +828,14 @@ class Executer extends Wizard {
     self.hasStarted = true;
 
     self.streams.request(COMMAND_ID, (sd) => {
-      return self.buildCommand(
-        sd,
-        {
-          user: self.config.user,
-          authentication: self.config.authentication,
-          host: self.config.host,
-          charset: self.config.charset ? self.config.charset : "utf-8",
-          fingerprint: self.config.fingerprint,
-        },
-        self.session
-      );
+      return self.buildCommand(sd, {
+        user : self.config.user,
+        authentication : self.config.authentication,
+        host : self.config.host,
+        charset : self.config.charset ? self.config.charset : "utf-8",
+        fingerprint : self.config.fingerprint,
+      },
+                               self.session);
     });
 
     return self.stepWaitForAcceptWait();
@@ -991,64 +845,24 @@ class Executer extends Wizard {
 export class Command {
   constructor() {}
 
-  id() {
-    return COMMAND_ID;
+  id() { return COMMAND_ID; }
+
+  name() { return "SSH"; }
+
+  description() { return "Secure Shell Host"; }
+
+  color() { return "#3c8"; }
+
+  wizard(info, preset, session, keptSessions, streams, subs, controls,
+         history) {
+    return new Wizard(info, preset, session, keptSessions, streams, subs,
+                      controls, history);
   }
 
-  name() {
-    return "SSH";
-  }
-
-  description() {
-    return "Secure Shell Host";
-  }
-
-  color() {
-    return "#3c8";
-  }
-
-  wizard(
-    info,
-    preset,
-    session,
-    keptSessions,
-    streams,
-    subs,
-    controls,
-    history
-  ) {
-    return new Wizard(
-      info,
-      preset,
-      session,
-      keptSessions,
-      streams,
-      subs,
-      controls,
-      history
-    );
-  }
-
-  execute(
-    info,
-    config,
-    session,
-    keptSessions,
-    streams,
-    subs,
-    controls,
-    history
-  ) {
-    return new Executer(
-      info,
-      config,
-      session,
-      keptSessions,
-      streams,
-      subs,
-      controls,
-      history
-    );
+  execute(info, config, session, keptSessions, streams, subs, controls,
+          history) {
+    return new Executer(info, config, session, keptSessions, streams, subs,
+                        controls, history);
   }
 
   launch(info, launcher, streams, subs, controls, history) {
@@ -1064,10 +878,9 @@ export class Command {
       throw new Exception('Given launcher "' + launcher + '" was malformed');
     }
 
-    let user = userHostName[1],
-      host = userHostName[2],
-      auth = d[1],
-      charset = d.length >= 3 && d[2] ? d[2] : "utf-8"; // RM after depreciation
+    let user = userHostName[1], host = userHostName[2], auth = d[1],
+        charset =
+            d.length >= 3 && d[2] ? d[2] : "utf-8"; // RM after depreciation
 
     try {
       initialFieldDef["User"].verify(user);
@@ -1075,38 +888,22 @@ export class Command {
       initialFieldDef["Authentication"].verify(auth);
       initialFieldDef["Encoding"].verify(charset);
     } catch (e) {
-      throw new Exception(
-        'Given launcher "' + launcher + '" was malformed ' + e
-      );
+      throw new Exception('Given launcher "' + launcher + '" was malformed ' +
+                          e);
     }
 
-    return this.execute(
-      info,
-      {
-        user: user,
-        host: host,
-        authentication: auth,
-        charset: charset,
-      },
-      null,
-      null,
-      streams,
-      subs,
-      controls,
-      history
-    );
+    return this.execute(info, {
+      user : user,
+      host : host,
+      authentication : auth,
+      charset : charset,
+    },
+                        null, null, streams, subs, controls, history);
   }
 
   launcher(config) {
-    return (
-      config.user +
-      "@" +
-      config.host +
-      "|" +
-      config.authentication +
-      "|" +
-      (config.charset ? config.charset : "utf-8")
-    );
+    return (config.user + "@" + config.host + "|" + config.authentication +
+            "|" + (config.charset ? config.charset : "utf-8"));
   }
 
   represet(preset) {

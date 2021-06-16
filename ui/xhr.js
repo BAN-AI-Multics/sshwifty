@@ -27,13 +27,9 @@ function send(method, url, headers) {
       res(authReq);
     });
 
-    authReq.addEventListener("error", (e) => {
-      rej(e);
-    });
+    authReq.addEventListener("error", (e) => { rej(e); });
 
-    authReq.addEventListener("timeout", (e) => {
-      rej(e);
-    });
+    authReq.addEventListener("timeout", (e) => { rej(e); });
 
     authReq.open(method, url, true);
 
@@ -45,10 +41,6 @@ function send(method, url, headers) {
   });
 }
 
-export function get(url, headers) {
-  return send("GET", url, headers);
-}
+export function get(url, headers) { return send("GET", url, headers); }
 
-export function options(url, headers) {
-  return send("OPTIONS", url, headers);
-}
+export function options(url, headers) { return send("OPTIONS", url, headers); }
