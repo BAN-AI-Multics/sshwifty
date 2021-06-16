@@ -15,6 +15,7 @@
 ## License
 
 - Code of this project is licensed under the **AGPL‑3.0**
+
   - See [LICENSE.md] for details
 
 - Third-party components used by this project are licensed under their
