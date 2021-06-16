@@ -16,7 +16,6 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import * as iconv from "iconv-lite";
-
 import * as color from "../commands/color.js";
 import * as common from "../commands/common.js";
 import * as reader from "../stream/reader.js";

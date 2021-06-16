@@ -514,9 +514,8 @@ export default {
       let mod = {};
 
       for (let i = 0; i < this.current.fields.length; i++) {
-        mod[this.current.fields[i].field.name] = this.current.fields[
-          i
-        ].field.value;
+        mod[this.current.fields[i].field.name] =
+          this.current.fields[i].field.value;
       }
 
       return mod;

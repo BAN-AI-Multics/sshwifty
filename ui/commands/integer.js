@@ -16,6 +16,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import * as reader from "../stream/reader.js";
+import Exception from "./exception.js";
 
 import Exception from "./exception.js";
 

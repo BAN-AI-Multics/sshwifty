@@ -45,30 +45,7 @@ describe("Reader", () => {
       return data;
     });
     const expected = [
-      0,
-      1,
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
-      0,
-      1,
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
-      0,
-      1,
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
+      0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7,
     ];
     const feedIntv = setInterval(() => {
       r.feed(Uint8Array.from(expected.slice(0, 8)));

@@ -41,8 +41,8 @@
 // 			"which",
 // 		]
 
-// 		document.getElementById("input").addEventListener("keydown", function(e) {
-// 			e.preventDefault();
+// 		document.getElementById("input").addEventListener("keydown",
+// function(e) { 			e.preventDefault();
 
 // 			var ev = {};
 
@@ -52,7 +52,8 @@
 
 // 			keyHistory.push([e.key, ev])
 
-// 			document.getElementById("result").innerHTML = JSON.stringify(keyHistory);
+// 			document.getElementById("result").innerHTML =
+// JSON.stringify(keyHistory);
 // 		})
 
 // 	</script>

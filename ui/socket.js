@@ -46,6 +46,7 @@ class Dial {
   /**
    * Connect to the remote server
    *
+   * @param {string} address Target URL address
    * @param {number} timeout Connect timeout
    *
    * @returns {Promise<WebSocket>} When connection is established

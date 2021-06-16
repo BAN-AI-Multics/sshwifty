@@ -16,6 +16,8 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import assert from "assert";
+import * as reader from "../stream/reader.js";
+import * as strings from "./string.js";
 
 import * as reader from "../stream/reader.js";
 

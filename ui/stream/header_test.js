@@ -16,6 +16,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import assert from "assert";
+import * as header from "./header.js";
 
 import * as header from "./header.js";
 
