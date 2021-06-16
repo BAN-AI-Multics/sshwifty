@@ -1,6 +1,6 @@
 # sshwifty
 
-[![license-agpl-3.0](https://img.shields.io/badge/Open%20Source%20License-AGPL‑3.0-blue.svg)](https://img.shields.io/badge/Open%20Source%20License-AGPL‑3.0-blue.svg)
+[![license-agpl-3.0](https://img.shields.io/badge/license-AGPL‑3.0-blue.svg)](https://img.shields.io/badge/license-AGPL‑3.0-blue.svg)
 [![codesize](https://img.shields.io/github/languages/code-size/BAN-AI-Multics/sshwifty.svg)](https://github.com/BAN-AI-Multics/sshwifty)
 [![goreportcard](https://goreportcard.com/badge/github.com/BAN-AI-Multics/sshwifty)](https://goreportcard.com/badge/github.com/BAN-AI-Multics/sshwifty)
 [![codacybadge](https://api.codacy.com/project/badge/Grade/abada4bf5755427ca565bdef2e23ef5e)](https://app.codacy.com/gh/BAN-AI-Multics/sshwifty?utm_source=github.com&utm_medium=referral&utm_content=BAN-AI-Multics/sshwifty&utm_campaign=Badge_Grade_Settings)
