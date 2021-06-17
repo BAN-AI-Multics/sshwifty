@@ -1,4 +1,4 @@
-# sshwifty
+# Sshwifty
 
 [![license-agpl-3.0](https://img.shields.io/badge/license-AGPL‑3.0-blue.svg)](https://img.shields.io/badge/license-AGPL‑3.0-blue.svg)
 [![codesize](https://img.shields.io/github/languages/code-size/BAN-AI-Multics/sshwifty.svg)](https://github.com/BAN-AI-Multics/sshwifty)
@@ -10,12 +10,21 @@
 
 ---
 
-This Software is distributed under the terms and conditions of the
-[**AGPL‑3.0**](LICENSE.md). This Software may contain, incorporate,
-integrate, require, or be delivered with
-[third-party components](DEPENDENCIES.md) subject to different license
-agreement terms, disclaimers of warranties, maintenance, limited
-warranties, or other terms and conditions.
+* This repository contains a version of [Sshwifty](https://github.com/nirui/sshwifty/),
+  [modified](https://github.com/nirui/sshwifty/compare/master...BAN-AI-Multics:master.diff)
+  by [Jeffrey H. Johnson](mailto:trnsz+banai@pobox.com) for use at
+  [BAN.AI](https://ban.ai).
+
+    ```text
+    Copyright © 2021 Jeffrey H. Johnson <trnsz+banai@pobox.com>
+    Copyright © 2019-2021 NI Rui <ranqus@gmail.com>
+	```
+
+* Third-party [components](DEPENDENCIES.md) required for operation may be
+  subject to different license agreement terms, disclaimers of warranties,
+  maintenance, limited warranties, or other terms and conditions. Refer to
+  the licenses and copyright statements of the respective components for
+  further details.
 
 [license.md]: LICENSE.md
 [dependencies.md]: DEPENDENCIES.md

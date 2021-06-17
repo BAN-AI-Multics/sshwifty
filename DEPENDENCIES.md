@@ -1,28 +1,49 @@
 # Dependencies used by Sshwifty
 
-Sshwifty uses many third-party components. Those components is required in order
-for Sshwifty to function.
+* Sshwifty uses many third-party components which are required for Sshwifty
+  to function.
 
-A list of used components can be found inside `package.json` and `go.mod` file.
+    * A complete list of these components can be found by examination of the
+      `package.json` and `go.mod` files within this repository.
 
-Major dependencies includes:
+* These dependencies include, but are not limited to,
 
-## For front-end application
-
-- [Vue](https://vuejs.org), Licensed under MIT license
-- [Babel](https://babeljs.io/), Licensed under MIT license
-- [XTerm.js](https://xtermjs.org/), Licensed under MIT license
-- [normalize.css](https://github.com/necolas/normalize.css), Licensed under MIT license
-- [Roboto font](https://en.wikipedia.org/wiki/Roboto), Licensed under Apache license
-  Packaged by [Christian Hoffmeister](https://github.com/choffmeister/roboto-fontface-bower), Licensed under Apache 2.0
-- [iconv-lite](https://github.com/ashtuchkin/iconv-lite), Licensed under MIT license
-- [buffer](https://github.com/feross/buffer), Licensed under MIT license
-- [Hack font](https://github.com/source-foundry/Hack), [View license](https://github.com/source-foundry/Hack/blob/master/LICENSE.md)
-- [fontfaceobserver](https://github.com/bramstein/fontfaceobserver), [View license](https://github.com/bramstein/fontfaceobserver/blob/master/LICENSE)
-
-## For back-end application
-
-- [Go programming language](https://golang.org), [View license](https://github.com/golang/go/blob/master/LICENSE)
-- `github.com/gorilla/websocket`, Licensed under BSD-2-Cause license
-- `golang.org/x/net/proxy` [View license](https://github.com/golang/net/blob/master/LICENSE)
-- `golang.org/x/crypto`, [View license](https://github.com/golang/crypto/blob/master/LICENSE)
+- [Vue.js](https://vuejs.org)
+  (*MIT license*)
+- [Babel](https://babeljs.io/)
+  (*MIT license*)
+- [Xterm.js](https://xtermjs.org/)
+  (*MIT license*)
+- [normalize.css](https://github.com/necolas/normalize.css)
+  (*MIT license*)
+- [Roboto](https://en.wikipedia.org/wiki/Roboto)
+  distributed by [Christian Hoffmeister](https://github.com/choffmeister/roboto-fontface-bower)
+  (*Apache license*)
+- [iconv-lite](https://github.com/ashtuchkin/iconv-lite)
+  (*MIT license*)
+- [buffer](https://github.com/feross/buffer)
+  (*MIT license*)
+- [Hack](https://github.com/source-foundry/Hack)
+  (*[Hack font license](https://github.com/source-foundry/Hack/blob/master/LICENSE.md)*)
+- [Font Face Observer](https://github.com/bramstein/fontfaceobserver)
+  (*[2-clause BSD license](https://github.com/bramstein/fontfaceobserver/blob/master/LICENSE)*)
+- [Go](https://golang.org)
+  (*[3-clause BSD license with patent grant](https://github.com/golang/go/blob/master/LICENSE)*)
+- [Gorilla WebSocket](https://github.com/gorilla/websocket)
+  (*3-clause BSD license*)
+- [Go Proxy](https://golang.org/x/net/proxy)
+  (*[3-clause BSD license](https://github.com/golang/net/blob/master/LICENSE)*)
+- [Go Crypto](https://golang.org/x/crypto)
+  (*[3-clause BSD license](https://github.com/golang/crypto/blob/master/LICENSE)*)
+- [Go Spew](https://github.com/davecgh/go-spew)
+  (*ISC license*)
+- [leaktestfe](https://github.com/johnsonjh/leaktestfe)
+  (*ISC license*)
+- [Testify](https://github.com/stretchr/testify)
+  (*MIT license*)
+- [Uber goleak](https://go.uber.org/goleak)
+  (*MIT license*)
+- [Go YAML v2](https://gopkg.in/yaml.v2)
+  (*Apache 2.0 license*)
+- [Go YAML v3](https://gopkg.in/yaml.v3)
+  (*Apache 2.0 license*)
