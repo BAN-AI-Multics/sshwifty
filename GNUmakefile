@@ -23,23 +23,13 @@ sshwifty: jsinstall
 
 ############################################################################
 
-.PHONY: test check
-test check:
+.PHONY: testonly test check
+testonly test check: sshwifty
 	@$(NEWL)
 	@$(ECHO) "Start: test" || $(TRUE)
-	@$(NPM) "run" "test"
-	@$(NEWL)
-	@$(ECHO) "Finish: test" || $(TRUE)
-
-############################################################################
-
-.PHONY: testonly
-testonly: sshwifty
-	@$(NEWL)
-	@$(ECHO) "Start: testonly" || $(TRUE)
 	@$(NPM) "run" "testonly"
 	@$(NEWL)
-	@$(ECHO) "Finish: testonly" || $(TRUE)
+	@$(ECHO) "Finish: test" || $(TRUE)
 
 ############################################################################
 
