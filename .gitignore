@@ -42,3 +42,6 @@ typings/
 application/controller/static_pages/
 application/controller/static_pages.go
 sshwifty
+jsinstall
+jsinstalld
+jsinstallp
