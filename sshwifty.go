@@ -21,13 +21,13 @@
 package main
 
 import (
-	"os"
 	"C"
 	"github.com/BAN-AI-Multics/sshwifty/application"
 	"github.com/BAN-AI-Multics/sshwifty/application/commands"
 	"github.com/BAN-AI-Multics/sshwifty/application/configuration"
 	"github.com/BAN-AI-Multics/sshwifty/application/controller"
 	"github.com/BAN-AI-Multics/sshwifty/application/log"
+	"os"
 )
 
 func main() {
