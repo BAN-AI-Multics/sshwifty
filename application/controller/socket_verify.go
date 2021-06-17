@@ -58,8 +58,8 @@ func buildAccessConfigRespondBody(remotes []configuration.Preset) []byte {
 		}
 	}
 
-	json := jsoniter.ConfigCompatibleWithStandardLibrary
-	mData, mErr := jsoniter.Marshal(presets)
+	var json = jsoniter.ConfigCompatibleWithStandardLibrary
+	mData, mErr := json.Marshal(presets)
 
 	if mErr != nil {
 		panic(fmt.Errorf("Unable to marshal remote data: %s", mErr))
