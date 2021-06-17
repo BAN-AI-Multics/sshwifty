@@ -1,5 +1,6 @@
 // Sshwifty - A Web SSH client
 //
+// Copyright (C) 2021 Jeffrey H. Johnson <trnsz@pobox.com>
 // Copyright (C) 2019-2021 NI Rui <ranqus@gmail.com>
 //
 // This program is free software: you can redistribute it and/or modify
@@ -25,6 +26,7 @@ import (
 
 	"github.com/BAN-AI-Multics/sshwifty/application/log"
 	"github.com/BAN-AI-Multics/sshwifty/application/rw"
+	m "github.com/johnsonjh/leaktestfe"
 )
 
 func testDummyFetchGen(data []byte) rw.FetchReaderFetcher {
@@ -53,6 +55,7 @@ func (d *dummyWriter) Write(b []byte) (int, error) {
 }
 
 func TestHandlerHandleEcho(t *testing.T) {
+	defer m.Leakplug(t)
 	w := dummyWriter{
 		written: make([]byte, 0, 64),
 	}

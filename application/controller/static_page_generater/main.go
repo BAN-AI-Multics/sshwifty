@@ -20,7 +20,6 @@ package main
 import (
 	"bytes"
 	"compress/gzip"
-	sha256 github.com/minio/sha256-simd"
 	"encoding/base64"
 	"fmt"
 	"io"
@@ -32,6 +31,8 @@ import (
 	"strings"
 	"text/template"
 	"time"
+
+	sha256 "github.com/minio/sha256-simd"
 )
 
 const (

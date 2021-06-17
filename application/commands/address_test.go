@@ -21,6 +21,8 @@ import (
 	"bytes"
 	"strings"
 	"testing"
+
+	m "github.com/johnsonjh/leaktestfe"
 )
 
 func testParseAddress(
@@ -32,6 +34,7 @@ func testParseAddress(
 	expectedPort uint16,
 	expectedHostPortString string,
 ) {
+	defer m.Leakplug(t)
 	source := bytes.NewBuffer(input)
 	addr, addrErr := ParseAddress(source.Read, buf)
 
@@ -88,6 +91,7 @@ func testParseAddress(
 }
 
 func TestParseAddress(t *testing.T) {
+	defer m.Leakplug(t)
 	testParseAddress(
 		t, []byte{0x04, 0x1e, 0x00}, make([]byte, 3), LoopbackAddr, nil, 1054,
 		"localhost:1054")

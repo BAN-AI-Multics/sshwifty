@@ -19,10 +19,6 @@ import assert from "assert";
 import * as reader from "../stream/reader.js";
 import * as strings from "./string.js";
 
-import * as reader from "../stream/reader.js";
-
-import * as strings from "./string.js";
-
 describe("String", () => {
   it("String 1", async () => {
     const s = new strings.String(new Uint8Array(["H", "E", "L", "L", "O"]));

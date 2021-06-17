@@ -1,5 +1,6 @@
 // Sshwifty - A Web SSH client
 //
+// Copyright (C) 2021 Jeffrey H. Johnson <trnsz@pobox.com>
 // Copyright (C) 2019-2021 NI Rui <ranqus@gmail.com>
 //
 // This program is free software: you can redistribute it and/or modify
@@ -23,6 +24,8 @@ import (
 	"io"
 	"sync"
 	"testing"
+
+	m "github.com/johnsonjh/leaktestfe"
 
 	"github.com/BAN-AI-Multics/sshwifty/application/log"
 	"github.com/BAN-AI-Multics/sshwifty/application/rw"
@@ -170,6 +173,7 @@ func (d *dummyStreamCommand) Release() error {
 }
 
 func TestHandlerHandleStream(t *testing.T) {
+	defer m.Leakplug(t)
 	cmds := Commands{}
 	cmds.Register(0, "name", newDummyStreamCommand, nil)
 

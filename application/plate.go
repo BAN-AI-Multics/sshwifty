@@ -21,13 +21,13 @@ package application
 const (
 	Name     = "Sshwifty"
 	FullName = "Sshwifty Web SSH Client for BAN.AI"
-	Author   = "NI Rui <ranqus@gmail.com> & Jeffrey H. Johnson <trnsz+banai@pobox.com>"
-	URL      = "https://github.com/BAN-AI-Multics/sshwifty"
+	Author   = "Copyright © 2019-2021 NI Rui <ranqus@gmail.com>\r\n  Copyright © 2021 Jeffrey H. Johnson <trnsz+banai@pobox.com>"
+	URL      = "https://github.com/BAN-AI-Multics/sshwifty/"
 )
 
 // Banner message
 const (
-	banner = "\r\n %s %s\r\n\r\n Copyright © %s\r\n %s\r\n\r\n"
+	banner = "  %s %s\r\n\r\n  %s\r\n  %s\r\n\r\n"
 )
 
 // Version

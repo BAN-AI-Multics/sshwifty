@@ -20,9 +20,12 @@ package commands
 import (
 	"bytes"
 	"testing"
+
+	m "github.com/johnsonjh/leaktestfe"
 )
 
 func testString(t *testing.T, str []byte) {
+	defer m.Leakplug(t)
 	ss := NewString(str)
 	mm := make([]byte, len(str)+2)
 
@@ -53,6 +56,7 @@ func testString(t *testing.T, str []byte) {
 }
 
 func TestString(t *testing.T) {
+	defer m.Leakplug(t)
 	testString(t, []byte{
 		'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'i',
 	})

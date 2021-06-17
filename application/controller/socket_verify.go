@@ -58,7 +58,7 @@ func buildAccessConfigRespondBody(remotes []configuration.Preset) []byte {
 		}
 	}
 
-	var json = jsoniter.ConfigCompatibleWithStandardLibrary
+	json := jsoniter.ConfigCompatibleWithStandardLibrary
 	mData, mErr := json.Marshal(presets)
 
 	if mErr != nil {

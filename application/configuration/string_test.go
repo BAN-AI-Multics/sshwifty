@@ -20,9 +20,12 @@ package configuration
 import (
 	"os"
 	"testing"
+
+	m "github.com/johnsonjh/leaktestfe"
 )
 
 func TestStringString(t *testing.T) {
+	defer m.Leakplug(t)
 	ss := String("aaaaaaaaaaaaa")
 
 	result, err := ss.Parse()
@@ -44,6 +47,7 @@ func TestStringString(t *testing.T) {
 }
 
 func TestStringFile(t *testing.T) {
+	defer m.Leakplug(t)
 	const testFilename = "sshwifty.configuration.test.string.file.tmp"
 
 	filePath := os.TempDir() + string(os.PathSeparator) + testFilename

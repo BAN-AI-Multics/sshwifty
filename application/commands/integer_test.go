@@ -20,9 +20,12 @@ package commands
 import (
 	"bytes"
 	"testing"
+
+	m "github.com/johnsonjh/leaktestfe"
 )
 
 func TestInteger(t *testing.T) {
+	defer m.Leakplug(t)
 	ii := Integer(0x3fff)
 	result := Integer(0)
 	buf := make([]byte, 2)
@@ -52,6 +55,7 @@ func TestInteger(t *testing.T) {
 }
 
 func TestIntegerSingleByte1(t *testing.T) {
+	defer m.Leakplug(t)
 	ii := Integer(102)
 	result := Integer(0)
 	buf := make([]byte, 2)
@@ -88,6 +92,7 @@ func TestIntegerSingleByte1(t *testing.T) {
 }
 
 func TestIntegerSingleByte2(t *testing.T) {
+	defer m.Leakplug(t)
 	ii := Integer(127)
 	result := Integer(0)
 	buf := make([]byte, 2)

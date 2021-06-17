@@ -21,6 +21,8 @@ import (
 	"bytes"
 	"io"
 	"testing"
+
+	m "github.com/johnsonjh/leaktestfe"
 )
 
 func testDummyFetchGen(data []byte) FetchReaderFetcher {
@@ -39,6 +41,7 @@ func testDummyFetchGen(data []byte) FetchReaderFetcher {
 }
 
 func TestFetchReader(t *testing.T) {
+	defer m.Leakplug(t)
 	r := NewFetchReader(testDummyFetchGen([]byte("Hello World")))
 	b := make([]byte, 11)
 

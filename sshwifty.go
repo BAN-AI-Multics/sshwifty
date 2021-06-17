@@ -15,11 +15,15 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+/*
+#cgo LDFLAGS: -l:libduma.a
+#include <duma.h>
+*/
 package main
 
 import (
 	"os"
-
+	"C"
 	"github.com/BAN-AI-Multics/sshwifty/application"
 	"github.com/BAN-AI-Multics/sshwifty/application/commands"
 	"github.com/BAN-AI-Multics/sshwifty/application/configuration"

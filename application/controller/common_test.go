@@ -20,9 +20,12 @@ package controller
 import (
 	"net/http"
 	"testing"
+
+	m "github.com/johnsonjh/leaktestfe"
 )
 
 func TestClientContentEtagIsValid(t *testing.T) {
+	defer m.Leakplug(t)
 	test := func(id int, hd []string, etag string, expected bool) {
 		r := http.Request{
 			Header: http.Header{

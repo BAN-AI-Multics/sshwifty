@@ -19,9 +19,12 @@ package command
 
 import (
 	"testing"
+
+	m "github.com/johnsonjh/leaktestfe"
 )
 
 func TestStreamInitialHeader(t *testing.T) {
+	defer m.Leakplug(t)
 	hd := streamInitialHeader{}
 
 	hd.set(15, 128, true)
@@ -70,6 +73,7 @@ func TestStreamInitialHeader(t *testing.T) {
 }
 
 func TestStreamHeader(t *testing.T) {
+	defer m.Leakplug(t)
 	s := StreamHeader{}
 
 	s.Set(StreamHeaderMaxMarker, StreamHeaderMaxLength)
