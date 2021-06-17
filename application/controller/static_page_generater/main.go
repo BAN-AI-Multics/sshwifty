@@ -20,7 +20,7 @@ package main
 import (
 	"bytes"
 	"compress/gzip"
-	"crypto/sha256"
+	sha256 github.com/minio/sha256-simd"
 	"encoding/base64"
 	"fmt"
 	"io"

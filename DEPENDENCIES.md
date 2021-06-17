@@ -1,10 +1,8 @@
 # Dependencies used by Sshwifty
 
-* Sshwifty uses many third-party components which are required for Sshwifty
-  to function.
-
-    * A complete list of these components can be found by examination of the
-      `package.json` and `go.mod` files within this repository.
+* ***Sshwifty*** uses many third-party components. A complete list of
+  these components can be found by examination of the `package.json` and
+  `go.mod` files in this repository.
 
 * These dependencies include, but are not limited to,
 
@@ -31,19 +29,23 @@
   (*[3-clause BSD license with patent grant](https://github.com/golang/go/blob/master/LICENSE)*)
 - [Gorilla WebSocket](https://github.com/gorilla/websocket)
   (*3-clause BSD license*)
-- [Go Proxy](https://golang.org/x/net/proxy)
+- [Proxy](https://golang.org/x/net/proxy)
   (*[3-clause BSD license](https://github.com/golang/net/blob/master/LICENSE)*)
-- [Go Crypto](https://golang.org/x/crypto)
+- [Crypto](https://golang.org/x/crypto)
   (*[3-clause BSD license](https://github.com/golang/crypto/blob/master/LICENSE)*)
-- [Go Spew](https://github.com/davecgh/go-spew)
+- [Spew](https://github.com/davecgh/go-spew)
   (*ISC license*)
 - [leaktestfe](https://github.com/johnsonjh/leaktestfe)
   (*ISC license*)
 - [Testify](https://github.com/stretchr/testify)
   (*MIT license*)
-- [Uber goleak](https://go.uber.org/goleak)
+- [goleak](https://go.uber.org/goleak)
   (*MIT license*)
 - [Go YAML v2](https://gopkg.in/yaml.v2)
   (*Apache 2.0 license*)
 - [Go YAML v3](https://gopkg.in/yaml.v3)
   (*Apache 2.0 license*)
+- [SHA256-SIMD](https://github.com/minio/sha256-simd)
+  (*Apache 2.0 license*)
+- [cpuid](https://github.com/klauspost/cpuid)
+  (*MIT license*)

@@ -18,12 +18,13 @@
 package configuration
 
 import (
-	"encoding/json"
 	"fmt"
 	"os"
 	"strconv"
 	"strings"
 	"time"
+
+	jsoniter "github.com/json-iterator/go"
 
 	"github.com/BAN-AI-Multics/sshwifty/application/log"
 )
@@ -117,6 +118,7 @@ func Enviro() Loader {
 		presets := make(fileCfgPresets, 0, 16)
 		presetStr := strings.TrimSpace(parseEnv("SSHWIFTY_PRESETS"))
 
+		json := jsoniter.ConfigCompatibleWithStandardLibrary
 		if len(presetStr) > 0 {
 			jErr := json.Unmarshal([]byte(presetStr), &presets)
 

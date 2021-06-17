@@ -20,11 +20,12 @@ package controller
 import (
 	"crypto/hmac"
 	"encoding/base64"
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
 	"time"
+
+	jsoniter "github.com/json-iterator/go"
 
 	"github.com/BAN-AI-Multics/sshwifty/application/configuration"
 	"github.com/BAN-AI-Multics/sshwifty/application/log"
@@ -57,7 +58,8 @@ func buildAccessConfigRespondBody(remotes []configuration.Preset) []byte {
 		}
 	}
 
-	mData, mErr := json.Marshal(presets)
+	json := jsoniter.ConfigCompatibleWithStandardLibrary
+	mData, mErr := jsoniter.Marshal(presets)
 
 	if mErr != nil {
 		panic(fmt.Errorf("Unable to marshal remote data: %s", mErr))
