@@ -16,8 +16,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 /*
-#cgo LDFLAGS: -l:libduma.a
-#include <duma.h>
+#cgo LDFLAGS: -ljemalloc
 */
 package main
 
