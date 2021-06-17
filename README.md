@@ -20,9 +20,8 @@ Copyright © 2021 Jeffrey H. Johnson <trnsz+banai@pobox.com>
 Copyright © 2019-2021 NI Rui <ranqus@gmail.com>
 ```
 
-- Necessary third-party [dependencies](DEPENDENCIES.md) are subject to different
-  terms and conditions of use. Refer to the licenses and copyright statements of
-  the respective components for details.
+Required third-party [dependencies](DEPENDENCIES.md) are subject to different terms
+and conditions of use. Refer to the licenses of the individual components for details.
 
 [license.md]: LICENSE.md
 [dependencies.md]: DEPENDENCIES.md
