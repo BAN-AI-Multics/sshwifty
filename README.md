@@ -10,16 +10,17 @@
 
 ---
 
-* This repository contains a
+- This repository contains a
   [modified](https://github.com/nirui/sshwifty/compare/master...BAN-AI-Multics:master.diff)
   version of [Sshwifty](https://github.com/nirui/sshwifty/), customized for
   [BAN.AI](https://ban.ai).
+
   ```text
   Copyright © 2021 Jeffrey H. Johnson <trnsz+banai@pobox.com>
   Copyright © 2019-2021 NI Rui <ranqus@gmail.com>
   ```
 
-  * Various third-party [dependencies](DEPENDENCIES.md) are separately licensed - see
+  - Various third-party [dependencies](DEPENDENCIES.md) are separately licensed - see
     the licenses included with each component for full details.
 
 [license.md]: LICENSE.md
