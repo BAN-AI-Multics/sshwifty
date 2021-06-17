@@ -1,25 +1,36 @@
 ############################################################################
 
-ECHO?=printf '*** %s\n'
-TRUE?=true > /dev/null 2>&1 || { :; }
-NEWL?=printf '%s\n' "" 2> /dev/null || $(TRUE)
-MAKE?=make
-NPM?=npm
-NPMP?=NODE_ENV=production $(NPM)
-NPMD?=NODE_ENV=development $(NPM)
-RM?=rm -f > /dev/null 2>&1 || $(TRUE)
-TEST?=test
-TOUCH?=touch
+ECHO ?= printf '*** %s\n'
+NULL ?=  > /dev/null 2>&1
+NUL2 ?= 2> /dev/null
+TRUE ?= true $(NULL) || { :; }
+NEWL ?= printf '%s\n' "" $(NUL2) || $(TRUE)
+MAKE ?= make
+NPMX ?= npm
+NPMP ?= NODE_ENV=production  $(NPMX)
+NPMD ?= NODE_ENV=development $(NPMX)
+RMFR ?= $(NULL) rm -f
+TEST ?= test
+TOUC ?= touch
+
+############################################################################
+
+NPMUPP = jsupdatep
+NPMUPD = jsupdated
+NPMINP = jsinstallp
+NPMIND = jsinstalld
+NPMOPT = $(NPMUPP)
 
 ############################################################################
 
 .PHONY: all
-sshwifty: jsinstall
+sshwifty: $(NPMOPT)
 	@$(NEWL)
 	@$(ECHO) "Start: sshwifty (build)" || $(TRUE)
 	@$(NPMP) "run" "build"
 	@$(NEWL)
 	@$(ECHO) "Finish: sshwifty (build)" || $(TRUE)
+	@$(NEWL)
 
 ############################################################################
 
@@ -27,9 +38,10 @@ sshwifty: jsinstall
 testonly test check: sshwifty
 	@$(NEWL)
 	@$(ECHO) "Start: test" || $(TRUE)
-	@$(NPM) "run" "testonly"
+	@$(NPMX) "run" "testonly"
 	@$(NEWL)
 	@$(ECHO) "Finish: test" || $(TRUE)
+	@$(NEWL)
 
 ############################################################################
 
@@ -40,6 +52,7 @@ generate generation:
 	@$(NPMP) "run" "generate"
 	@$(NEWL)
 	@$(ECHO) "Finish: generation" || $(TRUE)
+	@$(NEWL)
 
 ############################################################################
 
@@ -47,19 +60,21 @@ generate generation:
 lint eslint linter linters:
 	@$(NEWL)
 	@$(ECHO) "Start: linters" || $(TRUE)
-	@$(NPMP) "run" "lint"
+	@$(NPMD) "run" "lint"
 	@$(NEWL)
 	@$(ECHO) "Finish: linters" || $(TRUE)
+	@$(NEWL)
 
 ############################################################################
 
 .PHONY: dev
-dev:
+dev: $(NPMUPD)
 	@$(NEWL)
 	@$(ECHO) "Start: dev (build)" || $(TRUE)
 	@$(NPMD) "run" "dev"
 	@$(NEWL)
 	@$(ECHO) "Finish: dev (build)" || $(TRUE)
+	@$(NEWL)
 
 ############################################################################
 
@@ -67,22 +82,26 @@ dev:
 clean:
 	@$(NEWL)
 	@$(ECHO) "Start: Quick cleanup" || $(TRUE)
-	@$(NPM) "run" "clean"
-	@$(RM) "sshwifty" || $(TRUE)
+	@$(NPMX) "run" "clean"
+	@$(RMFR) "sshwifty" || $(TRUE)
 	@$(NEWL)
 	@$(ECHO) "Finish: Quick cleanup" || $(TRUE)
+	@$(NEWL)
 
 ############################################################################
 
 .PHONY: distclean realclean
 distclean realclean: clean
 	@$(NEWL)
-	@$(ECHO) "Start: Full cleanup" || $(TRUE)
-	@($(TEST) -d "node_modules" && { $(RM) "node_modules" -r; $(TRUE); } \
-		|| $(TRUE)) || $(TRUE)
-	@$(RM) "jsinstall" || $(TRUE)
+	@$(ECHO) "Start: Distribution cleanup" || $(TRUE)
+	@($(TEST) -d "node_modules" && \
+		{ $(RMFR) "node_modules" -r \
+			|| $(TRUE); $(TRUE); } || \
+				$(TRUE)) || $(TRUE)
+	@$(RMFR) "jsinstall" || $(TRUE)
 	@$(NEWL)
-	@$(ECHO) "Finish: Full cleanup" || $(TRUE)
+	@$(ECHO) "Finish: Distribution cleanup" || $(TRUE)
+	@$(NEWL)
 
 ############################################################################
 
@@ -92,9 +111,10 @@ jsinstallp jsinstall:
 	@$(ECHO) "Start: Install production modules" || $(TRUE)
 	@$(NPMP) "install"
 	@$(NPMP) "audit" "fix" || $(TRUE)
-	@$(TOUCH) "jsinstall"
+	@$(TOUC) "jsinstall"
 	@$(NEWL)
 	@$(ECHO) "Finish: Install production modules" || $(TRUE)
+	@$(NEWL)
 
 ############################################################################
 
@@ -104,10 +124,11 @@ jsinstalld:
 	@$(ECHO) "Start: Install development modules" || $(TRUE)
 	@$(NPMD) "install"
 	@$(NPMD) "audit" "fix" || $(TRUE)
-	@$(TOUCH) "jsinstall"
-	@$(TOUCH) "jsinstalld"
+	@$(TOUC) "jsinstall"
+	@$(TOUC) "jsinstalld"
 	@$(NEWL)
 	@$(ECHO) "Finish: Install development modules" || $(TRUE)
+	@$(NEWL)
 
 ############################################################################
 
@@ -115,13 +136,14 @@ jsinstalld:
 jsupdatep jsupdate: jsinstallp
 	@$(NEWL)
 	@$(ECHO) "Start: Update production modules" || $(TRUE)
-	@$(RM) "jsinstall" || $(TRUE)
+	@$(RMFR) "jsinstall" || $(TRUE)
 	@$(NPMP) "audit" "fix" || $(TRUE)
 	@$(NPMP) "update"
 	@$(NPMP) "audit" "fix" || $(TRUE)
-	@$(TOUCH) "jsinstall"
+	@$(TOUC) "jsinstall"
 	@$(NEWL)
 	@$(ECHO) "Finish: Update production modules" || $(TRUE)
+	@$(NEWL)
 
 ############################################################################
 
@@ -129,14 +151,15 @@ jsupdatep jsupdate: jsinstallp
 jsupdated: jsinstalld
 	@$(NEWL)
 	@$(ECHO) "Start: Update developmentbmodules" || $(TRUE)
-	@$(RM) "jsinstall" || $(TRUE)
-	@$(RM) "jsinstalld" || $(TRUE)
+	@$(RMFR) "jsinstall" || $(TRUE)
+	@$(RMFR) "jsinstalld" || $(TRUE)
 	@$(NPMD) "audit" "fix" || $(TRUE)
 	@$(NPMD) "update"
 	@$(NPMD) "audit" "fix" || $(TRUE)
-	@$(TOUCH) "jsinstall"
-	@$(TOUCH) "jsinstalld"
+	@$(TOUC) "jsinstall"
+	@$(TOUC) "jsinstalld"
 	@$(NEWL)
 	@$(ECHO) "Finish: Update development modules" || $(TRUE)
+	@$(NEWL)
 
 ############################################################################
