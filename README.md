@@ -15,10 +15,12 @@
   version of [Sshwifty](https://github.com/nirui/sshwifty/), customized for
   [BAN.AI](https://ban.ai).
 
-```text
-Copyright © 2021 Jeffrey H. Johnson <trnsz+banai@pobox.com>
-Copyright © 2019-2021 NI Rui <ranqus@gmail.com>
-```
+ ```text
+   Copyright © 2021 Jeffrey H. Johnson
+       <trnsz+banai@pobox.com>
+   Copyright © 2019-2021 NI Rui
+       <ranqus@gmail.com>
+ ```
 
 - Various third-party [dependencies](DEPENDENCIES.md) are separately licensed - see
   the licenses included with each component for full details.
