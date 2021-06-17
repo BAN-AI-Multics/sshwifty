@@ -49,3 +49,5 @@
   (*Apache 2.0 license*)
 - [cpuid](https://github.com/klauspost/cpuid)
   (*MIT license*)
+- [jsoniter](https://github.com/json-iterator/go)
+  (*MIT license*)
