@@ -181,6 +181,10 @@ process.on("SIGTERM", killAllProc);
 process.on("SIGINT", killAllProc);
 
 module.exports = {
+  performance: {
+    maxAssetSize: 994000,
+    maxEntrypointSize: 994000
+  },
   entry: {
     app: path.join(__dirname, "ui", "app.js"),
   },
@@ -396,7 +400,6 @@ module.exports = {
     ];
 
     if (!inDevMode) {
-	  performance: { hints: false }
       plugins.push(
         new ImageMinimizerPlugin({
           severityError: "warning",

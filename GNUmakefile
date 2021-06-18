@@ -13,6 +13,7 @@ RMFR ?= $(NULL) rm -f
 TEST ?= test
 TOUC ?= touch
 FIND ?= find
+GOGO ?= go
 
 ############################################################################
 
@@ -28,15 +29,24 @@ NPMOPT   = $(NPMINP)
 JSCONFIG = webpack.config.js \
 		   package.json \
 		   package-lock.json \
+		   babel.config.js
 
 ############################################################################
 
-GOSOURCES = $(shell $(FIND) . -name '*.go')
+GOSOURCES = $(shell $(FIND) application       \
+	                           -name '*.go')
+UISOURCES = $(shell $(FIND) ui -name '*.html' \
+	                        -o -name '*.css'  \
+	                        -o -name '*.js'   \
+	                        -o -name '*.vue'  \
+	                        -o -name '*.txt'  \
+	                        -o -name '*.svg'  \
+	                        -o -name '*.png')
 
 ############################################################################
 
 .PHONY: all
-sshwifty: $(NPMOPT) $(JSCONFIG) $(GOSOURCES)
+sshwifty: $(NPMOPT) $(JSCONFIG) $(GOSOURCES) $(UISOURCES)
 	@$(NEWL)
 	@$(ECHO) "Start: sshwifty (build)"                || $(TRUE)
 	@$(NPMP) "run" "build"
@@ -99,6 +109,7 @@ distclean realclean: clean
 		{ $(RMFR) "node_modules" -r   \
 			|| $(TRUE); $(TRUE); } || \
 				$(TRUE))                              || $(TRUE)
+	@$(GOGO) clean -cache -testcache ./...            || $(TRUE)
 	@$(RMFR) "jsinstall"                              || $(TRUE)
 	@$(RMFR) "jsinstalld"                             || $(TRUE)
 	@$(NEWL)
