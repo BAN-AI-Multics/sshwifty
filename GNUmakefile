@@ -12,6 +12,7 @@ NPMD ?= NODE_ENV= $(NPMX)
 RMFR ?= $(NULL) rm -f
 TEST ?= test
 TOUC ?= touch
+FIND ?= find
 
 ############################################################################
 
@@ -24,8 +25,18 @@ NPMOPT   = $(NPMINP)
 
 ############################################################################
 
+JSCONFIG = webpack.config.js \
+		   package.json \
+		   package-lock.json \
+
+############################################################################
+
+GOSOURCES = $(shell $(FIND) . -name '*.go')
+
+############################################################################
+
 .PHONY: all
-sshwifty: $(NPMOPT)
+sshwifty: $(NPMOPT) $(JSCONFIG) $(GOSOURCES)
 	@$(NEWL)
 	@$(ECHO) "Start: sshwifty (build)"                || $(TRUE)
 	@$(NPMP) "run" "build"
