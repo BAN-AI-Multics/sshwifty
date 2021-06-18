@@ -55,3 +55,5 @@
   (_[Apache 2.0 license](https://github.com/modern-go/concurrent/blob/master/LICENSE)_)
 * [reflect2](https://github.com/modern-go/reflect2)
   (_[Apache 2.0 license](https://github.com/modern-go/reflect2/blob/master/LICENSE)_)
+* [jemalloc](https://github.com/jemalloc/jemalloc)
+  (_[2-clause BSD license](https://github.com/jemalloc/jemalloc/blob/dev/COPYING)_)

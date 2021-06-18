@@ -7,19 +7,19 @@ TRUE ?= true $(NULL) || { :; }
 NEWL ?= printf '%s\n' "" $(NUL2) || $(TRUE)
 MAKE ?= make
 NPMX ?= npm
-NPMP ?= NODE_ENV=production  $(NPMX)
-NPMD ?= NODE_ENV=development $(NPMX)
+NPMP ?= NODE_ENV= $(NPMX)
+NPMD ?= NODE_ENV= $(NPMX)
 RMFR ?= $(NULL) rm -f
 TEST ?= test
 TOUC ?= touch
 
 ############################################################################
 
-NPMUPP = jsupdatep
-NPMUPD = jsupdated
-NPMINP = jsinstallp
-NPMIND = jsinstalld
-NPMOPT = $(NPMUPP)
+NPMUPP   = jsupdatep
+NPMUPD   = jsupdated
+NPMINP   = jsinstallp
+NPMIND   = jsinstalld
+NPMOPT   = $(NPMUPP)
 
 ############################################################################
 
