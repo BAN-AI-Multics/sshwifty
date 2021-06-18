@@ -207,7 +207,7 @@ module.exports = {
       : {
           chunks: "all",
           minSize: 102400,
-          maxSize: 244000,
+          maxSize: 994000,
           maxAsyncRequests: 6,
           maxInitialRequests: 6,
           name: false,

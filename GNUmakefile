@@ -15,9 +15,9 @@ TOUC ?= touch
 
 ############################################################################
 
-NPMUPP   = jsupdatep
+NPMUPP   = jsupdate
 NPMUPD   = jsupdated
-NPMINP   = jsinstallp
+NPMINP   = jsinstall
 NPMIND   = jsinstalld
 #NPMOPT  = $(NPMUPP)
 NPMOPT   = $(NPMINP)
@@ -100,6 +100,7 @@ distclean realclean: clean
 			|| $(TRUE); $(TRUE); } || \
 				$(TRUE)) || $(TRUE)
 	@$(RMFR) "jsinstall" || $(TRUE)
+	@$(RMFR) "jsinstalld" || $(TRUE)
 	@$(NEWL)
 	@$(ECHO) "Finish: Distribution cleanup" || $(TRUE)
 	@$(NEWL)
@@ -107,11 +108,11 @@ distclean realclean: clean
 ############################################################################
 
 .PHONY: jsinstallp
-jsinstallp jsinstall:
+jsinstall:
 	@$(NEWL)
 	@$(ECHO) "Start: Install production modules" || $(TRUE)
-	@$(NPMP) "install"
-	@$(NPMP) "audit" "fix" || $(TRUE)
+	@$(TEST) -f "jsinstall" || @$(NPMP) "install"
+	@$(TEST) -f "jsinstall" || @$(NPMP) "audit" "fix" || $(TRUE)
 	@$(TOUC) "jsinstall"
 	@$(NEWL)
 	@$(ECHO) "Finish: Install production modules" || $(TRUE)
@@ -123,8 +124,8 @@ jsinstallp jsinstall:
 jsinstalld:
 	@$(NEWL)
 	@$(ECHO) "Start: Install development modules" || $(TRUE)
-	@$(NPMD) "install"
-	@$(NPMD) "audit" "fix" || $(TRUE)
+	@$(TEST) -f "jsinstalld" || @$(NPMD) "install"
+	@$(TEST) -f "jsinstalld" || @$(NPMD) "audit" "fix" || $(TRUE)
 	@$(TOUC) "jsinstall"
 	@$(TOUC) "jsinstalld"
 	@$(NEWL)
@@ -133,8 +134,8 @@ jsinstalld:
 
 ############################################################################
 
-.PHONY: jsupdatep jsupdate
-jsupdatep jsupdate: jsinstallp
+.PHONY: jsupdatep
+jsupdate: jsinstall
 	@$(NEWL)
 	@$(ECHO) "Start: Update production modules" || $(TRUE)
 	@$(RMFR) "jsinstall" || $(TRUE)
