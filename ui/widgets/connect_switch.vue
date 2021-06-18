@@ -20,7 +20,7 @@
 <template>
   <ul id="connect-switch" class="tab2" :class="{ red: tab === 'known' }">
     <li :class="{ active: tab === 'known' }" @click="switchTab('known')">
-      Available hosts</span>
+      Available hosts
     </li>
   </ul>
 </template>
