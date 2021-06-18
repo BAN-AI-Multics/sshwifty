@@ -396,7 +396,9 @@ module.exports = {
     ];
 
     if (!inDevMode) {
-	  performance: { hints: false }
+      performance: {
+        hints: false;
+      }
       plugins.push(
         new ImageMinimizerPlugin({
           severityError: "warning",
