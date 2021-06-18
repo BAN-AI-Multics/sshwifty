@@ -19,7 +19,8 @@ NPMUPP   = jsupdatep
 NPMUPD   = jsupdated
 NPMINP   = jsinstallp
 NPMIND   = jsinstalld
-NPMOPT   = $(NPMUPP)
+#NPMOPT  = $(NPMUPP)
+NPMOPT   = $(NPMINP)
 
 ############################################################################
 
