@@ -16,10 +16,8 @@
   [BAN.AI](https://ban.ai).
 
 ```text
-  Copyright © 2021 Jeffrey H. Johnson
-      <trnsz+banai@pobox.com>
-  Copyright © 2019-2021 NI Rui
-      <ranqus@gmail.com>
+  Copyright © 2021 Jeffrey H. Johnson <trnsz+banai@pobox.com>
+  Copyright © 2019-2021 NI Rui <ranqus@gmail.com>
 ```
 
 - Various third-party [dependencies](DEPENDENCIES.md) are separately licensed - see
