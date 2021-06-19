@@ -182,7 +182,7 @@ process.on("SIGINT", killAllProc);
 module.exports = {
   performance: {
     maxAssetSize: 1654321,
-    maxEntrypointSize: 987654,
+    maxEntrypointSize: 987654
   },
   entry: {
     app: path.join(__dirname, "ui", "app.js"),
