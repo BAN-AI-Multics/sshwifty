@@ -11,10 +11,10 @@
 
 ---
 
-- This repository contains source code for a
+- This is a
   [modified](https://github.com/nirui/sshwifty/compare/master...BAN-AI-Multics:master.diff)
-  version of [Sshwifty](https://github.com/nirui/sshwifty/), which has been customized for
-  use at [BAN.AI](https://ban.ai).
+  version of [Sshwifty](https://github.com/nirui/sshwifty/). It is customized for use at
+  [BAN.AI](https://ban.ai).
 
 ```text
   Copyright © 2021 Jeffrey H. Johnson <trnsz+banai@pobox.com>
