@@ -1,6 +1,7 @@
 <!--
 // Sshwifty - A Web SSH client
 //
+// Copyright (C) 2021 Jeffrey H. Johnson <trnsz+banai@pobox.com>
 // Copyright (C) 2019-2021 NI Rui <ranqus@gmail.com>
 //
 // This program is free software: you can redistribute it and/or modify
@@ -21,7 +22,6 @@
   <div id="home">
     <header id="home-header">
       <h1 id="home-hd-title"><b>BAN.AI</b></h1>
-
       <a id="home-hd-delay" href="javascript:;" @click="showDelayWindow">
         <span
           id="home-hd-delay-icon"
@@ -32,7 +32,6 @@
           socket.message
         }}</span>
       </a>
-
       <a
         id="home-hd-plus"
         class="icon icon-plus1"
@@ -43,7 +42,6 @@
         }"
         @click="showConnectWindow"
       ></a>
-
       <tabs
         id="home-hd-tabs"
         :tab="tab.current"
@@ -56,7 +54,6 @@
         @close="closeTab"
       ></tabs>
     </header>
-
     <screens
       id="home-content"
       :screen="tab.current"
@@ -77,9 +74,33 @@
           ></span
           >&nbsp; to connect.
         </p>
+		<br />
+          <p class="copy copy-first">
+            <br />
+			<a href="https://github.com/BAN-AI-Multics/sshwifty">Sshwifty</a>,
+			<a href="">modified</a> for
+			<a href="https://ban.ai">BAN.AI</a> by
+			<a href="mailto:trnsz+banai@pobox.com">Jeffrey H. Johnson</a>
+			<br />
+            Copyright &copy; 2021 Jeffrey H. Johnson &lt;trnsz+banai@pobox.com&gt;
+            <br />
+            Copyright &copy; 2019-2021 NI Rui &lt;ranqus@gmail.com&gt;
+			<br />
+			<small>
+			This program is free software: you can redistribute it and/or modify
+			it under the terms of the <i>GNU Affero General Public License</i> as
+			published by the <i>Free Software Foundation</i>, either version <b>3</b>
+			of the License, or (<i>at your option</i>) any later version.
+			<br />
+			This program is distributed in the hope that it will be useful, but
+			<b>WITHOUT ANY WARRANTY</b>; without even the implied warranty of
+			MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+			<i><a href="https://github.com/BAN-AI-Multics/sshwifty/blob/master/LICENSE.md">GNU Affero General Public License</a></i>
+			for more details.
+			</small>
+          </p>
       </div>
     </screens>
-
     <connect-widget
       :inputting="connector.inputting"
       :display="windows.connect"
@@ -123,25 +144,19 @@
     ></tab-window>
   </div>
 </template>
-
 <script>
 import "./home.css";
-
 import ConnectWidget from "./widgets/connect.vue";
 import StatusWidget from "./widgets/status.vue";
 import Connector from "./widgets/connector.vue";
 import Tabs from "./widgets/tabs.vue";
 import TabWindow from "./widgets/tab_window.vue";
 import Screens from "./widgets/screens.vue";
-
 import * as home_socket from "./home_socketctl.js";
 import * as home_history from "./home_historyctl.js";
-
 import * as presets from "./commands/presets.js";
-
 const BACKEND_CONNECT_ERROR = "Unable to connect to the backend server: ";
 const BACKEND_REQUEST_ERROR = "Unable to perform request: ";
-
 export default {
   components: {
     "connect-widget": ConnectWidget,
@@ -187,7 +202,6 @@ export default {
   },
   data() {
     let history = home_history.build(this);
-
     return {
       ticker: null,
       windows: {
@@ -217,13 +231,11 @@ export default {
     this.ticker = setInterval(() => {
       this.tick();
     }, 1000);
-
     if (this.query.length > 1 && this.query.indexOf("+") === 0) {
       this.connectLaunch(this.query.slice(1, this.query.length), (success) => {
         if (!success) {
           return;
         }
-
         this.$emit("navigate-to", "");
       });
     }
@@ -237,7 +249,6 @@ export default {
   methods: {
     tick() {
       let now = new Date();
-
       this.socket.update(now, this);
     },
     closeAllWindow() {
@@ -259,25 +270,19 @@ export default {
     },
     async getStreamThenRun(run, end) {
       let errStr = null;
-
       try {
         let conn = await this.connection.get(this.socket);
-
         try {
           run(conn);
         } catch (e) {
           errStr = BACKEND_REQUEST_ERROR + e;
-
           process.env.NODE_ENV === "development" && console.trace(e);
         }
       } catch (e) {
         errStr = BACKEND_CONNECT_ERROR + e;
-
         process.env.NODE_ENV === "development" && console.trace(e);
       }
-
       end();
-
       if (errStr !== null) {
         alert(errStr);
       }
@@ -286,10 +291,8 @@ export default {
       if (this.connector.acquired) {
         return;
       }
-
       this.connector.acquired = true;
       this.connector.busy = true;
-
       this.getStreamThenRun(
         (stream) => {
           this.connector.busy = false;
@@ -304,7 +307,6 @@ export default {
     },
     connectNew(connector) {
       const self = this;
-
       self.runConnect((stream) => {
         self.connector.connector = {
           id: connector.id(),
@@ -320,13 +322,11 @@ export default {
             () => {}
           ),
         };
-
         self.connector.inputting = true;
       });
     },
     connectPreset(preset) {
       const self = this;
-
       self.runConnect((stream) => {
         self.connector.connector = {
           id: preset.command.id(),
@@ -342,37 +342,28 @@ export default {
             () => {}
           ),
         };
-
         self.connector.inputting = true;
       });
     },
     getConnectorByType(type) {
       let connector = null;
-
       for (let c in this.connector.connectors) {
         if (this.connector.connectors[c].name() !== type) {
           continue;
         }
-
         connector = this.connector.connectors[c];
       }
-
       return connector;
     },
     connectKnown(known) {
       const self = this;
-
       self.runConnect((stream) => {
         let connector = self.getConnectorByType(known.type);
-
         if (!connector) {
           alert("Unknown connector: " + known.type);
-
           self.connector.inputting = false;
-
           return;
         }
-
         self.connector.connector = {
           id: connector.id(),
           name: connector.name(),
@@ -389,18 +380,15 @@ export default {
             }
           ),
         };
-
         self.connector.inputting = true;
       });
     },
     parseConnectLauncher(ll) {
       let llSeparatorIdx = ll.indexOf(":");
-
       // Type must contain at least one charater
       if (llSeparatorIdx <= 0) {
         throw new Error("Invalid Launcher string");
       }
-
       return {
         type: ll.slice(0, llSeparatorIdx),
         query: ll.slice(llSeparatorIdx + 1, ll.length),
@@ -408,21 +396,15 @@ export default {
     },
     connectLaunch(launcher, done) {
       this.showConnectWindow();
-
       this.runConnect((stream) => {
         let ll = this.parseConnectLauncher(launcher),
           connector = this.getConnectorByType(ll.type);
-
         if (!connector) {
           alert("Unknown connector: " + ll.type);
-
           this.connector.inputting = false;
-
           return;
         }
-
         const self = this;
-
         this.connector.connector = {
           id: connector.id(),
           name: connector.name(),
@@ -434,22 +416,18 @@ export default {
             ll.query,
             (n) => {
               self.connector.knowns = self.connector.historyRec.all();
-
               done(n.data().success);
             }
           ),
         };
-
         this.connector.inputting = true;
       });
     },
     buildknownLauncher(known) {
       let connector = this.getConnectorByType(known.type);
-
       if (!connector) {
         return;
       }
-
       return this.hostPath + "#+" + connector.launcher(known.data);
     },
     exportKnowns() {
@@ -457,17 +435,14 @@ export default {
     },
     importKnowns(d) {
       this.connector.historyRec.import(d);
-
       this.connector.knowns = this.connector.historyRec.all();
     },
     removeKnown(uid) {
       this.connector.historyRec.del(uid);
-
       this.connector.knowns = this.connector.historyRec.all();
     },
     clearSessionKnown(uid) {
       this.connector.historyRec.clearSession(uid);
-
       this.connector.knowns = this.connector.historyRec.all();
     },
     cancelConnection() {
@@ -478,9 +453,7 @@ export default {
       this.connector.inputting = false;
       this.connector.acquired = false;
       this.windows.connect = false;
-
       this.addToTab(data);
-
       this.$emit("tab-opened", this.tab.tabs);
     },
     async addToTab(data) {
@@ -505,7 +478,6 @@ export default {
     },
     removeFromTab(index) {
       let isLast = index === this.tab.tabs.length - 1;
-
       this.tab.tabs.splice(index, 1);
       this.tab.current = isLast ? this.tab.tabs.length - 1 : index;
     },
@@ -513,36 +485,27 @@ export default {
       if (this.tab.current >= 0) {
         await this.tab.tabs[this.tab.current].control.disabled();
       }
-
       this.tab.current = to;
-
       this.tab.tabs[this.tab.current].indicator.updated = false;
       await this.tab.tabs[this.tab.current].control.enabled();
     },
     async retapTab(tab) {
       this.tab.tabs[tab].toolbar = !this.tab.tabs[tab].toolbar;
-
       await this.tab.tabs[tab].control.retap(this.tab.tabs[tab].toolbar);
     },
     async closeTab(index) {
       if (this.tab.tabs[index].status.closing) {
         return;
       }
-
       this.tab.tabs[index].status.closing = true;
-
       try {
         this.tab.tabs[index].control.disabled();
-
         await this.tab.tabs[index].control.close();
       } catch (e) {
         alert("Cannot close tab due to error: " + e);
-
         process.env.NODE_ENV === "development" && console.trace(e);
       }
-
       this.removeFromTab(index);
-
       this.$emit("tab-closed", this.tab.tabs);
     },
     tabStopped(index, reason) {
@@ -562,13 +525,10 @@ export default {
         ) {
           return;
         }
-
         this.tab.tabs[index].indicator.message = "";
         this.tab.tabs[index].indicator.level = "";
-
         return;
       }
-
       this.tab.tabs[index].indicator.message = msg.text;
       this.tab.tabs[index].indicator.level = type;
     },
@@ -580,7 +540,6 @@ export default {
     },
     tabUpdated(index) {
       this.$emit("tab-updated", this.tab.tabs);
-
       this.tab.tabs[index].indicator.updated = index !== this.tab.current;
     },
   },

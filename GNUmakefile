@@ -45,17 +45,22 @@ JSCONFIG  =    webpack.config.js                   \
 
 NODE_ENV  =
 
+############################################################################
+
 export NODE_ENV
 
 ############################################################################
 
-JEMALLOC  = /opt/jemalloc-static/lib/libjemalloc.a
+JEMA     = /opt/jemalloc-static/lib/libjemalloc.a
 
 ############################################################################
 
 GOSOURCES = $(shell $(FIND) application            \
 	                           -name '*.go')       \
 							   sshwifty.go
+
+############################################################################
+
 UISOURCES = $(shell $(FIND) ui -name '*.html'      \
 	                        -o -name '*.css'       \
 	                        -o -name '*.js'        \
@@ -73,6 +78,7 @@ sshwifty: $(NPMOPT) $(JSCONFIG) $(GOSOURCES) $(UISOURCES) GNUmakefile
 	@NPMX="$(NPMP)" GOGO="$(GOGO)" GITX="$(GITX)"  \
 	 STRP="$(STRP)" SSTR="$(SSTR)" TEST="$(TEST)"  \
 	 QNPM="$(QNPM)" ECHO="$(ECHO)"                 \
+	 JEMA="$(JEMA)"                                \
 	 exec  $(NPMP) "run" "build"
 	@$(NEWL)
 	@$(ECHO) "Finish: sshwifty (build)"                        || $(TRUE)
@@ -125,7 +131,7 @@ distclean realclean: clean
 	 { $(RMFR) "node_modules" -r                   \
 	  || $(TRUE); $(TRUE); } ||                    \
 	   $(TRUE))                                                || $(TRUE)
-	@$(GOGO) clean -cache -testcache ./...                     || $(TRUE)
+	@$(GOGO) "clean" "-cache" "-testcache" "./..."             || $(TRUE)
 	@$(RMFR) "jsinstall"                                       || $(TRUE)
 	@$(RMFR) "jsinstalld"                                      || $(TRUE)
 	@$(NEWL)

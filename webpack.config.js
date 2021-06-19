@@ -25,7 +25,6 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
-const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
@@ -326,32 +325,6 @@ module.exports = {
           );
         },
       },
-      new FaviconsWebpackPlugin({
-        logo: path.join(__dirname, "ui", "sshwifty.svg"),
-        prefix: "",
-        cache: false,
-        inject: true,
-        favicons: {
-          appName: "Sshwifty SSH Client",
-          appDescription: "Web SSH Client",
-          developerName: "Rui Ni",
-          developerURL: "https://vaguly.com",
-          background: "#333",
-          theme_color: "#333",
-          appleStatusBarStyle: "black",
-          display: "standalone",
-          icons: {
-            android: { offset: 0, overlayGlow: false, overlayShadow: true },
-            appleIcon: { offset: 5, overlayGlow: false },
-            appleStartup: { offset: 5, overlayGlow: false },
-            coast: false,
-            favicons: { overlayGlow: false },
-            firefox: { offset: 5, overlayGlow: false },
-            windows: { offset: 5, overlayGlow: false },
-            yandex: false,
-          },
-        },
-      }),
       new HtmlWebpackPlugin({
         inject: true,
         template: path.join(__dirname, "ui", "index.html"),

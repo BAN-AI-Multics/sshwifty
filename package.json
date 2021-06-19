@@ -15,8 +15,6 @@
     "copy-webpack-plugin": "^9.0.0",
     "css-loader": "^5.2.6",
     "css-minimizer-webpack-plugin": "^3.0.1",
-    "favicons": "^6.2.2",
-    "favicons-webpack-plugin": "^5.0.2",
     "file-loader": "^6.2.0",
     "fontfaceobserver": "^2.1.0",
     "hack-font": "^3.3.0",
@@ -45,7 +43,7 @@
     "dev": "NODE_ENV=development webpack --mode=development --config=webpack.config.js --stats-error-details",
     "clean": "${RMFR:-rm -f} ./.tmp/ -r || ${TRUE:-true}",
     "generate": "${GOGO:-go} generate ./.. && NODE_ENV=production webpack --mode=production --config=webpack.config.js --no-stats",
-    "build": "NODE_ENV=production ${NPMX:-npm} ${QNPM:-} run generate && CGO_ENABLED=1 ${GOGO:-go} build -tags=osusergo,netgo,leaktest -trimpath -ldflags \"-s -w -X github.com/BAN-AI-Multics/sshwifty/application.version=v$(${GITX:-git} describe --always --dirty='*' --tag) -buildid= -linkmode external -extldflags '-static /opt/jemalloc-static/lib/libjemalloc.a -Wl,--gc-sections'\" && ${STRP:-strip} -s -R .gnu.build.attributes* -R .note.stapsdt -R .comment -R .go.buildinfo -R .note* -R .stapsdt.base -R .gcc-except_table -R .eh_frame ./sshwifty 2> /dev/null; ${SSTR:-sstrip} -z ./sshwifty 2> /dev/null; ${TEST:-test} -x ./sshwifty",
+    "build": "NODE_ENV=production ${NPMX:-npm} ${QNPM:-} run generate && CGO_ENABLED=1 ${GOGO:-go} build -tags=osusergo,netgo,leaktest -trimpath -ldflags \"-s -w -X github.com/BAN-AI-Multics/sshwifty/application.version=v$(${GITX:-git} describe --always --dirty='*' --tag) -buildid= -linkmode external -extldflags '-static ${JEMA:-} -Wl,--gc-sections'\" && ${STRP:-strip} -s -R .gnu.build.attributes* -R .note.stapsdt -R .comment -R .go.buildinfo -R .note* -R .stapsdt.base -R .gcc-except_table -R .eh_frame ./sshwifty 2> /dev/null; ${SSTR:-sstrip} -z ./sshwifty 2> /dev/null; ${TEST:-test} -x ./sshwifty",
     "testonly": "mocha --require @babel/register --recursive --timeout 3s ./ui/**/*_test.js && CGO_ENABLED=1 ${GOGO:-go} test -v -tags=osusergo,netgo,leaktest ./... -race -bench=. -count=1 -cover -covermode=atomic -timeout 30s",
     "test": "${NPMX:-npm} ${QNPM:-} run generate && ${NPMX:-npm} ${QNPM:-} run testonly"
   },
@@ -53,17 +51,8 @@
   "license": "AGPL-3.0",
   "dependencies": {
     "bin-wrapper": "^4.1.0",
-    "gifsicle": "^5.2.0",
     "html-minifier": "^4.0.0",
-    "jimp": "^0.16.2-canary.1016.1185.0",
-    "meow": "^10.0.1",
-    "mozjpeg": "^7.1.0",
-    "pngquant-bin": "^6.0.0",
-    "resize-img": "^2.0.0",
-    "to-ico": "^1.1.5",
-    "trim-newlines": "^4.0.2",
     "uglify-js": "^3.13.9",
-    "url-regex": "^5.0.0",
-    "uuid": "^8.3.2"
+    "url-regex": "^5.0.0"
   }
 }
