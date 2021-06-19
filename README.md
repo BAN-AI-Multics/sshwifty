@@ -7,13 +7,14 @@
 [![maintainability](https://api.codeclimate.com/v1/badges/e0a0f66c4911f46f643c/maintainability)](https://codeclimate.com/github/BAN-AI-Multics/sshwifty/maintainability)
 [![deepsource-active](https://deepsource.io/gh/BAN-AI-Multics/sshwifty.svg/?label=active-issues)](https://deepsource.io/gh/BAN-AI-Multics/sshwifty/?ref=repository-badge)
 [![deepsource-resolved](https://deepsource.io/gh/BAN-AI-Multics/sshwifty.svg/?label=resolved+issues)](https://deepsource.io/gh/BAN-AI-Multics/sshwifty/?ref=repository-badge)
+[![issues](http://img.shields.io/github/issues/BAN-AI-Multics/sshwifty.svg)](https://github.com/BAN-AI-Multics/sshwifty/issues)
 
 ---
 
-- This repository contains a
+- This repository contains source code for a
   [modified](https://github.com/nirui/sshwifty/compare/master...BAN-AI-Multics:master.diff)
-  version of [Sshwifty](https://github.com/nirui/sshwifty/), customized for
-  [BAN.AI](https://ban.ai).
+  version of [Sshwifty](https://github.com/nirui/sshwifty/), which has been customized for
+  use at [BAN.AI](https://ban.ai).
 
 ```text
   Copyright © 2021 Jeffrey H. Johnson <trnsz+banai@pobox.com>
