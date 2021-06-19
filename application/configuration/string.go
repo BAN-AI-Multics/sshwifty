@@ -51,7 +51,7 @@ func (s String) Parse() (string, error) {
 		f, e := os.Open(fPath)
 
 		if e != nil {
-			return "", fmt.Errorf("Unable to open %s: %s", fPath, e)
+			return "", fmt.Errorf("Unable to open %s: %w", fPath, e)
 		}
 
 		defer f.Close()
@@ -59,7 +59,7 @@ func (s String) Parse() (string, error) {
 		fData, e := ioutil.ReadAll(f)
 
 		if e != nil {
-			return "", fmt.Errorf("Unable to read from %s: %s", fPath, e)
+			return "", fmt.Errorf("Unable to read from %s: %w", fPath, e)
 		}
 
 		return string(fData), nil

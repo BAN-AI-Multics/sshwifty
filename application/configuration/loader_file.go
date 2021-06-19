@@ -104,7 +104,7 @@ func (f fileCfgPresets) concretize() ([]Preset, error) {
 		pp, err := p.concretize()
 		if err != nil {
 			return nil, fmt.Errorf(
-				"Unable to concretize Preset %d (titled \"%s\"): %s",
+				"Unable to concretize Preset %d (titled \"%s\"): %w",
 				i+1, p.Title, err)
 		}
 

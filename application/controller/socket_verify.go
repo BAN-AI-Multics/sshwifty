@@ -62,7 +62,7 @@ func buildAccessConfigRespondBody(remotes []configuration.Preset) []byte {
 	mData, mErr := json.Marshal(presets)
 
 	if mErr != nil {
-		panic(fmt.Errorf("Unable to marshal remote data: %s", mErr))
+		panic(fmt.Errorf("Unable to marshal remote data: %w", mErr))
 	}
 
 	return mData

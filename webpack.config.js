@@ -182,8 +182,8 @@ process.on("SIGINT", killAllProc);
 
 module.exports = {
   performance: {
-    maxAssetSize: 994000,
-    maxEntrypointSize: 994000
+    maxAssetSize: 1654321,
+    maxEntrypointSize: 987654
   },
   entry: {
     app: path.join(__dirname, "ui", "app.js"),
@@ -211,8 +211,8 @@ module.exports = {
       ? false
       : {
           chunks: "all",
-          minSize: 102400,
-          maxSize: 994000,
+          minSize: 123123,
+          maxSize: 888888,
           maxAsyncRequests: 6,
           maxInitialRequests: 6,
           name: false,
@@ -400,34 +400,6 @@ module.exports = {
     ];
 
     if (!inDevMode) {
-      plugins.push(
-        new ImageMinimizerPlugin({
-          severityError: "warning",
-          deleteOriginalAssets: true,
-          maxConcurrency: os.cpus().length,
-          minimizerOptions: {
-            plugins: [
-              ["gifsicle", { interlaced: true }],
-              ["mozjpeg", { progressive: true }],
-              ["pngquant", { quality: [0.0, 0.03] }],
-              [
-                "svgo",
-                {
-                  multipass: true,
-                  datauri: "enc",
-                  indent: 0,
-                  plugins: [
-                    {
-                      sortAttrs: true,
-                      inlineStyle: true,
-                    },
-                  ],
-                },
-              ],
-            ],
-          },
-        })
-      );
       plugins.push(new CleanWebpackPlugin());
     }
 

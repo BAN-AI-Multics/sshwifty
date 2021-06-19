@@ -131,7 +131,7 @@ func (m Meta) Concretize() (map[string]string, error) {
 	for k, v := range m {
 		result, err := v.Parse()
 		if err != nil {
-			return nil, fmt.Errorf("Unable to parse Meta \"%s\": %s", k, err)
+			return nil, fmt.Errorf("Unable to parse Meta \"%s\": %w", k, err)
 		}
 
 		mm[k] = result
@@ -184,7 +184,7 @@ func (c Configuration) Verify() error {
 			continue
 		}
 
-		return fmt.Errorf("Invalid setting for server %d: %s", i, vErr)
+		return fmt.Errorf("Invalid setting for server %d: %w", i, vErr)
 	}
 
 	return nil

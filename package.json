@@ -9,18 +9,12 @@
     "@babel/preset-env": "^7.14.5",
     "@babel/register": "^7.14.5",
     "@babel/runtime": "^7.14.6",
-    "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.2",
     "buffer": "^6.0.3",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
     "copy-webpack-plugin": "^9.0.0",
     "css-loader": "^5.2.6",
     "css-minimizer-webpack-plugin": "^3.0.1",
-    "eslint": "^7.28.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-loader": "^4.0.2",
-    "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-vue": "^7.11.1",
     "favicons": "^6.2.2",
     "favicons-webpack-plugin": "^5.0.2",
     "file-loader": "^6.2.0",
@@ -30,10 +24,6 @@
     "html-webpack-plugin": "^5.3.1",
     "iconv-lite": "^0.6.3",
     "image-minimizer-webpack-plugin": "^2.2.0",
-    "imagemin-gifsicle": "^7.0.0",
-    "imagemin-mozjpeg": "^9.0.0",
-    "imagemin-pngquant": "^9.0.2",
-    "imagemin-svgo": "^9.0.0",
     "mini-css-extract-plugin": "^1.6.0",
     "mocha": "^9.0.1",
     "normalize.css": "^8.0.1",
@@ -42,7 +32,7 @@
     "style-loader": "^2.0.0",
     "terser-webpack-plugin": "^5.1.3",
     "vue": "^2.6.14",
-    "vue-loader": "^16.2.0",
+    "vue-loader": "^15.9.7",
     "vue-template-compiler": "^2.6.14",
     "vueify": "^9.4.1",
     "webpack": "^5.39.1",
@@ -52,18 +42,16 @@
     "xterm-addon-web-links": "^0.5.0-beta.6"
   },
   "scripts": {
-    "dev": "NODE_ENV=development webpack --mode=development --config=webpack.config.js",
-    "clean": "rm .tmp/ -rf || true",
-    "generate": "go generate ./.. && NODE_ENV=production webpack --mode=production --config=webpack.config.js",
-    "build": "NODE_ENV=production npm run generate && CGO_ENABLED=1 go build -tags=osusergo,netgo,leaktest -trimpath -ldflags \"-s -w -X github.com/BAN-AI-Multics/sshwifty/application.version=v$(git describe --always --dirty='*' --tag) -buildid= -linkmode external -extldflags '-static /opt/jemalloc-static/lib/libjemalloc.a -Wl,--gc-sections'\" && strip -s -R .gnu.build.attributes* -R .note.stapsdt -R .comment -R .go.buildinfo -R .note* -R .stapsdt.base -R .gcc-except_table -R .eh_frame sshwifty 2> /dev/null; sstrip -z sshwifty 2> /dev/null; test -x sshwifty",
-    "lint": "eslint --ext .js,.vue ui",
-    "testonly": "mocha --require @babel/register --recursive --timeout 3s ./ui/**/*_test.js && CGO_ENABLED=1 go test -v -tags=osusergo,netgo,leaktest ./... -race -bench=. -count=1 -cover -covermode=atomic -timeout 30s",
-    "test": "npm run generate && npm run testonly"
+    "dev": "NODE_ENV=development webpack --mode=development --config=webpack.config.js --stats-error-details",
+    "clean": "${RMFR:-rm -f} ./.tmp/ -r || ${TRUE:-true}",
+    "generate": "${GOGO:-go} generate ./.. && NODE_ENV=production webpack --mode=production --config=webpack.config.js --no-stats",
+    "build": "NODE_ENV=production ${NPMX:-npm} ${QNPM:-} run generate && CGO_ENABLED=1 ${GOGO:-go} build -tags=osusergo,netgo,leaktest -trimpath -ldflags \"-s -w -X github.com/BAN-AI-Multics/sshwifty/application.version=v$(${GITX:-git} describe --always --dirty='*' --tag) -buildid= -linkmode external -extldflags '-static /opt/jemalloc-static/lib/libjemalloc.a -Wl,--gc-sections'\" && ${STRP:-strip} -s -R .gnu.build.attributes* -R .note.stapsdt -R .comment -R .go.buildinfo -R .note* -R .stapsdt.base -R .gcc-except_table -R .eh_frame ./sshwifty 2> /dev/null; ${SSTR:-sstrip} -z ./sshwifty 2> /dev/null; ${TEST:-test} -x ./sshwifty",
+    "testonly": "mocha --require @babel/register --recursive --timeout 3s ./ui/**/*_test.js && CGO_ENABLED=1 ${GOGO:-go} test -v -tags=osusergo,netgo,leaktest ./... -race -bench=. -count=1 -cover -covermode=atomic -timeout 30s",
+    "test": "${NPMX:-npm} ${QNPM:-} run generate && ${NPMX:-npm} ${QNPM:-} run testonly"
   },
   "author": "",
   "license": "AGPL-3.0",
   "dependencies": {
-    "@vue/compiler-sfc": "^3.1.1",
     "bin-wrapper": "^4.1.0",
     "gifsicle": "^5.2.0",
     "html-minifier": "^4.0.0",
@@ -75,6 +63,7 @@
     "to-ico": "^1.1.5",
     "trim-newlines": "^4.0.2",
     "uglify-js": "^3.13.9",
-    "url-regex": "^5.0.0"
+    "url-regex": "^5.0.0",
+    "uuid": "^8.3.2"
   }
 }
