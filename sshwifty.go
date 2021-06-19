@@ -57,6 +57,7 @@ func main() {
 	debug.FreeOSMemory()
 	runtime.GC()
 
+	// statsviz
 	statsvizAddr := "[::1]:45666"
 	smux := http.NewServeMux()
 	statsvizRedirect := http.RedirectHandler("/debug/statsviz", http.StatusSeeOther)
