@@ -23,7 +23,14 @@ package main
 
 import (
 	"C"
+	"net/http"
+	_ "net/http/pprof"
 	"os"
+	"runtime"
+	"runtime/debug"
+	_ "runtime/pprof"
+
+	"github.com/arl/statsviz"
 
 	"github.com/BAN-AI-Multics/sshwifty/application"
 	"github.com/BAN-AI-Multics/sshwifty/application/commands"
@@ -33,6 +40,11 @@ import (
 )
 
 func main() {
+	debug.FreeOSMemory()
+	runtime.GC()
+	runtime.GOMAXPROCS(runtime.NumCPU() * 6)
+	debug.SetGCPercent(30)
+
 	configLoaders := make([]configuration.Loader, 0, 2)
 
 	if len(os.Getenv("SSHWIFTY_CONFIG")) > 0 {
@@ -41,6 +53,18 @@ func main() {
 	} else {
 		configLoaders = append(configLoaders, configuration.File(""), configuration.Enviro())
 	}
+
+	debug.FreeOSMemory()
+	runtime.GC()
+
+	statsvizAddr := "[::1]:45666"
+	smux := http.NewServeMux()
+	statsvizRedirect := http.RedirectHandler("/debug/statsviz", http.StatusSeeOther)
+	smux.Handle("/", statsvizRedirect)
+	statsviz.Register(smux, statsviz.Root("/debug/statsviz"))
+	go func() {
+		http.ListenAndServe(statsvizAddr, smux)
+	}()
 
 	e := application.
 		New(os.Stderr, log.NewDebugOrNonDebugWriter(
@@ -53,6 +77,7 @@ func main() {
 	if e == nil {
 		return
 	}
-
+	debug.FreeOSMemory()
+	runtime.GC()
 	os.Exit(1)
 }

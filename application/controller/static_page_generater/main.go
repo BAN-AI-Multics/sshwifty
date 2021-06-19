@@ -20,7 +20,6 @@ package main
 
 import (
 	"bytes"
-	"compress/gzip"
 	"encoding/base64"
 	"fmt"
 	"io"
@@ -32,6 +31,8 @@ import (
 	"strings"
 	"text/template"
 	"time"
+
+	"github.com/klauspost/compress/gzip"
 
 	sha256 "github.com/minio/sha256-simd"
 )

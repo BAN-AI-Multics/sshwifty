@@ -1,6 +1,6 @@
 // Sshwifty - A Web SSH client
 //
-// Copyright (C) 2021 Jeffrey H. Johnson <trnsz@pobox.com>
+// Copyright (C) 2021 Jeffrey H. Johnson <trnsz+banai@pobox.com>
 // Copyright (C) 2019-2021 NI Rui <ranqus@gmail.com>
 //
 // This program is free software: you can redistribute it and/or modify

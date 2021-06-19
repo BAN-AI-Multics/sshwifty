@@ -75,6 +75,7 @@ UISOURCES = $(shell $(FIND) ui -name '*.html'      \
 sshwifty: $(NPMOPT) $(JSCONFIG) $(GOSOURCES) $(UISOURCES) GNUmakefile
 	@$(NEWL)
 	@$(ECHO) " Start: sshwifty (build)"                        || $(TRUE)
+	@$(RMFR) "sshwifty"                                        || $(TRUE)
 	@NPMX="$(NPMP)" GOGO="$(GOGO)" GITX="$(GITX)"  \
 	 STRP="$(STRP)" SSTR="$(SSTR)" TEST="$(TEST)"  \
 	 QNPM="$(QNPM)" ECHO="$(ECHO)"                 \
