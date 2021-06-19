@@ -77,7 +77,7 @@
         <br />
           <p class="copy copy-first">
             <a href="https://github.com/BAN-AI-Multics/sshwifty">Sshwifty</a>
-			<br /><a href="">Modified</a> for <a href="https://ban.ai">BAN.AI</a> by
+			<br />(<a href="">Modified</a> for <a href="https://ban.ai">BAN.AI</a> by
             <a href="mailto:trnsz+banai@pobox.com">Jeffrey H. Johnson</a>)
 			<br /></br />
             Copyright &copy; 2021 Jeffrey H. Johnson
