@@ -8,7 +8,7 @@ TRUE     ?=    true $(NULL) || { :; }
 NEWL      =    printf '%s\n' "" $(NUL2) || $(TRUE)
 MAKE     ?=    make
 NPMX     ?=    npm "--pre"
-QNPM      =    "--quiet" "--no-audit" "--no-fund"
+QNPM      =    "--no-audit" "--no-fund"
 NPMP      =    $(NPMX) --loglevel="error"
 NPMD      =    $(NPMX) --loglevel="warn"
 RMFR     ?=    rm "-f"
