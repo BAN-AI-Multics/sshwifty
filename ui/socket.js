@@ -194,7 +194,7 @@ class Dial {
           } catch (e) {
             ws.close();
             rd.closeWithReason(e);
-/*
+            /*
             if (process.env.NODE_ENV === "development") {
               console.error(e);
             }
@@ -377,10 +377,9 @@ export class Socket {
 
       streamHandler.serve().catch((e) => {
         if (process.env.NODE_ENV !== "development") {
-          return;
         }
 
-        //console.trace(e);
+        // console.trace(e);
       });
 
       this.streamHandler = streamHandler;
