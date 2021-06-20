@@ -20,7 +20,7 @@ import "./app.css";
 import "./common.css";
 import "./landing.css";
 
-import Vue from "vue";
+import vue from "vue";
 
 import Auth from "./auth.vue";
 import { Color as ControlColor } from "./commands/color.js";
