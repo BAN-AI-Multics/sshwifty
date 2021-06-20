@@ -22,6 +22,7 @@ const path = require("path");
 const os = require("os");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
 const CopyPlugin = require("copy-webpack-plugin");
@@ -215,6 +216,23 @@ module.exports = {
           maxInitialRequests: 6,
           name: false,
         },
+    minimize: !inDevMode,
+    minimizer: inDevMode
+      ? []
+      : [
+          new CssMinimizerPlugin(),
+          new TerserPlugin({
+            test: /\.js(\?.*)?$/i,
+            terserOptions: {
+              ecma: undefined,
+              parse: {},
+              compress: {},
+              mangle: true,
+              module: false,
+            },
+            extractComments: /^\**!|@preserve|@license|@cc_on/i,
+          }),
+        ],
   },
   module: {
     rules: [
