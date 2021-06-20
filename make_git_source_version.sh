@@ -133,23 +133,23 @@ get_git_info()
 
 get_utc_date()
 {
-	UTC_BLD_DATE=$(TZ=UTC date -u "+%Y-%m-%d" 2> /dev/null) ||
-		{
-			printf >&2 '%s\n' \
-				"Error: date failed."
-			exit 1
-		}
-	# shellcheck disable=SC2236
-	if [ -n "${UTC_BLD_DATE:-}" ] &&
-		[ ! -z "${UTC_BLD_DATE:-}" ]; then
-		UTC_BLD_DATE_INFO="(compiled ${UTC_BLD_DATE:?})"
-	else
-
+#	UTC_BLD_DATE=$(TZ=UTC date -u "+%Y-%m-%d" 2> /dev/null) ||
+#		{
+#			printf >&2 '%s\n' \
+#				"Error: date failed."
+#			exit 1
+#		}
+#	# shellcheck disable=SC2236
+#	if [ -n "${UTC_BLD_DATE:-}" ] &&
+#		[ ! -z "${UTC_BLD_DATE:-}" ]; then
+#		UTC_BLD_DATE_INFO="(compiled ${UTC_BLD_DATE:?})"
+#	else
+#
 		UTC_BLD_DATE_INFO=""
-	fi
+#	fi
 
 	printf '%s\n' \
-		"${UTC_BLD_DATE_INFO:?}"
+		"${UTC_BLD_DATE_INFO:-}"
 }
 
 BUILD_VER="$(get_git_info)" ||
@@ -167,7 +167,7 @@ BUILD_UTC="$(get_utc_date)" ||
 
 # shellcheck disable=SC1003
 printf '%s\n' \
-	"${BUILD_VER:?}${BUILD_UTC:?}" \
+	"${BUILD_VER:?}${BUILD_UTC:-}" \
 	> "./version.inc" ||
 	{
 		printf >&2 '%s\n' \
