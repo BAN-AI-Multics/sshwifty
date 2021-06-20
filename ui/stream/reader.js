@@ -320,7 +320,7 @@ export class Reader {
       await self.buffers.subscribe()
     );
 
-    this.multiple.feed(new Buffer(converted, () => {}), () => {});
+    this.multiple.feed(Buffer.from(converted, () => {}), () => {});
 
     return this.multiple;
   }
