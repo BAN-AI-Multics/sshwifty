@@ -1,7 +1,8 @@
-# Dependencies used by Sshwifty
+# Dependencies
 
-- [_BAN.AI_](https://ban.ai)'s **_Sshwifty_** uses many third-party components, some
-  of which are listed below. A complete list of components can be found by reviewing the
+- **_Sshwifty_** uses many third-party components, some of which are listed below.
+
+- A complete list of components can be found by reviewing the
   [`package.json`](https://github.com/BAN-AI-Multics/sshwifty/blob/master/package.json)
   and
   [`go.mod`](https://github.com/BAN-AI-Multics/sshwifty/blob/master/go.mod)
