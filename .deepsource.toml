@@ -3,7 +3,8 @@ version = 1
 exclude_patterns = [
   "Attic/**",
   "application/controller/static_pages/*_generated.go",
-  "node_modules/**"
+  "node_modules/**",
+  "*.config.js"
 ]
 
 test_patterns = [
