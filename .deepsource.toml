@@ -8,7 +8,6 @@ exclude_patterns = [
 
 test_patterns = [
   "application/**/*_test.go",
-  "ui/**/*_test.js"
 ]
 
 [[analyzers]]
