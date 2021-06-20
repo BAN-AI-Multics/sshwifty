@@ -49,10 +49,6 @@
   "author": "",
   "license": "AGPL-3.0",
   "dependencies": {
-    "bin-wrapper": "^4.1.0",
-    "html-minifier": "^4.0.0",
-    "safe-buffer": "^5.2.1",
-    "uglify-js": "^3.13.9",
-    "url-regex": "^5.0.0"
+    "bin-wrapper": "^4.1.0"
   }
 }
