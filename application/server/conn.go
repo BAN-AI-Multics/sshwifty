@@ -25,7 +25,7 @@ import (
 	"github.com/BAN-AI-Multics/sshwifty/application/network"
 )
 
-var emptyTime = time.Time{}
+//var emptyTime = time.Time{}
 
 type listener struct {
 	*net.TCPListener

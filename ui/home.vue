@@ -507,7 +507,7 @@ export default {
         await this.tab.tabs[index].control.close();
       } catch (e) {
         alert("Cannot close tab due to error: " + e);
-        process.env.NODE_ENV === "development" && console.trace(e);
+        // process.env.NODE_ENV === "development" && console.trace(e);
       }
       this.removeFromTab(index);
       this.$emit("tab-closed", this.tab.tabs);

@@ -44,15 +44,15 @@ func parseEnv(name string) string {
 	return os.Getenv(v[21:])
 }
 
-func parseEnvDef(name, def string) string {
-	v := parseEnv(name)
-
-	if len(v) > 0 {
-		return v
-	}
-
-	return def
-}
+//func parseEnvDef(name, def string) string {
+//	v := parseEnv(name)
+//
+//	if len(v) > 0 {
+//		return v
+//	}
+//
+//	return def
+//}
 
 // Enviro creates an environment variable based configuration loader
 func Enviro() Loader {

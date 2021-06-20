@@ -116,9 +116,9 @@ type streamHandlerSender struct {
 }
 
 // signal sends handler signal
-func (h streamHandlerSender) signal(hd Header, d, buf []byte) error {
-	return h.handlerSender.signal(hd, d, buf)
-}
+// func (h streamHandlerSender) signal(hd Header, d, buf []byte) error {
+//	return h.handlerSender.signal(hd, d, buf)
+//}
 
 // Write sends data
 func (h streamHandlerSender) Write(b []byte) (int, error) {
