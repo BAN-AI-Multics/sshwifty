@@ -74,34 +74,42 @@
           >&nbsp; to connect.
         </p>
         <br />
-          <p class="copy copy-first">
-            <a href="https://github.com/BAN-AI-Multics/sshwifty">Sshwifty</a>
-			<br>(<a href="https://github.com/nirui/sshwifty/compare/master...BAN-AI-Multics:master.diff">Modified</a> for <a href="https://ban.ai">BAN.AI</a> by
-            <a href="mailto:trnsz+banai@pobox.com">Jeffrey H. Johnson</a>)
-			<br><br>
-            Copyright &copy; 2021 Jeffrey H. Johnson
-            &lt;trnsz+banai@pobox.com&gt;
-            <br>
-            Copyright &copy; 2019-2021 NI Rui &lt;ranqus@gmail.com&gt;
-            <br>
-			<small><br>
-			  This program is <i>free software</i>: you can redistribute it and/or
-              modify it under the terms of the
-              <i>GNU Affero General Public License</i> as published by the
-              <i>Free Software Foundation</i>, either version <b>3</b> of the
-              <i>License</i>, or (<i>at your option</i>) any later version.
-			  <br><br>
-              This program is distributed in the hope that it will be useful,
-              but
-              <b>WITHOUT ANY WARRANTY</b> — without even the implied warranties of
-			  <b>MERCHANTABILITY</b> or <b>FITNESS FOR A PARTICULAR PURPOSE</b>.
-			  <br><br>See the
-    		  <i><b><a
+        <p class="copy copy-first">
+          <a href="https://github.com/BAN-AI-Multics/sshwifty">Sshwifty</a>
+          <br />(<a
+            href="https://github.com/nirui/sshwifty/compare/master...BAN-AI-Multics:master.diff"
+            >Modified</a
+          >
+          for <a href="https://ban.ai">BAN.AI</a> by
+          <a href="mailto:trnsz+banai@pobox.com">Jeffrey H. Johnson</a>)
+          <br /><br />
+          Copyright &copy; 2021 Jeffrey H. Johnson &lt;trnsz+banai@pobox.com&gt;
+          <br />
+          Copyright &copy; 2019-2021 NI Rui &lt;ranqus@gmail.com&gt;
+          <br />
+          <small
+            ><br />
+            This program is <i>free software</i>: you can redistribute it and/or
+            modify it under the terms of the
+            <i>GNU Affero General Public License</i> as published by the
+            <i>Free Software Foundation</i>, either version <b>3</b> of the
+            <i>License</i>, or (<i>at your option</i>) any later version.
+            <br /><br />
+            This program is distributed in the hope that it will be useful, but
+            <b>WITHOUT ANY WARRANTY</b> — without even the implied warranties of
+            <b>MERCHANTABILITY</b> or <b>FITNESS FOR A PARTICULAR PURPOSE</b>.
+            <br /><br />See the
+            <i
+              ><b
+                ><a
                   href="https://github.com/BAN-AI-Multics/sshwifty/blob/master/LICENSE.md"
-                  >GNU Affero General Public License</a></b></i>
-              for more details.
-            </small>
-          </p>
+                  >GNU Affero General Public License</a
+                ></b
+              ></i
+            >
+            for more details.
+          </small>
+        </p>
       </div>
     </screens>
     <connect-widget
