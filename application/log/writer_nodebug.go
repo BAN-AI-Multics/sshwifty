@@ -52,4 +52,4 @@ func (w NonDebugWriter) Context(name string, params ...interface{}) Logger {
 }
 
 // Debug ditchs debug operation
-func (w NonDebugWriter) Debug(msg string, params ...interface{}) {}
+func (w NonDebugWriter) Debug(_ string, _ ...interface{}) {}

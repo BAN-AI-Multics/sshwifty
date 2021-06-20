@@ -53,52 +53,52 @@ type controller interface {
 type baseController struct{}
 
 func (b baseController) Get(
-	w http.ResponseWriter, r *http.Request, l log.Logger) error {
+	_ http.ResponseWriter, _ *http.Request, _ log.Logger) error {
 	return ErrControllerNotImplemented
 }
 
 func (b baseController) Head(
-	w http.ResponseWriter, r *http.Request, l log.Logger) error {
+	_ http.ResponseWriter, _ *http.Request, _ log.Logger) error {
 	return ErrControllerNotImplemented
 }
 
 func (b baseController) Post(
-	w http.ResponseWriter, r *http.Request, l log.Logger) error {
+	_ http.ResponseWriter, _ *http.Request, _ log.Logger) error {
 	return ErrControllerNotImplemented
 }
 
 func (b baseController) Put(
-	w http.ResponseWriter, r *http.Request, l log.Logger) error {
+	_ http.ResponseWriter, _ *http.Request, _ log.Logger) error {
 	return ErrControllerNotImplemented
 }
 
 func (b baseController) Delete(
-	w http.ResponseWriter, r *http.Request, l log.Logger) error {
+	_ http.ResponseWriter, _ *http.Request, _ log.Logger) error {
 	return ErrControllerNotImplemented
 }
 
 func (b baseController) Connect(
-	w http.ResponseWriter, r *http.Request, l log.Logger) error {
+	_ http.ResponseWriter, _ *http.Request, _ log.Logger) error {
 	return ErrControllerNotImplemented
 }
 
 func (b baseController) Options(
-	w http.ResponseWriter, r *http.Request, l log.Logger) error {
+	_ http.ResponseWriter, _ *http.Request, _ log.Logger) error {
 	return ErrControllerNotImplemented
 }
 
 func (b baseController) Trace(
-	w http.ResponseWriter, r *http.Request, l log.Logger) error {
+	_ http.ResponseWriter, _ *http.Request, _ log.Logger) error {
 	return ErrControllerNotImplemented
 }
 
 func (b baseController) Patch(
-	w http.ResponseWriter, r *http.Request, l log.Logger) error {
+	_ http.ResponseWriter, _ *http.Request, _ log.Logger) error {
 	return ErrControllerNotImplemented
 }
 
 func (b baseController) Other(
-	method string, w http.ResponseWriter, r *http.Request, l log.Logger) error {
+	_ string, _ http.ResponseWriter, _ *http.Request, _ log.Logger) error {
 	return ErrControllerNotImplemented
 }
 

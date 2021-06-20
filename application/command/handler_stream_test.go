@@ -71,7 +71,7 @@ type dummyStreamCommand struct {
 func newDummyStreamCommand(
 	l log.Logger,
 	w StreamResponder,
-	cfg Configuration,
+	_ Configuration,
 ) FSMMachine {
 	return &dummyStreamCommand{
 		lock:      sync.Mutex{},
@@ -85,7 +85,7 @@ func newDummyStreamCommand(
 
 func (d *dummyStreamCommand) Bootup(
 	r *rw.LimitedReader,
-	b []byte,
+	_ []byte,
 ) (FSMState, FSMError) {
 	d.downWait.Add(1)
 

@@ -137,7 +137,7 @@ func buildWebsocketUpgrader(cfg configuration.Server) websocket.Upgrader {
 }
 
 func (s socket) Options(
-	w http.ResponseWriter, r *http.Request, l log.Logger) error {
+	w http.ResponseWriter, _ *http.Request, _ log.Logger) error {
 	w.Header().Add("Access-Control-Allow-Origin", "*")
 	w.Header().Add("Access-Control-Allow-Headers", "X-Key")
 

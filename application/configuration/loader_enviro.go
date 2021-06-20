@@ -77,7 +77,7 @@ func Enviro() Loader {
 
 		if cfgErr != nil {
 			return enviroTypeName, Configuration{}, fmt.Errorf(
-				"Failed to build the configuration: %w", cfgErr)
+				"failed to build the configuration: %w", cfgErr)
 		}
 
 		listenIface := parseEnv("SSHWIFTY_LISTENINTERFACE")
@@ -125,14 +125,14 @@ func Enviro() Loader {
 
 			if jErr != nil {
 				return enviroTypeName, Configuration{}, fmt.Errorf(
-					"Invalid \"SSHWIFTY_PRESETS\": %w", jErr)
+					"invalid \"SSHWIFTY_PRESETS\": %w", jErr)
 			}
 		}
 
 		concretizePresets, err := presets.concretize()
 		if err != nil {
 			return enviroTypeName, Configuration{}, fmt.Errorf(
-				"Unable to parse Preset data: %w", err)
+				"unable to parse Preset data: %w", err)
 		}
 
 		return enviroTypeName, Configuration{

@@ -110,7 +110,7 @@ func (s Server) IsTLS() bool {
 // Verify verifies current configuration
 func (s Server) Verify() error {
 	if net.ParseIP(s.ListenInterface) == nil {
-		return fmt.Errorf("Invalid IP address \"%s\"", s.ListenInterface)
+		return fmt.Errorf("invalid IP address \"%s\"", s.ListenInterface)
 	}
 
 	if (len(s.TLSCertificateFile) > 0 && len(s.TLSCertificateKeyFile) <= 0) ||
@@ -133,7 +133,7 @@ func (m Meta) Concretize() (map[string]string, error) {
 	for k, v := range m {
 		result, err := v.Parse()
 		if err != nil {
-			return nil, fmt.Errorf("Unable to parse Meta \"%s\": %w", k, err)
+			return nil, fmt.Errorf("unable to parse Meta \"%s\": %w", k, err)
 		}
 
 		mm[k] = result
@@ -176,7 +176,7 @@ type Common struct {
 // Verify verifies current setting
 func (c Configuration) Verify() error {
 	if len(c.Servers) <= 0 {
-		return errors.New("Must specify at least one server")
+		return errors.New("must specify at least one server")
 	}
 
 	for i, c := range c.Servers {
@@ -186,7 +186,7 @@ func (c Configuration) Verify() error {
 			continue
 		}
 
-		return fmt.Errorf("Invalid setting for server %d: %w", i, vErr)
+		return fmt.Errorf("invalid setting for server %d: %w", i, vErr)
 	}
 
 	return nil
@@ -207,7 +207,7 @@ func (c Configuration) Dialer() network.Dial {
 			c.Socks5, c.Socks5User, c.Socks5Password)
 
 		if sDialErr != nil {
-			panic("Unable to build Socks5 Dialer: " + sDialErr.Error())
+			panic("unable to build Socks5 Dialer: " + sDialErr.Error())
 		}
 
 		dialer = sDial

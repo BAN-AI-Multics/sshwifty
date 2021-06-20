@@ -342,13 +342,14 @@ func (d *sshClient) buildAuthMethod(
 }
 
 func (d *sshClient) comfirmRemoteFingerprint(
-	hostname string,
-	remote net.Addr,
-	key ssh.PublicKey,
-	buf []byte,
+	_ string,
+	_ net.Addr,
+	_ ssh.PublicKey,
+	_ []byte,
 ) error {
 	// Always allow fingerprint, dangerous.
 	return nil
+	/*
 	d.enableRemoteReadTimeoutRetry()
 	defer d.disableRemoteReadTimeoutRetry()
 
@@ -374,7 +375,7 @@ func (d *sshClient) comfirmRemoteFingerprint(
 		return ErrSSHRemoteFingerprintRefused
 	}
 
-	return nil
+	return nil */
 }
 
 func (d *sshClient) enableRemoteReadTimeoutRetry() {

@@ -607,7 +607,6 @@ export class Command {
     let charset = "utf-8";
 
     if (d.length > 1) {
-      // TODO: Remove this check after depreciation period.
       try {
         initialFieldDef.Encoding.verify(d[1]);
 

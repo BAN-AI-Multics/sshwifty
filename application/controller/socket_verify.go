@@ -115,7 +115,7 @@ func (s socketVerification) setServerConfigRespond(
 }
 
 func (s socketVerification) Get(
-	w http.ResponseWriter, r *http.Request, l log.Logger) error {
+	w http.ResponseWriter, r *http.Request, _ log.Logger) error {
 	hd := w.Header()
 	hd.Add("Cache-Control", "no-store")
 	hd.Add("Pragma", "no-store")
@@ -161,6 +161,6 @@ func (s socketVerification) Get(
 }
 
 func (s socketVerification) Options(
-	w http.ResponseWriter, r *http.Request, l log.Logger) error {
+	_ http.ResponseWriter, _ *http.Request, _ log.Logger) error {
 	return nil
 }

@@ -37,13 +37,13 @@ func (w Ditch) Write(b []byte) (int, error) {
 }
 
 // Info write an info message
-func (w Ditch) Info(msg string, params ...interface{}) {}
+func (w Ditch) Info(_ string, _ ...interface{}) {}
 
 // Debug write an debug message
-func (w Ditch) Debug(msg string, params ...interface{}) {}
+func (w Ditch) Debug(_ string, _ ...interface{}) {}
 
 // Warning write an warning message
-func (w Ditch) Warning(msg string, params ...interface{}) {}
+func (w Ditch) Warning(_ string, _ ...interface{}) {}
 
 // Error write an error message
-func (w Ditch) Error(msg string, params ...interface{}) {}
+func (w Ditch) Error(_ string, _ ...interface{}) {}

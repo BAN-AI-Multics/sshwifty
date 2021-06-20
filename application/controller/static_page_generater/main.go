@@ -344,13 +344,13 @@ func parseFile(
 		mimeType = "application/binary"
 	}
 
-	if strings.HasPrefix(mimeType, "image/") {
+/*	if strings.HasPrefix(mimeType, "image/") {
 		// Don't compress images
 	} else if strings.HasPrefix(mimeType, "application/font-woff") {
 		// Don't compress web fonts
 	} else if mimeType == "text/plain" {
 		// Don't compress plain text
-	} else {
+	} else {*/
 		compressed := bytes.NewBuffer(make([]byte, 0, 1024))
 
 		compressor, compressorBuildErr := gzip.NewWriterLevel(
@@ -374,7 +374,7 @@ func parseFile(
 		}
 
 		content = append(content, compressed.Bytes()...)
-	}
+	//}
 
 	goFileName := "Static" + strconv.FormatInt(int64(id), 10)
 
@@ -430,7 +430,7 @@ func main() {
 			destFolderPath, destFolderPathErr))
 	}
 
-	destFolderPathErr = os.Mkdir(destFolderPath, 0o777)
+	destFolderPathErr = os.Mkdir(destFolderPath, 0o750)
 
 	if destFolderPathErr != nil {
 		panic(fmt.Sprintf("Unable to build data destination folder %s: %s",

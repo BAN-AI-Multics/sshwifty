@@ -3,8 +3,6 @@ import { History } from "./commands/history.js";
 export function build(ctx) {
   let rec = [];
 
-  // This renames "knowns" to "sshwifty-knowns"
-  // TODO: Remove this after some few years
   try {
     const oldStore = localStorage.getItem("knowns");
 
