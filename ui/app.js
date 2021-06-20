@@ -426,7 +426,7 @@ function initializeClient() {
     return;
   }
 
-/*
+  /*
   if (process.env.NODE_ENV === "development") {
     console.log("Currently in Development environment");
   }
