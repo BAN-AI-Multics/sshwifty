@@ -5,7 +5,7 @@ exclude_patterns = [
   "application/controller/static_pages/*_generated.go",
   "node_modules/**",
   "*.config.js",
-  "application/controller/static.go"
+  "application/controller/static.go",
   "application/controller/static_page_generater/main.go"
 ]
 
