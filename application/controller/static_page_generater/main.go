@@ -344,36 +344,36 @@ func parseFile(
 		mimeType = "application/binary"
 	}
 
-/*	if strings.HasPrefix(mimeType, "image/") {
-		// Don't compress images
-	} else if strings.HasPrefix(mimeType, "application/font-woff") {
-		// Don't compress web fonts
-	} else if mimeType == "text/plain" {
-		// Don't compress plain text
-	} else {*/
-		compressed := bytes.NewBuffer(make([]byte, 0, 1024))
+	/*	if strings.HasPrefix(mimeType, "image/") {
+			// Don't compress images
+		} else if strings.HasPrefix(mimeType, "application/font-woff") {
+			// Don't compress web fonts
+		} else if mimeType == "text/plain" {
+			// Don't compress plain text
+		} else {*/
+	compressed := bytes.NewBuffer(make([]byte, 0, 1024))
 
-		compressor, compressorBuildErr := gzip.NewWriterLevel(
-			compressed, gzip.BestCompression)
+	compressor, compressorBuildErr := gzip.NewWriterLevel(
+		compressed, gzip.BestCompression)
 
-		if compressorBuildErr != nil {
-			panic(fmt.Sprintln(
-				"Cannot build data compressor:", compressorBuildErr))
-		}
+	if compressorBuildErr != nil {
+		panic(fmt.Sprintln(
+			"Cannot build data compressor:", compressorBuildErr))
+	}
 
-		_, compressErr := compressor.Write(content)
+	_, compressErr := compressor.Write(content)
 
-		if compressErr != nil {
-			panic(fmt.Sprintln("Cannot write compressed data:", compressErr))
-		}
+	if compressErr != nil {
+		panic(fmt.Sprintln("Cannot write compressed data:", compressErr))
+	}
 
-		compressErr = compressor.Flush()
+	compressErr = compressor.Flush()
 
-		if compressErr != nil {
-			panic(fmt.Sprintln("Cannot write compressed data:", compressErr))
-		}
+	if compressErr != nil {
+		panic(fmt.Sprintln("Cannot write compressed data:", compressErr))
+	}
 
-		content = append(content, compressed.Bytes()...)
+	content = append(content, compressed.Bytes()...)
 	//}
 
 	goFileName := "Static" + strconv.FormatInt(int64(id), 10)
