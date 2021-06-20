@@ -376,9 +376,8 @@ export class Socket {
       callbacks.connected();
 
       streamHandler.serve().catch((e) => {
-//        if (process.env.NODE_ENV !== "development") {
-//        }
-
+        //        if (process.env.NODE_ENV !== "development") {
+        //        }
         // console.trace(e);
       });
 
