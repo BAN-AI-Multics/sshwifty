@@ -85,7 +85,7 @@ get_git_info()
 						[ ! -z "${GITVER:-}" ]; then
 						GIT_OUT=$(printf '%s' \
 							"${GITVER:?}${CDDATE:?}" |
-								sed -e 's/[0-9]-0-g.* / /' \
+								sed -e 's/-0-g.* / /' \
 									-e 's/-[0-9]\+-g/+-g/')
 					fi
 				else
@@ -93,7 +93,7 @@ get_git_info()
 						[ ! -z "${GITVER:-}" ]; then
 						GIT_OUT=$(printf '%s' \
 							"${GITVER:?}-${BRANCH:?}${CDDATE:?}" |
-								sed -e 's/[0-9]-0-g.* / /' \
+								sed -e 's/-0-g.* / /' \
 									-e 's/-[0-9]\+-g/+-g/')
 					fi
 				fi
