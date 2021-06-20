@@ -6,6 +6,7 @@ exclude_patterns = [
   "node_modules/**",
   "*.config.js",
   "application/controller/static.go"
+  "application/controller/static_page_generater/main.go"
 ]
 
 test_patterns = [
