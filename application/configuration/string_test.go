@@ -86,10 +86,10 @@ func TestStringFile(t *testing.T) {
 
 	ss = String("file://" + filePath + ".notexist")
 
-	result, err = ss.Parse()
+	_, err = ss.Parse()
 
 	if err == nil {
-		t.Error("Parsing an non-existing file should result an error")
+		t.Error("Parsing a non-existing file should result in an error")
 
 		return
 	}

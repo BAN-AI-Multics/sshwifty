@@ -280,7 +280,7 @@ func (e *Handler) handleStream(h Header, d byte, l log.Logger) error {
 	}, l, e.commands, e.cfg, e.rBuf[:])
 }
 
-func (e *Handler) handleClose(h Header, d byte, l log.Logger) error {
+func (e *Handler) handleClose(h Header, d byte, _ log.Logger) error {
 	st, stErr := e.streams.get(d)
 
 	if stErr != nil {
@@ -304,7 +304,7 @@ func (e *Handler) handleClose(h Header, d byte, l log.Logger) error {
 	return e.sender.signal(hhd, nil, e.rBuf[:])
 }
 
-func (e *Handler) handleCompleted(d byte, l log.Logger) error {
+func (e *Handler) handleCompleted(d byte, _ log.Logger) error {
 	st, stErr := e.streams.get(d)
 
 	if stErr != nil {

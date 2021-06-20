@@ -27,7 +27,7 @@ func NewDitch() Ditch {
 }
 
 // Context build a new Sub context
-func (w Ditch) Context(name string, params ...interface{}) Logger {
+func (w Ditch) Context(_ string, _ ...interface{}) Logger {
 	return w
 }
 

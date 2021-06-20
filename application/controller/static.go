@@ -71,7 +71,7 @@ func serveStaticCachePage(
 	dataName string,
 	w http.ResponseWriter,
 	r *http.Request,
-	l log.Logger,
+	_ log.Logger,
 ) error {
 	d, dFound := staticPages[dataName]
 
@@ -132,7 +132,7 @@ func serveStaticPage(
 	code int,
 	w http.ResponseWriter,
 	r *http.Request,
-	l log.Logger,
+	_ log.Logger,
 ) error {
 	d, dFound := staticPages[dataName]
 

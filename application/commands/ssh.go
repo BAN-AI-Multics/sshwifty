@@ -631,7 +631,7 @@ func (d *sshClient) getRemote() (sshRemoteConn, error) {
 
 // nolint
 func (d *sshClient) local(
-	f *command.FSM,
+	_ *command.FSM,
 	r *rw.LimitedReader,
 	h command.StreamHeader,
 	b []byte,

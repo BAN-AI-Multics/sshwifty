@@ -84,7 +84,7 @@ func newSocketVerification(
 	}
 }
 
-func (s socketVerification) authKey(r *http.Request) []byte {
+func (s socketVerification) authKey(_ *http.Request) []byte {
 	timeMixer := strconv.FormatInt(time.Now().Unix()/100, 10)
 
 	if len(s.commonCfg.SharedKey) > 0 {

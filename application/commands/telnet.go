@@ -182,10 +182,10 @@ func (d *telnetClient) getRemote() (net.Conn, error) {
 }
 
 func (d *telnetClient) client(
-	f *command.FSM,
+	_ *command.FSM,
 	r *rw.LimitedReader,
-	h command.StreamHeader,
-	b []byte,
+	_ command.StreamHeader,
+	_ []byte,
 ) error {
 	remoteConn, remoteConnErr := d.getRemote()
 

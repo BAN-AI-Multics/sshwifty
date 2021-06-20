@@ -404,7 +404,7 @@ func (c *stream) reinit(
 }
 
 func (c *stream) tick(
-	h Header,
+	_ Header,
 	r *rw.FetchReader,
 	b []byte,
 ) error {

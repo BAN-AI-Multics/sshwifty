@@ -197,7 +197,7 @@ func (c Configuration) Dialer() network.Dial {
 	dialTimeout := c.DialTimeout
 
 	if dialTimeout < 3 {
-		dialTimeout = 3
+		c.DialTimeout = 3
 	}
 
 	dialer := network.TCPDial()

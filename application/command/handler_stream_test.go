@@ -136,7 +136,7 @@ func (d *dummyStreamCommand) Bootup(
 }
 
 func (d *dummyStreamCommand) run(
-	f *FSM, r *rw.LimitedReader, h StreamHeader, b []byte) error {
+	_ *FSM, r *rw.LimitedReader, _ StreamHeader, b []byte) error {
 	rLen, rErr := rw.ReadUntilCompleted(r, b)
 
 	if rErr != nil {
