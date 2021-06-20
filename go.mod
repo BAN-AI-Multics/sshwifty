@@ -21,6 +21,8 @@ require (
 	github.com/sirupsen/logrus v1.8.2-0.20210422133436-b50299cfaaa1
 	github.com/stretchr/objx v0.3.1-0.20210208113821-6c797d85514c
 	github.com/stretchr/testify v1.7.1-0.20210427113832-6241f9ab9942
+	go.uber.org/goleak v1.1.11-0.20210525221708-d36f3aede898
+	go4.org v0.0.0-20201209231011-d4a079459e60
 	golang.org/x/crypto v0.0.0-20210616213533-5ff15b29337e
 	golang.org/x/lint v0.0.0-20210508222113-6edffad5e616
 	golang.org/x/net v0.0.0-20210614182718-04defd469f4e
@@ -29,5 +31,4 @@ require (
 	golang.org/x/tools v0.1.4-0.20210618183400-d25f90668280
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
-	go.uber.org/goleak v1.1.11-0.20210525221708-d36f3aede898
 )
