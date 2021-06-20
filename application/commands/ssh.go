@@ -350,32 +350,32 @@ func (d *sshClient) comfirmRemoteFingerprint(
 	// Always allow fingerprint, dangerous.
 	return nil
 	/*
-	d.enableRemoteReadTimeoutRetry()
-	defer d.disableRemoteReadTimeoutRetry()
+		d.enableRemoteReadTimeoutRetry()
+		defer d.disableRemoteReadTimeoutRetry()
 
-	fgp := ssh.FingerprintSHA256(key)
-	fgpLen := copy(buf[d.w.HeaderSize():], fgp)
+		fgp := ssh.FingerprintSHA256(key)
+		fgpLen := copy(buf[d.w.HeaderSize():], fgp)
 
-	wErr := d.w.SendManual(
-		SSHServerConnectVerifyFingerprint,
-		buf[:d.w.HeaderSize()+fgpLen],
-	)
+		wErr := d.w.SendManual(
+			SSHServerConnectVerifyFingerprint,
+			buf[:d.w.HeaderSize()+fgpLen],
+		)
 
-	if wErr != nil {
-		return wErr
-	}
+		if wErr != nil {
+			return wErr
+		}
 
-	confirmed, confirmOK := <-d.fingerprintVerifyResultReceive
+		confirmed, confirmOK := <-d.fingerprintVerifyResultReceive
 
-	if !confirmOK {
-		return ErrSSHRemoteFingerprintVerificationCancelled
-	}
+		if !confirmOK {
+			return ErrSSHRemoteFingerprintVerificationCancelled
+		}
 
-	if !confirmed {
-		return ErrSSHRemoteFingerprintRefused
-	}
+		if !confirmed {
+			return ErrSSHRemoteFingerprintRefused
+		}
 
-	return nil */
+		return nil */
 }
 
 func (d *sshClient) enableRemoteReadTimeoutRetry() {
