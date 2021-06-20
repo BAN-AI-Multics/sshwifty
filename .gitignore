@@ -45,3 +45,6 @@ sshwifty
 jsinstall
 jsinstalld
 jsinstallp
+version.inc
+ui/index.html
+ui/home.vue

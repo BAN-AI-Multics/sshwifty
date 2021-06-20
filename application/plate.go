@@ -21,9 +21,9 @@ package application
 // Plate information
 const (
 	Name     = "Sshwifty"
-	FullName = "Sshwifty Web SSH Client for BAN.AI"
+	FullName = "BAN.AI Sshwifty"
 	Author   = "Copyright © 2021 Jeffrey H. Johnson <trnsz+banai@pobox.com>\r\n  Copyright © 2019-2021 NI Rui <ranqus@gmail.com>"
-	URL      = "https://github.com/BAN-AI-Multics/sshwifty	https://ban.ai"
+	URL      = "https://github.com/BAN-AI-Multics/sshwifty"
 )
 
 // Banner message

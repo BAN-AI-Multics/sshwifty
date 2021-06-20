@@ -19,6 +19,7 @@ GOGO     ?=    go
 STRP     ?=    strip
 SSTR     ?=    sstrip
 GITX     ?=    git
+SEDX     ?=    sed
 
 ############################################################################
 
@@ -72,7 +73,7 @@ UISOURCES = $(shell $(FIND) ui -name '*.html'      \
 ############################################################################
 
 .PHONY: all
-sshwifty: $(NPMOPT) $(JSCONFIG) $(GOSOURCES) $(UISOURCES) GNUmakefile
+sshwifty: $(NPMOPT) $(JSCONFIG) $(GOSOURCES) $(UISOURCES) version.inc
 	@$(NEWL)
 	@$(ECHO) " Start: sshwifty (build)"                        || $(TRUE)
 	@$(RMFR) "sshwifty"                                        || $(TRUE)
@@ -99,6 +100,24 @@ testonly test check: sshwifty
 
 ############################################################################
 
+.PHONY: version version.inc
+version version.inc ui/home.vue ui/index.html:
+	@$(NEWL)
+	@$(ECHO) " Start: version"                                 || $(TRUE)
+	@"./make_git_source_version.sh" || \
+	 sh "./make_git_source_version.sh" || \
+	  env $(SHELL) "./make_git_source_version.sh"
+	@$(SEDX) -i -e 's/\ / /g' "version.inc"
+	@$(SEDX) -e "s/@@@@/$$(cat version.inc)/" \
+	 "ui/index.html.in" > "ui/index.html"
+	@$(SEDX) -e "s/@@@@/$$(cat version.inc)/" \
+	 "ui/home.vue.in" > "ui/home.vue"
+	@$(NEWL)
+	@$(ECHO) "Finish: version"                                 || $(TRUE)
+	@$(NEWL)
+
+############################################################################
+
 .PHONY: generate generation
 generate generation:
 	@$(NEWL)
@@ -118,6 +137,10 @@ clean:
 	@TRUE="$(TRUE)" RMFR="$(RMFR)" QNPM="$(QNPM)"  \
 	 ECHO="$(ECHO)" exec  $(NPMX)  "run" "clean"
 	@$(RMFR) "sshwifty"                                        || $(TRUE)
+	@$(RMFR) "sshwifty.upx"                                    || $(TRUE)
+	@$(RMFR) "version.inc"                                     || $(TRUE)
+	@$(RMFR) "ui/index.html"                                   || $(TRUE)
+	@$(RMFR) "ui/home.vue"                                     || $(TRUE)
 	@$(NEWL)
 	@$(ECHO) "Finish: Quick cleanup"                           || $(TRUE)
 	@$(NEWL)
