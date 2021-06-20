@@ -61,7 +61,7 @@ type CloseCallback func(error)
 // Server represents a server
 type Server struct {
 	logger log.Logger
-	//cfg          configuration.Common
+	// cfg          configuration.Common
 	shutdownWait *sync.WaitGroup
 }
 
