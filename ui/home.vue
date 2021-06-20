@@ -280,11 +280,11 @@ export default {
           run(conn);
         } catch (e) {
           errStr = BACKEND_REQUEST_ERROR + e;
-          process.env.NODE_ENV === "development" && console.trace(e);
+          // process.env.NODE_ENV === "development" && console.trace(e);
         }
       } catch (e) {
         errStr = BACKEND_CONNECT_ERROR + e;
-        process.env.NODE_ENV === "development" && console.trace(e);
+        // process.env.NODE_ENV === "development" && console.trace(e);
       }
       end();
       if (errStr !== null) {

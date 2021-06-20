@@ -4,7 +4,8 @@ exclude_patterns = [
   "Attic/**",
   "application/controller/static_pages/*_generated.go",
   "node_modules/**",
-  "*.config.js"
+  "*.config.js",
+  "application/controller/static.go"
 ]
 
 test_patterns = [

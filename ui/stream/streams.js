@@ -141,13 +141,13 @@ export class Streams {
     try {
       this.sender.close();
     } catch (e) {
-      process.env.NODE_ENV === "development" && console.trace(e);
+      //process.env.NODE_ENV === "development" && console.trace(e);
     }
 
     try {
       this.reader.close();
     } catch (e) {
-      process.env.NODE_ENV === "development" && console.trace(e);
+      //process.env.NODE_ENV === "development" && console.trace(e);
     }
 
     this.config.cleared(e);

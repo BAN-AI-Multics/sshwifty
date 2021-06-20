@@ -305,7 +305,7 @@ class Term {
     try {
       this.term.textarea.dispatchEvent(event);
     } catch (e) {
-      process.env.NODE_ENV === "development" && console.trace(e);
+      //process.env.NODE_ENV === "development" && console.trace(e);
     }
   }
 
@@ -331,7 +331,7 @@ class Term {
     try {
       this.term.write(d);
     } catch (e) {
-      process.env.NODE_ENV === "development" && console.trace(e);
+      //process.env.NODE_ENV === "development" && console.trace(e);
     }
   }
 
@@ -343,7 +343,7 @@ class Term {
     try {
       this.term.write(d);
     } catch (e) {
-      process.env.NODE_ENV === "development" && console.trace(e);
+      //process.env.NODE_ENV === "development" && console.trace(e);
     }
   }
 
@@ -392,7 +392,7 @@ class Term {
     try {
       this.term.focus();
     } catch (e) {
-      process.env.NODE_ENV === "development" && console.trace(e);
+      //process.env.NODE_ENV === "development" && console.trace(e);
     }
   }
 
@@ -404,7 +404,7 @@ class Term {
     try {
       this.term.blur();
     } catch (e) {
-      process.env.NODE_ENV === "development" && console.trace(e);
+      //process.env.NODE_ENV === "development" && console.trace(e);
     }
   }
 
@@ -416,7 +416,7 @@ class Term {
     try {
       this.fit.fit();
     } catch (e) {
-      process.env.NODE_ENV === "development" && console.trace(e);
+      //process.env.NODE_ENV === "development" && console.trace(e);
     }
   }
 
@@ -434,7 +434,7 @@ class Term {
     try {
       this.term.dispose();
     } catch (e) {
-      process.env.NODE_ENV === "development" && console.trace(e);
+      //process.env.NODE_ENV === "development" && console.trace(e);
     }
   }
 }

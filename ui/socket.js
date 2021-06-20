@@ -194,11 +194,11 @@ class Dial {
           } catch (e) {
             ws.close();
             rd.closeWithReason(e);
-
+/*
             if (process.env.NODE_ENV === "development") {
               console.error(e);
             }
-
+*/
             throw e;
           }
         },
@@ -380,7 +380,7 @@ export class Socket {
           return;
         }
 
-        console.trace(e);
+        //console.trace(e);
       });
 
       this.streamHandler = streamHandler;

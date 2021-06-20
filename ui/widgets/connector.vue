@@ -368,7 +368,7 @@ export default {
     try {
       await this.closeWizard();
     } catch (e) {
-      process.env.NODE_ENV === "development" && console.trace(e);
+      //process.env.NODE_ENV === "development" && console.trace(e);
     }
   },
   methods: {
@@ -810,7 +810,7 @@ export default {
 
         alert("Submission has failed: " + e);
 
-        process.env.NODE_ENV === "development" && console.trace(e);
+        //process.env.NODE_ENV === "development" && console.trace(e);
 
         return;
       }

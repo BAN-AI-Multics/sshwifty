@@ -1,5 +1,6 @@
 // Sshwifty - A Web SSH client
 //
+// Copyright (C) 2021 Jeffrey H. Johnson <trnsz+banai@pobox.com>
 // Copyright (C) 2019-2021 NI Rui <ranqus@gmail.com>
 //
 // This program is free software: you can redistribute it and/or modify
@@ -320,7 +321,7 @@ export class Reader {
       await self.buffers.subscribe()
     );
 
-    this.multiple.feed(Buffer.from(converted, () => {}), () => {});
+    this.multiple.feed(new Buffer(converted, () => {}), () => {});
 
     return this.multiple;
   }

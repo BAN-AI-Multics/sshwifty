@@ -1,5 +1,6 @@
 // Sshwifty - A Web SSH client
 //
+// Copyright (C) 2021 Jeffrey H. Johnson <trnsz+banai@pobox.com>
 // Copyright (C) 2019-2021 NI Rui <ranqus@gmail.com>
 //
 // This program is free software: you can redistribute it and/or modify
@@ -38,8 +39,6 @@ import * as stream from "./stream/common";
 import * as xhr from "./xhr.js";
 
 const backendQueryRetryDelay = 2000;
-
-const maxTimeDiff = 990000;
 
 const updateIndicatorMaxDisplayTime = 3000;
 
@@ -427,6 +426,7 @@ function initializeClient() {
     return;
   }
 
+/*
   if (process.env.NODE_ENV === "development") {
     console.log("Currently in Development environment");
   }
@@ -438,6 +438,7 @@ function initializeClient() {
   window.addEventListener("error", function (e) {
     console.error("Error:", e);
   });
+*/
 
   landingRoot.parentNode.removeChild(landingRoot);
 
