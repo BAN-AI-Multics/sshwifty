@@ -40,7 +40,7 @@
     "dev": "NODE_ENV=development webpack --mode=development --config=webpack.config.js --stats-error-details",
     "clean": "${RMFR:-rm -f} ./.tmp/ -r || ${TRUE:-true}",
     "generate": "${GOGO:-go} generate ./.. && NODE_ENV=production webpack --mode=production --config=webpack.config.js",
-    "build": "NODE_ENV=production ${NPMX:-npm} ${QNPM:-} run generate && CGO_ENABLED=1 ${GOGO:-go} build -tags=osusergo,netgo,leaktest -trimpath -ldflags \"-s -w -X github.com/BAN-AI-Multics/sshwifty/application.version=v$(cat version.inc) -buildid= -linkmode external -extldflags '-static ${JEMA:-} -Wl,--gc-sections'\" && ${STRP:-strip} -s -R .gnu.build.attributes* -R .note.stapsdt -R .comment -R .go.buildinfo -R .note* -R .stapsdt.base -R .gcc-except_table -R .eh_frame ./sshwifty; ${SSTR:-sstrip} -z ./sshwifty; ${TEST:-test} -x ./sshwifty",
+    "build": "NODE_ENV=production ${NPMX:-npm} ${QNPM:-} run generate && CGO_ENABLED=1 ${GOGO:-go} build -v -a -tags=osusergo,netgo,leaktest -trimpath -ldflags \"-s -w -X github.com/BAN-AI-Multics/sshwifty/application.version=v$(cat version.inc) -buildid= -linkmode external -extldflags '-static ${JEMA:-} -Wl,--gc-sections'\" && ${STRP:-strip} -s -R .gnu.build.attributes* -R .note.stapsdt -R .comment -R .go.buildinfo -R .note* -R .stapsdt.base -R .gcc-except_table -R .eh_frame ./sshwifty; ${SSTR:-sstrip} -z ./sshwifty; ${TEST:-test} -x ./sshwifty",
     "testonly": "mocha --require @babel/register --recursive --timeout 3s ./ui/**/*_test.js && CGO_ENABLED=1 ${GOGO:-go} test -v -tags=osusergo,netgo,leaktest ./... -race -bench=. -count=1 -cover -covermode=atomic -timeout 30s",
     "test": "${NPMX:-npm} ${QNPM:-} run generate && ${NPMX:-npm} ${QNPM:-} run testonly"
   },
