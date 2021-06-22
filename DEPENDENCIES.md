@@ -23,14 +23,12 @@
 |                           [bnkamalesh/errors](https://github.com/bnkamalesh/errors) | _[MIT](https://github.com/bnkamalesh/errors/blob/master/LICENSE)_                              |
 |                       [File Loader](https://github.com/webpack-contrib/file-loader) | _[MIT](https://github.com/webpack-contrib/file-loader/blob/master/LICENSE)_                    |
 |                 [Font Face Observer](https://github.com/bramstein/fontfaceobserver) | _[2‑BSD](https://github.com/bramstein/fontfaceobserver/blob/master/LICENSE)_                   |
-|                                           [Labix gocheck](http://labix.org/gocheck) | _[2‑BSD](https://pkg.go.dev/gopkg.in/check.v1?tab=licenses)_                                   |
 |                                 [go‑difflib](https://github.com/pmezard/go-difflib) | _[MIT](https://github.com/pmezard/go-difflib/blob/master/LICENSE)_                             |
 |                                                            [Go](https://golang.org) | _[3‑BSD](https://github.com/golang/go/blob/master/LICENSE)_                                    |
 |                                                [Go4](https://github.com/go4org/go4) | _[Apache‑2.0](https://github.com/go4org/go4/blob/master/LICENSE)_                              |
 |                                                [goleak](https://go.uber.org/goleak) | _[MIT](https://pkg.go.dev/go.uber.org/goleak?tab=licenses)_                                    |
 |                                              [Go x/lint](https://golang.org/x/lint) | _[3‑BSD](https://pkg.go.dev/golang.org/x/lint?tab=licenses)_                                   |
 |                           [Gorilla WebSocket](https://github.com/gorilla/websocket) | _[2‑BSD](https://github.com/gorilla/websocket/blob/master/LICENSE)_                            |
-|                                                 [Go YAML](https://gopkg.in/yaml.v3) | _[Go YAML](https://github.com/go-yaml/yaml/blob/v3/LICENSE)_                                   |
 |                                      [Hack](https://github.com/source-foundry/Hack) | _[Hack](https://github.com/source-foundry/Hack/blob/master/LICENSE.md)_                        |
 |                       [HTML Loader](https://github.com/webpack-contrib/html-loader) | _[MIT](https://github.com/webpack-contrib/html-loader/blob/master/LICENSE)_                    |
 |                       [HTMLPlugin](https://github.com/jantimon/html-webpack-plugin) | _[MIT](https://github.com/jantimon/html-webpack-plugin/blob/main/LICENSE)_                     |
@@ -42,20 +40,15 @@
 |                                        [Logrus](https://github.com/sirupsen/logrus) | _[MIT](https://github.com/sirupsen/logrus/blob/master/LICENSE)_                                |
 |                                           [Mocha](https://github.com/mochajs/mocha) | _[MIT](https://github.com/mochajs/mocha/blob/master/LICENSE)_                                  |
 |                           [normalize.css](https://github.com/necolas/normalize.css) | _[MIT](https://github.com/necolas/normalize.css/blob/master/LICENSE.md)_                       |
-|                                            [Objx](https://github.com/stretchr/objx) | _[MIT](https://github.com/stretchr/objx/blob/master/LICENSE)_                                  |
-|                                           [kr/pretty](https://github.com/kr/pretty) | _[MIT](https://github.com/kr/pretty/blob/main/License)_                                        |
 |                                                [Go x/net](https://golang.org/x/net) | _[3‑BSD](https://github.com/golang/net/blob/master/LICENSE)_                                   |
 |                         [Modern‑Go Reflect2](https://github.com/modern-go/reflect2) | _[Apache‑2.0](https://github.com/modern-go/reflect2/blob/master/LICENSE)_                      |
 |                                      [Roboto](https://en.wikipedia.org/wiki/Roboto) | _[Apache‑2.0](https://github.com/choffmeister/roboto-fontface-bower/blob/master/LICENSE)_      |
 |                           [Minio SHA256‑SIMD](https://github.com/minio/sha256-simd) | _[Apache‑2.0](https://github.com/minio/sha256-simd/blob/master/LICENSE)_                       |
-|                                          [Spew](https://github.com/davecgh/go-spew) | _[ISC](https://github.com/davecgh/go-spew/blob/master/LICENSE)_                                |
 |                                         [StatsViz](https://github.com/arl/statsviz) | _[MIT](https://github.com/arl/statsviz/blob/master/LICENSE)_                                   |
 |                          [String Decoder](https://github.com/nodejs/string_decoder) | _[MIT](https://github.com/nodejs/string_decoder/blob/main/LICENSE)_                            |
 |                     [Style Loader](https://github.com/webpack-contrib/style-loader) | _[MIT](https://github.com/webpack-contrib/style-loader/blob/master/LICENSE)_                   |
 |                                                [Go x/sys](https://golang.org/x/sys) | _[3‑BSD](https://cs.opensource.google/go/x/sys/+/master:LICENSE)_                              |
 |            [TerserPlugin](https://github.com/webpack-contrib/terser-webpack-plugin) | _[MIT](https://github.com/webpack-contrib/terser-webpack-plugin/blob/master/LICENSE)_          |
-|                                      [Testify](https://github.com/stretchr/testify) | _[MIT](https://github.com/stretchr/testify/blob/master/LICENSE)_                               |
-|                                               [kr/text](https://github.com/kr/text) | _[MIT](https://github.com/kr/text)_                                                            |
 |                                                            [Vue](https://vuejs.org) | _[MIT](https://github.com/vuejs/vue/blob/dev/LICENSE)_                                         |
 |                                   [Vue Loader](https://github.com/vuejs/vue-loader) | _[MIT](https://github.com/vuejs/vue-loader/blob/master/LICENSE)_                               |
 |                                       [Webpack](https://github.com/webpack/webpack) | _[MIT](https://github.com/webpack/webpack/blob/master/LICENSE)_                                |
