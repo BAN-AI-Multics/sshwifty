@@ -73,7 +73,8 @@ UISOURCES = $(shell $(FIND) ui -name '*.html'      \
 ############################################################################
 
 .PHONY: all
-sshwifty: $(NPMOPT) $(JSCONFIG) $(GOSOURCES) $(UISOURCES) version.inc
+sshwifty: $(NPMOPT) $(JSCONFIG) $(GOSOURCES) $(UISOURCES) \
+	      $(JEMA) version.inc
 	@$(NEWL)
 	@$(ECHO) " Start: sshwifty (build)"                        || $(TRUE)
 	@$(RMFR) "sshwifty"                                        || $(TRUE)
