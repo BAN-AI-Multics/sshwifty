@@ -15,7 +15,7 @@ require (
 	go4.org v0.0.0-20201209231011-d4a079459e60
 	golang.org/x/crypto v0.0.0-20210616213533-5ff15b29337e
 	golang.org/x/net v0.0.0-20210614182718-04defd469f4e
-	github.com/klauspost/cpuid/v2 v2.0.6
+	github.com/klauspost/cpuid/v2 v2.0.7-0.20210629110636-30cc3e6bc785
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd
 	github.com/modern-go/reflect2 v1.0.2-0.20210109003243-333559e1834b
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2
