@@ -20,7 +20,7 @@ require (
 	go4.org v0.0.0-20201209231011-d4a079459e60
 	golang.org/x/crypto v0.0.0-20210616213533-5ff15b29337e
 	golang.org/x/net v0.0.0-20210614182718-04defd469f4e
-	golang.org/x/sys v0.0.0-20210616094352-59db8d763f22
+	golang.org/x/sys v0.0.0-20210629170331-7dc0b73dc9fb
 	golang.org/x/term v0.0.0-20210615171337-6886f2dfbf5b
-	golang.org/x/tools v0.1.5-0.20210629141133-100b22926171
+	golang.org/x/tools v0.1.5-0.20210629191230-72e4d1bb8d47
 )
