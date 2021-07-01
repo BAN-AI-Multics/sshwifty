@@ -21,4 +21,5 @@ require (
 	go.uber.org/goleak v1.1.11-0.20210525221708-d36f3aede898
 	golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c
 	golang.org/x/term v0.0.0-20210615171337-6886f2dfbf5b
+	golang.org/x/tools v0.1.5-0.20210701083923-20dafe5d6055
 )
