@@ -22,7 +22,7 @@
     "iconv-lite": "^0.6.3",
     "image-minimizer-webpack-plugin": "^2.2.0",
     "mini-css-extract-plugin": "^2.1.0",
-    "mocha": "^9.0.3",
+    "mocha": "^9.2.2",
     "normalize.css": "^8.0.1",
     "roboto-fontface": "^0.10.0",
     "style-loader": "^3.2.1",
