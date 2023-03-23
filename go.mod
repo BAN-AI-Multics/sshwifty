@@ -6,7 +6,7 @@ require (
 	github.com/arl/statsviz v0.4.1-0.20210509163250-108f3fe4a08e
 	github.com/bnkamalesh/errors v0.4.0
 	github.com/gorilla/websocket v1.4.3-0.20210424162022-e8629af678b7
-	github.com/johnsonjh/leaktestfe v0.0.0-20210729072946-c65fb1faa282
+	github.com/johnsonjh/leaktestfe v0.0.0-20230308203709-32b9101894df
 	github.com/json-iterator/go v1.1.12-0.20210722010026-c6661824eb80
 	github.com/klauspost/compress v1.13.2-0.20210709134322-94867dd0db71
 	github.com/minio/sha256-simd v1.0.1-0.20210617151322-99e45fae3395
@@ -21,6 +21,6 @@ require (
 	github.com/klauspost/cpuid/v2 v2.0.8 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2-0.20210109003243-333559e1834b // indirect
-	go.uber.org/goleak v1.1.11-0.20210525221708-d36f3aede898 // indirect
+	go.uber.org/goleak v1.2.1 // indirect
 	golang.org/x/sys v0.5.0 // indirect
 )
