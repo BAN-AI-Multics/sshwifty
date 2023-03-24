@@ -12,7 +12,7 @@ require (
 	github.com/minio/sha256-simd v1.0.1-0.20210617151322-99e45fae3395
 	github.com/segmentio/encoding v0.2.19
 	github.com/sirupsen/logrus v1.8.2-0.20210422133436-b50299cfaaa1
-	go4.org v0.0.0-20201209231011-d4a079459e60
+	go4.org v0.0.0-20230225012048-214862532bf5
 	golang.org/x/crypto v0.1.0
 	golang.org/x/net v0.7.0
 )
